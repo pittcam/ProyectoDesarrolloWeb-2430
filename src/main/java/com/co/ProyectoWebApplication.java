@@ -1,4 +1,4 @@
-package co.edu.javeriana.ProyectoWeb;
+package com.co;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

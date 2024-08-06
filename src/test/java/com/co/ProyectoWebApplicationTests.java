@@ -1,4 +1,4 @@
-package co.edu.javeriana.ProyectoWeb;
+package com.co;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
