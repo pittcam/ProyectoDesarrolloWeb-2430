@@ -12,11 +12,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bus {
-    private Integer idBus;
-    private String placa;
-    private String modelo;
-    private List<RutaAsignada> rutasAsignadas = new ArrayList<>();
 
+public class BusAsignado {
+    private Integer idBus;
+    private List<String> dias = new ArrayList<>();
 
 }
