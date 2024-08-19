@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +22,11 @@ public class Conductor {
     private String nombre;
     private String telefono;
     private String direccion;
+
+    @OneToMany(mappedBy = "conductor")
+    private List<Sistema> idConductores;
+
+
 
 
 

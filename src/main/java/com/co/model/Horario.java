@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,7 @@ public class Horario {
     private String horaInicio;
     private String horaFin;
     private List<String> dias = new ArrayList<>();
+    @OneToMany(mappedBy = "horario")
+    private List<Sistema> idHorarios;
 
 }

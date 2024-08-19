@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,8 @@ public class Ruta {
     private Long id;
     private Horario horario;
     private List <String> estaciones = new ArrayList<>();
+    @OneToMany(mappedBy = "conductor")
+    private List<Sistema> idRutas;
 
 
 }

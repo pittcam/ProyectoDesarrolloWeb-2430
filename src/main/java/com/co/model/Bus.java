@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,5 +19,8 @@ public class Bus {
     private Long id;
     private String placa;
     private String modelo;
+
+    @OneToMany(mappedBy = "bus")
+    private List<Sistema> idBuses;
 
 }
