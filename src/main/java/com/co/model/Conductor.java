@@ -1,7 +1,4 @@
-package com.co.modelo;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.co.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,12 +21,6 @@ public class Conductor {
     private String telefono;
     private String direccion;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Bus_Asignado",
-            joinColumns = @JoinColumn(name = "idConductor"),
-            inverseJoinColumns = @JoinColumn(name = "idBus")
-    )
-    private Set<Bus> busesAsignados = new HashSet<>();
+
 
 }
