@@ -1,5 +1,4 @@
-package com.co;
-
+package com.co.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Horario {
+public class Ruta {
     private Integer id;
-    private String horaInicio;
-    private String horaFin;
-    private List<String> dias = new ArrayList<>();
+    private Horario horario;
+    private List <String> estaciones = new ArrayList<>();
+
 
 }
