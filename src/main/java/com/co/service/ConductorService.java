@@ -14,10 +14,27 @@ public class ConductorService {
     @Autowired
     private ConductorRepository conductorRepository;
 
+
+
     // Obtener todos los conductores
-    public List<Conductor> findAll() {
+    public List<Conductor> conductorList() {
         return conductorRepository.findAll();
     }
+
+    public List<Conductor> buscarPorNombre(String textoBusqueda) {
+        return conductorRepository.findAllByNombre(textoBusqueda);
+        //return personRepository.findAllByLastNameStartingWith(textoBusqueda);
+        // return personRepository.findAllByLastNameStartingWithIgnoreCase(textoBusqueda);
+        // return personRepository.findPersonsByLastNameStartingWithCaseInsensitive(textoBusqueda);
+        // return personRepository.findPersonsByLastNameStartingWith(textoBusqueda);
+    }
+
+    public Conductor recuperarConductor(Long id) {
+        return conductorRepository.findById(id).orElseThrow();
+    }
+
+
+
 
     // Obtener un conductor por ID
     public Optional<Conductor> findById(Long id) {
@@ -25,8 +42,8 @@ public class ConductorService {
     }
 
     // Crear o actualizar un conductor
-    public Conductor save(Conductor conductor) {
-        return conductorRepository.save(conductor);
+    public void guardarConductor(Conductor conductor) {
+        conductorRepository.save(conductor);
     }
 
     // Eliminar un conductor por ID

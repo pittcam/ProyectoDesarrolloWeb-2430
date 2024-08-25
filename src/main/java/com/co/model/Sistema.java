@@ -18,19 +18,19 @@ public class Sistema {
     private String idRuta;
 
     @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "")
+    @JoinColumn(name = "idBus")
     private Bus bus;
 
     @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "")
+    @JoinColumn(name = "idConductor")
     private Conductor conductor;
 
     @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "")
+    @JoinColumn(name = "idRuta")
     private Ruta ruta;
 
     @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "")
+    @JoinColumn(name = "idHorario")
     private Horario horario;
 
 }
