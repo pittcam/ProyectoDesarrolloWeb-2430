@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <link rel="stylesheet" th:href="@{static.css/estilo.css}">
 </head>
+
 <body>
-    <h1>Detalles del Conductor</h1>
-    <p>ID: <span th:text="${conductor.id}"></span></p>
-    <p>Nombre: <span th:text="${conductor.nombre}"></span></p>
-    <p>Cédula: <span th:text="${conductor.cedula}"></span></p>
-    <p>Teléfono: <span th:text="${conductor.telefono}"></span></p>
-    <p>Dirección: <span th:text="${conductor.direccion}"></span></p>
-    <a href="/conductores/edit-form/{id}(id=${conductor.id})">Editar</a>
-    <a href="/conductores/list">Volver a la lista</a>
+
+<h1>Detalles del Conductor</h1>
+
+<div>
+    <p><strong>Nombre:</strong> <span th:text="${conductor.nombre}"></span></p>
+    <p><strong>Cédula:</strong> <span th:text="${conductor.cedula}"></span></p>
+    <p><strong>Teléfono:</strong> <span th:text="${conductor.telefono}"></span></p>
+    <p><strong>Dirección:</strong> <span th:text="${conductor.direccion}"></span></p>
+</div>
+
+<!-- Botón para volver a la lista -->
+<a th:href="@{/conductor/list}" class="btn volver-btn">Volver a la lista</a>
+
 </body>
+
 </html>
