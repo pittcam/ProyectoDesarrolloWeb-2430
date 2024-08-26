@@ -23,8 +23,11 @@ public class Conductor {
     @Column(name = "cedula", unique = true, nullable = false)
     private String cedula;
 
-    @Column(name = "direccion")
-    private String direccion; // Campo para dirección
+     @Column(name = "direccion")
+    private String direccion;// Campo para dirección
+
+    @Column(name = "telefono")
+    private String telefono;
 
     @ManyToMany(mappedBy = "conductores")
     private Set<Bus> buses; // Lista de buses asignados
@@ -69,5 +72,13 @@ public class Conductor {
 
     public void setBuses(Set<Bus> buses) {
         this.buses = buses;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

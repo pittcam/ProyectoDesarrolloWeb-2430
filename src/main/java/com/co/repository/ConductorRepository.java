@@ -17,6 +17,7 @@ public interface ConductorRepository extends JpaRepository<Conductor, Long> {
 
     List<Conductor> findAllByNombreStartingWithIgnoreCase(String texto);
 
+
     // Consultas personalizadas usando JPQL
     @Query("SELECT c FROM Conductor c WHERE c.nombre LIKE concat(:texto, '%')")
     List<Conductor> findConductoresByNombreStartingWith(@Param("texto") String texto);

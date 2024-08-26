@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{static.css/estilo.css}">
+</head>
+
+<body>
+
+    <h1>Persons</h1>
+    <form method="get" action="#" th:action="@{/conductor/search}">
+        <label for="searchText">Buscar por nombre</label>
+        <input type="text" id="searchText" name="searchText">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Botón para agregar un nuevo conductor -->
+    <div class="btn-container">
+        <a th:href="@{/conductor/add-form}" class="btn agregar-btn">Agregar Conductor</a>
+    </div>
+
+    <table class="entity-list">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cedula</th>
+            <th>Telefono</th>
+            <th>Direccion</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr th:each="c : ${conductors}" th:if="${c.nombre}">
+                <td th:text="${c.cedula}"></td>
+                <td th:text="${c.direccion}"></td>
+                <td>
+                    <a th:href="@{/conductor/view/{id}(id=${c.id})}" class="ver-btn">Ver</a>
+                    <a th:href="@{/conductor/edit-form/{id}(id=${c.id})}" class="editar-btn">Editar</a>
+                    <a th:href="@{/conductor/delete/{id}(id=${c.id})}" class="eliminar-btn">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

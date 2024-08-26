@@ -25,6 +25,8 @@ public class Bus {
     @Column(name = "modelo", nullable = false)
     private String modelo;
 
+
+
     @ManyToMany
     @JoinTable(
         name = "bus_conductor",

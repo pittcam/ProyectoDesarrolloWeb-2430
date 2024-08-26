@@ -1,0 +1,39 @@
+/* Archivo: estilo.css */
+
+/* Estilo general para los enlaces tipo botón */
+.entity-list a {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+/* Botón Ver */
+.entity-list a.ver-btn {
+    background-color: #007bff; /* Azul */
+}
+
+.entity-list a.ver-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Botón Editar */
+.entity-list a.editar-btn {
+    background-color: #ffc107; /* Amarillo */
+    color: #333;
+}
+
+.entity-list a.editar-btn:hover {
+    background-color: #d39e00;
+}
+
+/* Botón Eliminar */
+.entity-list a.eliminar-btn {
+    background-color: #dc3545; /* Rojo */
+}
+
+.entity-list a.eliminar-btn:hover {
+    background-color: #c82333;
+}

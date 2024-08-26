@@ -14,8 +14,6 @@ public class ConductorService {
     @Autowired
     private ConductorRepository conductorRepository;
 
-
-
     // Obtener todos los conductores
     public List<Conductor> conductorList() {
         return conductorRepository.findAll();
@@ -32,8 +30,6 @@ public class ConductorService {
     public Conductor recuperarConductor(Long id) {
         return conductorRepository.findById(id).orElseThrow();
     }
-
-
 
 
     // Obtener un conductor por ID

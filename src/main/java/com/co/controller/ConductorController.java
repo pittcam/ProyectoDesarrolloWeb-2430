@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("conductores")
+@RequestMapping("conductor")
 public class ConductorController {
 
     Logger log = LoggerFactory.getLogger(getClass());
@@ -34,47 +34,68 @@ public class ConductorController {
     @GetMapping("/list")
     public ModelAndView listarConductores() {
         List<Conductor> conductores = conductorService.conductorList();
-        ModelAndView modelAndView = new ModelAndView("conductor-list");
+        ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("conductores", conductores);
         return modelAndView;
     }
 
-    @GetMapping("/view/{idConductor}")
-    public ModelAndView verConductor(@PathVariable("idPersona") Long id) {
-        Conductor conductor = conductorService.recuperarConductor(id);
-        ModelAndView modelAndView = new ModelAndView("person-view");
-        modelAndView.addObject("conductor", conductor);
-        return modelAndView;
-    }
 
+    //Editar
     @GetMapping("/edit-form/{id}")
     public ModelAndView formularioEditarConductor(@PathVariable Long id) {
         Conductor c = conductorService.recuperarConductor(id);
         ModelAndView modelAndView = new ModelAndView("conductor-edit");
         modelAndView.addObject("conductor", c);
         return modelAndView;
-
     }
 
-    @PostMapping(value = "/save")
-    public Object guardarConductor(@Valid Conductor conductor, BindingResult result) {
+    // Método para mostrar el formulario de agregar conductor
+    @GetMapping("/add-form")
+    public ModelAndView formularioAgregarConductor() {
+        Conductor nuevoConductor = new Conductor();  // Creamos un nuevo objeto Conductor
+        ModelAndView modelAndView = new ModelAndView("conductor-form");  // Referencia a la vista del formulario
+        modelAndView.addObject("conductor", nuevoConductor);  // Pasamos el objeto Conductor al modelo
+        return modelAndView;
+    }
+
+
+
+    @PostMapping("/save")
+    public Object guardarConductor(@Valid @ModelAttribute Conductor conductor, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("conductor-edit");
+            // Si hay errores, regresa al formulario adecuado.
+            if (conductor.getId() == null) {
+                return new ModelAndView("conductor-form"); // Si no hay ID, es agregar.
+            } else {
+                return new ModelAndView("conductor-edit"); // Si hay ID, es editar.
+            }
         }
+
         conductorService.guardarConductor(conductor);
-        return new RedirectView("/conductor/list");
+        return new RedirectView("/conductor/list"); // Redirige a la lista después de guardar.
     }
 
 
-    // Eliminar un conductor por ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteConductor(@PathVariable("id") Long id) {
-        if (!conductorService.existsById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @GetMapping("/view/{id}")
+    public ModelAndView verConductor(@PathVariable("id") Long id) {
+        Conductor conductor = conductorService.recuperarConductor(id);
+        ModelAndView modelAndView = new ModelAndView("conductor-view");
+        modelAndView.addObject("conductor", conductor);
+        return modelAndView;
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public RedirectView deleteConductor(@PathVariable("id") Long id) {
+        if (conductorService.existsById(id)) {
+            conductorService.delete(id);
+            log.info("Conductor con ID {} eliminado correctamente.", id);
+        } else {
+            log.warn("El conductor con ID {} no fue encontrado.", id);
         }
-        conductorService.delete(id);
-        return ResponseEntity.noContent().build();
+        return new RedirectView("/conductores/list");
     }
+
 
     @GetMapping("/search")
     public ModelAndView listConductores(@RequestParam(required = false) String searchText) {
@@ -83,10 +104,10 @@ public class ConductorController {
             log.info("No hay texto de búsqueda. Retornando todo");
             conductors = conductorService.conductorList();
         } else {
-            log.info("Buscando personas cuyo apellido comienza con {}", searchText);
+            log.info("Buscando personas cuyo nombre comienza con {}", searchText);
             conductors = conductorService.buscarPorNombre(searchText);
         }
-        ModelAndView modelAndView = new ModelAndView("person-search");
+        ModelAndView modelAndView = new ModelAndView("conductor-search");
         modelAndView.addObject("conductors", conductors);
         return modelAndView;
 
