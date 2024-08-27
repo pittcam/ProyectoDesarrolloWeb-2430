@@ -1,11 +1,17 @@
 package com.co.controller;
 
 import com.co.model.Bus;
+import com.co.model.Conductor;
 import com.co.service.BusService;
+import com.co.service.ConductorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/bus")
@@ -13,6 +19,9 @@ public class BusController {
 
     @Autowired
     private BusService busService;
+
+    @Autowired
+    private ConductorService conductorService;
 
     @GetMapping("/list")
     public String listBuses(Model model) {
@@ -22,21 +31,25 @@ public class BusController {
 
     @GetMapping("/view/{id}")
     public String viewBus(@PathVariable("id") Long id, Model model) {
-        Bus bus = busService.findById(id).orElseThrow();
+        Bus bus = busService.findById(id).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
         model.addAttribute("bus", bus);
         return "bus-view";
     }
 
     @GetMapping("/edit-form/{id}")
     public String editBusForm(@PathVariable("id") Long id, Model model) {
-        Bus bus = busService.findById(id).orElseThrow();
+        Bus bus = busService.findById(id).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
+        List<Conductor> allConductors = conductorService.conductorList();
+
         model.addAttribute("bus", bus);
+        model.addAttribute("allConductors", allConductors);
         return "bus-form";
     }
 
     @GetMapping("/add-form")
     public String addBusForm(Model model) {
         model.addAttribute("bus", new Bus());
+        model.addAttribute("allConductors", conductorService.conductorList());
         return "bus-form";
     }
 
@@ -46,16 +59,17 @@ public class BusController {
         return "redirect:/bus/list";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteBus(@PathVariable("id") Long id) {
-        busService.delete(id);
-        return "redirect:/bus/list";
-    }
+    @PostMapping("/assign")
+    public String assignConductorsToBus(
+            @RequestParam("busId") Long busId,
+            @RequestParam("conductors") List<Long> conductorIds) {
 
-    @GetMapping("/search")
-    public String searchBuses(@RequestParam("searchText") String searchText, Model model) {
-        // Implement search logic if needed
-        model.addAttribute("buses", busService.findAll()); // Adjust search results as necessary
-        return "bus-search";
+        Bus bus = busService.findById(busId).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
+        List<Conductor> conductors = conductorService.findByIds(conductorIds);
+
+        bus.setConductores(new HashSet<>(conductors));
+        busService.save(bus);
+
+        return "redirect:/bus/list";
     }
 }

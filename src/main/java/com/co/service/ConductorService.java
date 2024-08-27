@@ -19,22 +19,15 @@ public class ConductorService {
         return conductorRepository.findAll();
     }
 
+    // Buscar conductores por nombre
     public List<Conductor> buscarPorNombre(String textoBusqueda) {
-        return conductorRepository.findAllByNombre(textoBusqueda);
-        //return personRepository.findAllByLastNameStartingWith(textoBusqueda);
-        // return personRepository.findAllByLastNameStartingWithIgnoreCase(textoBusqueda);
-        // return personRepository.findPersonsByLastNameStartingWithCaseInsensitive(textoBusqueda);
-        // return personRepository.findPersonsByLastNameStartingWith(textoBusqueda);
+        return conductorRepository.findAllByNombreContainingIgnoreCase(textoBusqueda);
     }
-
-    public Conductor recuperarConductor(Long id) {
-        return conductorRepository.findById(id).orElseThrow();
-    }
-
 
     // Obtener un conductor por ID
-    public Optional<Conductor> findById(Long id) {
-        return conductorRepository.findById(id);
+    public Conductor recuperarConductor(Long id) {
+        return conductorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
     }
 
     // Crear o actualizar un conductor
@@ -51,5 +44,9 @@ public class ConductorService {
     public boolean existsById(Long id) {
         return conductorRepository.existsById(id);
     }
-}
 
+    // Obtener conductores por lista de IDs
+    public List<Conductor> findByIds(List<Long> ids) {
+        return conductorRepository.findAllById(ids);
+    }
+}

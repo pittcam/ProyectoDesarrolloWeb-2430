@@ -33,9 +33,4 @@ public class BusService {
     public void delete(Long id) {
         busRepository.deleteById(id);
     }
-
-    // Verificar si un bus existe por ID
-    public boolean existsById(Long id) {
-        return busRepository.existsById(id);
-    }
 }
