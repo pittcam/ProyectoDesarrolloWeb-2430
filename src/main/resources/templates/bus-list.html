@@ -3,14 +3,19 @@
 
 <head>
     <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <title>Lista de Buses</title>
 </head>
 
 <body>
 <h1>Buses</h1>
 
-<!-- Botón para agregar un nuevo bus -->
+<!-- Botones de navegación -->
 <div class="btn-container">
+    <!-- Botón para agregar un nuevo bus -->
     <a th:href="@{/bus/add-form}" class="btn agregar-btn">Agregar Bus</a>
+
+    <!-- Botón para ver conductores -->
+    <a th:href="@{/conductor/list}" class="btn ver-conductores-btn">Ver Conductores</a>
 </div>
 
 <table class="entity-list">
@@ -26,8 +31,13 @@
         <td th:text="${b.numeroPlaca}"></td>
         <td th:text="${b.modelo}"></td>
         <td>
+            <!-- Botón para ver detalles del bus -->
             <a th:href="@{/bus/view/{id}(id=${b.id})}" class="ver-btn">Ver</a>
+
+            <!-- Botón para editar el bus -->
             <a th:href="@{/bus/edit-form/{id}(id=${b.id})}" class="editar-btn">Editar</a>
+
+            <!-- Botón para eliminar el bus -->
             <a th:href="@{/bus/delete/{id}(id=${b.id})}" class="eliminar-btn">Eliminar</a>
         </td>
     </tr>

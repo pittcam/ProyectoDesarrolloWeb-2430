@@ -54,7 +54,13 @@ public class BusController {
     }
 
     @PostMapping("/save")
-    public String saveBus(@ModelAttribute Bus bus) {
+    public String saveBus(@ModelAttribute Bus bus, @RequestParam(value = "conductorIds", required = false) List<Long> conductorIds) {
+        if (conductorIds != null) {
+            List<Conductor> selectedConductores = conductorService.findByIds(conductorIds);
+            bus.setConductores(new HashSet<>(selectedConductores)); // Asigna conductores seleccionados al bus
+        } else {
+            bus.setConductores(new HashSet<>()); // Si no se seleccionan conductores, se asigna un conjunto vacío
+        }
         busService.save(bus);
         return "redirect:/bus/list";
     }

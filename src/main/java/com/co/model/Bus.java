@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,5 +33,5 @@ public class Bus {
             joinColumns = @JoinColumn(name = "bus_id"),
             inverseJoinColumns = @JoinColumn(name = "conductor_id")
     )
-    private Set<Conductor> conductores; // Conductores asignados a este bus
+    private Set<Conductor> conductores = new HashSet<>(); // Inicializar el conjunto de conductores
 }
