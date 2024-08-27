@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "ruta")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,13 +22,16 @@ public class Ruta {
 
     @OneToOne
     @JoinColumn(name = "horario_id")
-    private Horario horario; // Suponiendo que horario es una entidad
+    private Horario horario;
 
     @ElementCollection
     @CollectionTable(name = "estaciones", joinColumns = @JoinColumn(name = "ruta_id"))
     @Column(name = "estacion")
     private List<String> estaciones = new ArrayList<>();
 
-    @OneToMany(mappedBy = "ruta") // Asegúrate de que la propiedad en Sistema se llame ruta
-    private List<Sistema> sistemas;
+    @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Asignacion> asignacions = new ArrayList<>();
+
+    public <T> Ruta(Horario horario1, List<T> list) {
+    }
 }

@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <link rel="stylesheet" th:href="@{static.css/estilo.css}">
+    <meta charset="UTF-8">
+    <title>Detalle del Conductor</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-
 <body>
-
 <h1>Detalles del Conductor</h1>
 
-<div>
-    <p><strong>Nombre:</strong> <span th:text="${conductor.nombre}"></span></p>
-    <p><strong>Cédula:</strong> <span th:text="${conductor.cedula}"></span></p>
-    <p><strong>Teléfono:</strong> <span th:text="${conductor.telefono}"></span></p>
-    <p><strong>Dirección:</strong> <span th:text="${conductor.direccion}"></span></p>
-</div>
+<p><strong>ID:</strong> <span th:text="${conductor.id}"></span></p>
+<p><strong>Nombre:</strong> <span th:text="${conductor.nombre}"></span></p>
+<p><strong>Cédula:</strong> <span th:text="${conductor.cedula}"></span></p>
+<p><strong>Teléfono:</strong> <span th:text="${conductor.telefono}"></span></p>
+<p><strong>Dirección:</strong> <span th:text="${conductor.direccion}"></span></p>
 
-<!-- Botón para volver a la lista -->
-<a th:href="@{/conductor/list}" class="btn volver-btn">Volver a la lista</a>
+<h2>Buses Asignados</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Numero de Placa</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bus : ${conductor.buses}">
+        <td th:text="${bus.numeroPlaca}"></td>
+        <td th:text="${bus.modelo}"></td>
+        <td th:text="${bus.Ruta}"></td>
+        <td th:text="${bus.Horarios}"></td>
+    </tr>
+    </tbody>
+</table>
 
+<a href="#" th:href="@{/conductor/list}">Volver a Conductores</a>
 </body>
-
 </html>

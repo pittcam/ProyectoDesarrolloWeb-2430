@@ -1,6 +1,8 @@
 package com.co.controller;
 
+import com.co.model.Bus;
 import com.co.model.Conductor;
+import com.co.service.BusService;
 import com.co.service.ConductorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import jakarta.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -22,6 +25,9 @@ public class ConductorController {
 
     @Autowired
     private ConductorService conductorService;
+
+    @Autowired
+    private BusService busService;  // Servicio para manejar buses
 
     // Obtener todos los conductores
     @GetMapping("/list")
@@ -38,6 +44,7 @@ public class ConductorController {
         Conductor c = conductorService.recuperarConductor(id);
         ModelAndView modelAndView = new ModelAndView("conductor-form");
         modelAndView.addObject("conductor", c);
+        modelAndView.addObject("buses", busService.findAll());  // Agregar buses disponibles
         return modelAndView;
     }
 
@@ -54,11 +61,7 @@ public class ConductorController {
     public Object guardarConductor(@Valid @ModelAttribute Conductor conductor, BindingResult result) {
         if (result.hasErrors()) {
             // Si hay errores, regresa al formulario adecuado.
-            if (conductor.getId() == null) {
-                return new ModelAndView("conductor-form"); // Si no hay ID, es agregar.
-            } else {
-                return new ModelAndView("conductor-form"); // Si hay ID, es editar.
-            }
+            return new ModelAndView("conductor-form"); // Regresa al formulario
         }
 
         conductorService.guardarConductor(conductor);
@@ -70,6 +73,8 @@ public class ConductorController {
         Conductor conductor = conductorService.recuperarConductor(id);
         ModelAndView modelAndView = new ModelAndView("conductor-view");
         modelAndView.addObject("conductor", conductor);
+        // Asegúrate de que se está pasando la lista de buses asignados
+        modelAndView.addObject("buses", conductor.getBuses());
         return modelAndView;
     }
 
@@ -97,5 +102,33 @@ public class ConductorController {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("conductores", conductores);
         return modelAndView;
+    }
+
+    @GetMapping("/assign-buses/{id}")
+    public ModelAndView asignarBuses(@PathVariable Long id) {
+        Conductor conductor = conductorService.recuperarConductor(id);
+        List<Bus> buses = busService.findAll();  // Obtener todos los buses disponibles
+        ModelAndView modelAndView = new ModelAndView("assign-buses");
+        modelAndView.addObject("conductor", conductor);
+        modelAndView.addObject("buses", buses);
+        return modelAndView;
+    }
+
+    @PostMapping("/save-bus-assignments")
+    public RedirectView guardarAsignacionesBuses(
+            @RequestParam Long conductorId,
+            @RequestParam List<Long> busIds) {
+        Conductor conductor = conductorService.recuperarConductor(conductorId);
+        log.info("Conductor recuperado: {}", conductor);
+
+        List<Bus> buses = busService.findByIds(busIds);
+        log.info("Buses recuperados: {}", buses);
+
+        // Actualiza el conjunto de buses en el conductor
+        conductor.setBuses(new HashSet<>(buses));
+        conductorService.guardarConductor(conductor);
+        log.info("Conductor actualizado con buses asignados: {}", conductor);
+
+        return new RedirectView("/conductor/list");
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Asignar Buses</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Asignar Buses al Conductor</h1>
+<form th:action="@{/conductor/save-bus-assignments}" method="post">
+    <input type="hidden" name="conductorId" th:value="${conductor.id}"/>
+
+    <label>Selecciona los buses:</label>
+    <div th:each="bus : ${buses}">
+        <input type="checkbox" name="busIds" th:value="${bus.id}" />
+        <label th:text="${bus.numeroPlaca + ' - ' + bus.modelo}"></label><br/>
+    </div>
+
+    <button type="submit">Asignar Buses</button>
+</form>
+
+<a href="#" th:href="@{/conductor/list}">Volver a Conductores</a>
+</body>
+</html>

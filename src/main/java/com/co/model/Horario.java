@@ -19,10 +19,10 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "hora_inicio")
+    @Column(name = "hora_inicio", nullable = false)
     private String horaInicio;
 
-    @Column(name = "hora_fin")
+    @Column(name = "hora_fin", nullable = false)
     private String horaFin;
 
     @ElementCollection
@@ -31,5 +31,12 @@ public class Horario {
     private List<String> dias = new ArrayList<>();
 
     @OneToMany(mappedBy = "horario")
-    private List<Sistema> sistemas; // Relación con Sistema
+    private List<Asignacion> asignacions; // Relación con Sistema
+
+    // Constructor con solo los campos requeridos para simplificar la creación
+    public Horario(String horaInicio, String horaFin, List<String> dias) {
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.dias = dias;
+    }
 }

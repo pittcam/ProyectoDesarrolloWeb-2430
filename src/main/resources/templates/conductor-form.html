@@ -6,18 +6,28 @@
 <body>
 <h1 th:if="${conductor.id == null}">Agregar Conductor</h1>
 <h1 th:if="${conductor.id != null}">Editar Conductor</h1>
+
 <form action="#" th:action="@{/conductor/save}" th:object="${conductor}" method="post">
     <input type="hidden" th:field="*{id}" />
+
     <label for="nombre">Nombre:</label>
     <input type="text" th:field="*{nombre}" id="nombre" />
+
     <label for="cedula">Cédula:</label>
     <input type="text" th:field="*{cedula}" id="cedula" />
+
     <label for="telefono">Teléfono:</label>
     <input type="text" th:field="*{telefono}" id="telefono" />
+
     <label for="direccion">Dirección:</label>
     <input type="text" th:field="*{direccion}" id="direccion" />
+
     <button type="submit">Guardar</button>
+
+    <!-- Si el conductor ya existe, mostrar el botón de asignar buses -->
+    <a th:if="${conductor.id != null}" th:href="@{/conductor/assign-buses/{id}(id=${conductor.id})}">Asignar Buses</a>
 </form>
+
 <a href="/conductor/list">Volver a la lista</a>
 </body>
 </html>

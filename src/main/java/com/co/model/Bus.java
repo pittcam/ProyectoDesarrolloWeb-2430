@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,10 @@ public class Bus {
     @Column(name = "modelo", nullable = false)
     private String modelo;
 
+    @ManyToOne
+    @JoinColumn(name = "ruta_id")
+    private Ruta ruta;
+
     @ManyToMany
     @JoinTable(
             name = "bus_conductor",
@@ -34,4 +39,12 @@ public class Bus {
             inverseJoinColumns = @JoinColumn(name = "conductor_id")
     )
     private Set<Conductor> conductores = new HashSet<>(); // Inicializar el conjunto de conductores
+
+    @ManyToMany
+    @JoinTable(
+            name = "bus_horario",
+            joinColumns = @JoinColumn(name = "bus_id"),
+            inverseJoinColumns = @JoinColumn(name = "horario_id")
+    )
+    private List<Horario> horarios;
 }

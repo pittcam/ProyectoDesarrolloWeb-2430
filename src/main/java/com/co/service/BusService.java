@@ -29,6 +29,10 @@ public class BusService {
         busRepository.save(bus);
     }
 
+    public List<Bus> findByIds(List<Long> ids) {
+        return busRepository.findByIdIn(ids);
+    }
+
     // Eliminar un bus por ID
     public void delete(Long id) {
         busRepository.deleteById(id);

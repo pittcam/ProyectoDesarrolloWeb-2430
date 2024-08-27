@@ -1,48 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <meta charset="UTF-8">
     <title>Lista de Buses</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-
 <body>
-<h1>Buses</h1>
-
-<!-- Botones de navegación -->
-<div class="btn-container">
-    <!-- Botón para agregar un nuevo bus -->
-    <a th:href="@{/bus/add-form}" class="btn agregar-btn">Agregar Bus</a>
-
-    <!-- Botón para ver conductores -->
-    <a th:href="@{/conductor/list}" class="btn ver-conductores-btn">Ver Conductores</a>
-</div>
-
-<table class="entity-list">
+<h1>Lista de Buses</h1>
+<table>
     <thead>
     <tr>
-        <th>Placa</th>
+        <th>Número de Placa</th>
         <th>Modelo</th>
-        <th>Acciones</th>
+        <th>Ruta</th>
+        <th>Horarios</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="b : ${buses}">
-        <td th:text="${b.numeroPlaca}"></td>
-        <td th:text="${b.modelo}"></td>
+    <tr th:each="bus : ${buses}">
+        <td th:text="${bus.numeroPlaca}">Número de Placa</td>
+        <td th:text="${bus.modelo}">Modelo</td>
+        <td th:text="${bus.ruta != null ? bus.ruta.id : 'No asignada'}">Ruta</td>
         <td>
-            <!-- Botón para ver detalles del bus -->
-            <a th:href="@{/bus/view/{id}(id=${b.id})}" class="ver-btn">Ver</a>
-
-            <!-- Botón para editar el bus -->
-            <a th:href="@{/bus/edit-form/{id}(id=${b.id})}" class="editar-btn">Editar</a>
-
-            <!-- Botón para eliminar el bus -->
-            <a th:href="@{/bus/delete/{id}(id=${b.id})}" class="eliminar-btn">Eliminar</a>
+            <ul>
+                <li th:each="horario : ${bus.horarios}" th:text="${horario.horaInicio + ' - ' + horario.horaFin}">Horario</li>
+            </ul>
         </td>
     </tr>
     </tbody>
 </table>
+<a href="#" th:href="@{/conductor/list}">Volver a Conductores</a>
 </body>
-
 </html>
