@@ -1,16 +1,19 @@
 package com.co.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Set;
 
 @Entity
 @Table(name = "conductor")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Conductor {
 
     @Id
@@ -23,62 +26,12 @@ public class Conductor {
     @Column(name = "cedula", unique = true, nullable = false)
     private String cedula;
 
-     @Column(name = "direccion")
-    private String direccion;// Campo para dirección
+    @Column(name = "direccion")
+    private String direccion;
 
     @Column(name = "telefono")
     private String telefono;
 
-    @ManyToMany(mappedBy = "conductores")
+    @ManyToMany(mappedBy = "conductores") // Corresponde con el atributo en Bus
     private Set<Bus> buses; // Lista de buses asignados
-
-    // Getters y Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public Set<Bus> getBuses() {
-        return buses;
-    }
-
-    public void setBuses(Set<Bus> buses) {
-        this.buses = buses;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
 }

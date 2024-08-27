@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<h1 th:if="${bus.id == null}">Agregar Bus</h1>
+<h1 th:if="${bus.id != null}">Editar Bus</h1>
+<form action="#" th:action="@{/bus/save}" th:object="${bus}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label for="numeroPlaca">Número de Placa:</label>
+    <input type="text" th:field="*{numeroPlaca}" id="numeroPlaca" />
+    <label for="modelo">Modelo:</label>
+    <input type="text" th:field="*{modelo}" id="modelo" />
+    <button type="submit">Guardar</button>
+</form>
+<a href="/bus/list">Volver a la lista</a>
+</body>
+</html>

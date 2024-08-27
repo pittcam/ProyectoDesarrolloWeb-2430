@@ -10,27 +10,25 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Entity
 public class Sistema {
-    private String idBus;
-    private String idConductor;
-    private String idHorario;
-    private String idRuta;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idBus")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idConductor")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "conductor_id")
     private Conductor conductor;
 
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idRuta")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ruta_id")
     private Ruta ruta;
 
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idHorario")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "horario_id")
     private Horario horario;
-
 }

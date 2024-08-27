@@ -1,30 +1,33 @@
 package com.co.model;
-import java.util.ArrayList;
-import java.util.List;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Ruta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Horario horario;
-    private List <String> estaciones = new ArrayList<>();
-    @OneToMany(mappedBy = "conductor")
-    private List<Sistema> idRutas;
 
+    @OneToOne
+    @JoinColumn(name = "horario_id")
+    private Horario horario; // Suponiendo que horario es una entidad
 
+    @ElementCollection
+    @CollectionTable(name = "estaciones", joinColumns = @JoinColumn(name = "ruta_id"))
+    @Column(name = "estacion")
+    private List<String> estaciones = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ruta") // Asegúrate de que la propiedad en Sistema se llame ruta
+    private List<Sistema> sistemas;
 }

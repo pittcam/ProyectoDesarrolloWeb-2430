@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+
+<body>
+<h1>Buses</h1>
+
+<!-- Botón para agregar un nuevo bus -->
+<div class="btn-container">
+    <a th:href="@{/bus/add-form}" class="btn agregar-btn">Agregar Bus</a>
+</div>
+
+<table class="entity-list">
+    <thead>
+    <tr>
+        <th>Placa</th>
+        <th>Modelo</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${buses}">
+        <td th:text="${b.numeroPlaca}"></td>
+        <td th:text="${b.modelo}"></td>
+        <td>
+            <a th:href="@{/bus/view/{id}(id=${b.id})}" class="ver-btn">Ver</a>
+            <a th:href="@{/bus/edit-form/{id}(id=${b.id})}" class="editar-btn">Editar</a>
+            <a th:href="@{/bus/delete/{id}(id=${b.id})}" class="eliminar-btn">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>
