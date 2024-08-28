@@ -6,14 +6,13 @@
 </head>
 <body>
 <h1>Lista de Buses</h1>
-<table>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Numero de Placa</th>
         <th>Modelo</th>
         <th>Ruta</th>
-        <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -22,9 +21,11 @@
         <td th:text="${bus.numeroPlaca}"></td>
         <td th:text="${bus.modelo}"></td>
         <td th:text="${bus.ruta.nombre}"></td>
-        <td><a th:href="@{/bus/view/{id}(id=${bus.id})}">Ver Detalles</a></td>
     </tr>
     </tbody>
 </table>
+
+<!-- Botón para volver a la lista de conductores -->
+<a href="/conductor/list"><button>Volver a Conductores</button></a>
 </body>
 </html>
