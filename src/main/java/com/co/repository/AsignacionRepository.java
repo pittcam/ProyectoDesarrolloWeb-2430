@@ -1,10 +1,13 @@
 package com.co.repository;
 
 import com.co.model.Asignacion;
+import com.co.model.Conductor;
+import com.co.model.Bus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.List;
+
 public interface AsignacionRepository extends JpaRepository<Asignacion, Long> {
-    // Métodos adicionales de consulta personalizada pueden ser añadidos aquí si es necesario
+    List<Asignacion> findByConductor(Conductor conductor);
+    List<Asignacion> findByBus(Bus bus);
 }

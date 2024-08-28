@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ruta")
@@ -16,22 +16,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ruta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "horario_id")
-    private Horario horario;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 
-    @ElementCollection
-    @CollectionTable(name = "estaciones", joinColumns = @JoinColumn(name = "ruta_id"))
-    @Column(name = "estacion")
-    private List<String> estaciones = new ArrayList<>();
+    // Eliminamos @OneToMany a buses
+    // Añadimos la relación con Asignacion
 
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Asignacion> asignacions = new ArrayList<>();
-
-    public <T> Ruta(Horario horario1, List<T> list) {
-    }
+    private Set<Asignacion> asignaciones = new HashSet<>();
 }

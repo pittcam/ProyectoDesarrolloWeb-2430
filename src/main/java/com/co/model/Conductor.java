@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,12 +27,15 @@ public class Conductor {
     @Column(name = "cedula", unique = true, nullable = false)
     private String cedula;
 
-    @Column(name = "direccion")
-    private String direccion;
-
     @Column(name = "telefono")
     private String telefono;
 
-    @ManyToMany(mappedBy = "conductores") // Corresponde con el atributo en Bus
-    private Set<Bus> buses; // Lista de buses asignados
+    @Column(name = "direccion")
+    private String direccion;
+
+    // Eliminamos @ManyToMany a buses
+    // Añadimos la relación con Asignacion
+
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Asignacion> asignaciones = new HashSet<>();
 }

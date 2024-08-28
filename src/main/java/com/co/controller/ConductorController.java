@@ -1,9 +1,10 @@
 package com.co.controller;
 
-import com.co.model.Bus;
-import com.co.model.Conductor;
+import com.co.model.*;
+import com.co.service.AsignacionService;
 import com.co.service.BusService;
 import com.co.service.ConductorService;
+import com.co.service.HorarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import jakarta.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/conductor")
@@ -27,7 +28,13 @@ public class ConductorController {
     private ConductorService conductorService;
 
     @Autowired
-    private BusService busService;  // Servicio para manejar buses
+    private BusService busService;
+
+    @Autowired
+    private HorarioService horarioService;
+
+    @Autowired
+    private AsignacionService asignacionService;
 
     // Obtener todos los conductores
     @GetMapping("/list")
@@ -45,6 +52,7 @@ public class ConductorController {
         ModelAndView modelAndView = new ModelAndView("conductor-form");
         modelAndView.addObject("conductor", c);
         modelAndView.addObject("buses", busService.findAll());  // Agregar buses disponibles
+        modelAndView.addObject("horarios", horarioService.findAll());  // Agregar horarios disponibles
         return modelAndView;
     }
 
@@ -73,8 +81,14 @@ public class ConductorController {
         Conductor conductor = conductorService.recuperarConductor(id);
         ModelAndView modelAndView = new ModelAndView("conductor-view");
         modelAndView.addObject("conductor", conductor);
-        // Asegúrate de que se está pasando la lista de buses asignados
-        modelAndView.addObject("buses", conductor.getBuses());
+
+        // Obtener buses asignados al conductor usando asignaciones
+        List<Bus> busesAsignados = asignacionService.findByConductor(conductor)
+                .stream()
+                .map(Asignacion::getBus)
+                .collect(Collectors.toList());
+        modelAndView.addObject("buses", busesAsignados);
+
         return modelAndView;
     }
 
@@ -108,27 +122,75 @@ public class ConductorController {
     public ModelAndView asignarBuses(@PathVariable Long id) {
         Conductor conductor = conductorService.recuperarConductor(id);
         List<Bus> buses = busService.findAll();  // Obtener todos los buses disponibles
+        List<Horario> horarios = horarioService.findAll();  // Obtener todos los horarios disponibles
+
         ModelAndView modelAndView = new ModelAndView("assign-buses");
         modelAndView.addObject("conductor", conductor);
         modelAndView.addObject("buses", buses);
+        modelAndView.addObject("horarios", horarios);  // Asegúrate de enviar la lista de horarios también
         return modelAndView;
     }
+
 
     @PostMapping("/save-bus-assignments")
     public RedirectView guardarAsignacionesBuses(
             @RequestParam Long conductorId,
-            @RequestParam List<Long> busIds) {
+            @RequestParam List<Long> busIds,
+            @RequestParam List<Long> horarioIds) {
+
+        Conductor conductor = conductorService.recuperarConductor(conductorId);
+        List<Bus> buses = busService.findByIds(busIds);
+        List<Horario> horarios = horarioService.findByIds(horarioIds);
+
+        // Limpiar asignaciones anteriores
+        asignacionService.eliminar(conductorId);
+
+        // Crear nuevas asignaciones
+        for (int i = 0; i < buses.size(); i++) {
+            Bus bus = buses.get(i);
+            Horario horario = horarios.get(i);
+
+            Asignacion asignacion = new Asignacion();
+            asignacion.setConductor(conductor);
+            asignacion.setBus(bus);
+            asignacion.setHorario(horario);
+            asignacionService.guardar(asignacion);
+        }
+
+        return new RedirectView("/conductor/list");
+    }
+
+
+
+    @GetMapping("/assign-schedule/{id}")
+    public ModelAndView asignarHorarios(@PathVariable Long id) {
+        Conductor conductor = conductorService.recuperarConductor(id);
+        List<Horario> horarios = horarioService.findAll();  // Obtener todos los horarios disponibles
+        ModelAndView modelAndView = new ModelAndView("assign-schedule");
+        modelAndView.addObject("conductor", conductor);
+        modelAndView.addObject("horarios", horarios);
+        return modelAndView;
+    }
+
+    @PostMapping("/save-schedule-assignments")
+    public RedirectView guardarAsignacionesHorarios(
+            @RequestParam Long conductorId,
+            @RequestParam List<Long> horarioIds) {
         Conductor conductor = conductorService.recuperarConductor(conductorId);
         log.info("Conductor recuperado: {}", conductor);
 
-        List<Bus> buses = busService.findByIds(busIds);
-        log.info("Buses recuperados: {}", buses);
+        List<Horario> horarios = horarioService.findByIds(horarioIds);
+        log.info("Horarios recuperados: {}", horarios);
 
-        // Actualiza el conjunto de buses en el conductor
-        conductor.setBuses(new HashSet<>(buses));
-        conductorService.guardarConductor(conductor);
-        log.info("Conductor actualizado con buses asignados: {}", conductor);
+        // Crear nuevas asignaciones para los horarios seleccionados
+        horarios.forEach(horario -> {
+            Asignacion asignacion = new Asignacion();
+            asignacion.setConductor(conductor);
+            asignacion.setHorario(horario);
+            asignacionService.guardar(asignacion);
+        });
 
+        log.info("Conductor actualizado con horarios asignados: {}", conductor);
         return new RedirectView("/conductor/list");
     }
 }

@@ -1,9 +1,13 @@
 package com.co.init;
 
+import com.co.model.Asignacion;
 import com.co.model.Bus;
+import com.co.model.Conductor;
 import com.co.model.Horario;
 import com.co.model.Ruta;
+import com.co.repository.AsignacionRepository;
 import com.co.repository.BusRepository;
+import com.co.repository.ConductorRepository;
 import com.co.repository.HorarioRepository;
 import com.co.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -25,33 +30,73 @@ public class DBInitializer implements CommandLineRunner {
     @Autowired
     private RutaRepository rutaRepository;
 
+    @Autowired
+    private ConductorRepository conductorRepository;
+
+    @Autowired
+    private AsignacionRepository asignacionRepository;
+
     @Override
     public void run(String... args) throws Exception {
         // Inicializar Horarios
-        Horario horario1 = new Horario("08:00", "12:00", Arrays.asList("Lunes", "Martes"));
-        Horario horario2 = new Horario("13:00", "17:00", Arrays.asList("Miércoles", "Jueves"));
+        Horario horario1 = new Horario();
+        horario1.setHoraInicio("08:00");
+        horario1.setHoraFin("12:00");
+        horarioRepository.save(horario1);
 
-        horarioRepository.saveAll(Arrays.asList(horario1, horario2));
+        Horario horario2 = new Horario();
+        horario2.setHoraInicio("13:00");
+        horario2.setHoraFin("17:00");
+        horarioRepository.save(horario2);
 
         // Inicializar Rutas
-        Ruta ruta1 = new Ruta(horario1, Arrays.asList("Estación 1", "Estación 2"));
-        Ruta ruta2 = new Ruta(horario2, Arrays.asList("Estación 3", "Estación 4"));
+        Ruta ruta1 = new Ruta();
+        ruta1.setNombre("Ruta 1");
+        rutaRepository.save(ruta1);
 
-        rutaRepository.saveAll(Arrays.asList(ruta1, ruta2));
+        Ruta ruta2 = new Ruta();
+        ruta2.setNombre("Ruta 2");
+        rutaRepository.save(ruta2);
 
         // Inicializar Buses
         Bus bus1 = new Bus();
         bus1.setNumeroPlaca("ABC123");
         bus1.setModelo("Modelo Bus 1");
         bus1.setRuta(ruta1);
-        bus1.setHorarios(Arrays.asList(horario1));
+        busRepository.save(bus1);
 
         Bus bus2 = new Bus();
         bus2.setNumeroPlaca("XYZ789");
         bus2.setModelo("Modelo Bus 2");
         bus2.setRuta(ruta2);
-        bus2.setHorarios(Arrays.asList(horario2));
+        busRepository.save(bus2);
 
-        busRepository.saveAll(Arrays.asList(bus1, bus2));
+        // Eliminar la inicialización de conductores
+        // Conductor conductor1 = new Conductor();
+        // conductor1.setNombre("Juan Pérez");
+        // conductor1.setCedula("12345678");
+        // conductor1.setTelefono("3001234567");
+        // conductor1.setDireccion("Calle 1 # 2-3");
+        // conductorRepository.save(conductor1);
+
+        // Conductor conductor2 = new Conductor();
+        // conductor2.setNombre("María Rodríguez");
+        // conductor2.setCedula("87654321");
+        // conductor2.setTelefono("3017654321");
+        // conductor2.setDireccion("Carrera 4 # 5-6");
+        // conductorRepository.save(conductor2);
+
+        // Crear Asignaciones
+        Asignacion asignacion1 = new Asignacion();
+        asignacion1.setBus(bus1);
+        asignacion1.setRuta(ruta1);
+        asignacion1.setHorario(horario1);
+        asignacionRepository.save(asignacion1);
+
+        Asignacion asignacion2 = new Asignacion();
+        asignacion2.setBus(bus2);
+        asignacion2.setRuta(ruta2);
+        asignacion2.setHorario(horario2);
+        asignacionRepository.save(asignacion2);
     }
 }

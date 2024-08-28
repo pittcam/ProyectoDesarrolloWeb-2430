@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/sistema")
@@ -31,17 +32,23 @@ public class AsignacionController {
 
     @GetMapping("/list")
     public ModelAndView listarSistemas() {
-        List<Asignacion> asignacions = asignacionService.obtenerTodos();
+        List<Asignacion> asignaciones = asignacionService.obtenerTodos();
         ModelAndView modelAndView = new ModelAndView("sistema-list");
-        modelAndView.addObject("sistemas", asignacions);
+        modelAndView.addObject("sistemas", asignaciones);
         return modelAndView;
     }
 
     @GetMapping("/edit-form/{id}")
     public ModelAndView formularioEditarSistema(@PathVariable Long id) {
-        Asignacion asignacion = asignacionService.obtenerPorId(id).orElseThrow();
+        Optional<Asignacion> asignacionOpt = asignacionService.obtenerPorId(id);
+        if (!asignacionOpt.isPresent()) {
+            // Manejar el caso cuando no se encuentra la asignación (opcional)
+            return new ModelAndView("redirect:/sistema/list");
+        }
+
+        Asignacion asignacion = asignacionOpt.get();
         List<Bus> buses = busService.findAll();
-        List<Horario> horarios = horarioService.obtenerTodos();
+        List<Horario> horarios = horarioService.findAll();
         List<Ruta> rutas = rutaService.obtenerTodos();
 
         ModelAndView modelAndView = new ModelAndView("sistema-form");

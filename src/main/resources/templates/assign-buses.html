@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Asignar Buses</title>
-    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <h1>Asignar Buses al Conductor</h1>
 <form th:action="@{/conductor/save-bus-assignments}" method="post">
     <input type="hidden" name="conductorId" th:value="${conductor.id}"/>
 
-    <label>Selecciona los buses:</label>
-    <div th:each="bus : ${buses}">
-        <input type="checkbox" name="busIds" th:value="${bus.id}" />
-        <label th:text="${bus.numeroPlaca + ' - ' + bus.modelo}"></label><br/>
+    <h2>Buses y Horarios</h2>
+    <div id="assignments">
+        <div th:each="bus, iterStat : ${buses}">
+            <label>
+                <input type="checkbox" th:value="${bus.id}" name="busIds"/>
+                <span th:text="${bus.numeroPlaca}">Bus</span>
+            </label>
+            <select name="horarioIds" th:field="*{horarioIds}">
+                <option th:each="horario : ${horarios}"
+                        th:value="${horario.id}"
+                        th:text="${horario.horaInicio + ' - ' + horario.horaFin}">Horario</option>
+            </select>
+            <br/>
+        </div>
     </div>
 
-    <button type="submit">Asignar Buses</button>
+    <button type="submit">Guardar Asignaciones</button>
 </form>
-
-<a href="#" th:href="@{/conductor/list}">Volver a Conductores</a>
 </body>
 </html>

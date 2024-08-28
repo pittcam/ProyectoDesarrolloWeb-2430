@@ -1,6 +1,8 @@
 package com.co.service;
 
 import com.co.model.Asignacion;
+import com.co.model.Conductor;
+import com.co.model.Bus;
 import com.co.repository.AsignacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,14 @@ public class AsignacionService {
     @Autowired
     private AsignacionRepository asignacionRepository;
 
+    public List<Asignacion> findByConductor(Conductor conductor) {
+        return asignacionRepository.findByConductor(conductor);
+    }
+
+    public List<Asignacion> findByBus(Bus bus) {
+        return asignacionRepository.findByBus(bus);
+    }
+
     public List<Asignacion> obtenerTodos() {
         return asignacionRepository.findAll();
     }
@@ -22,8 +32,8 @@ public class AsignacionService {
         return asignacionRepository.findById(id);
     }
 
-    public void guardar(Asignacion asignacion) {
-        asignacionRepository.save(asignacion);
+    public Asignacion guardar(Asignacion asignacion) {
+        return asignacionRepository.save(asignacion);
     }
 
     public void eliminar(Long id) {

@@ -16,17 +16,19 @@ public class BusController {
     @Autowired
     private BusService busService;
 
+    // Método para listar todos los buses
     @GetMapping("/list")
     public String listBuses(Model model) {
         List<Bus> buses = busService.findAll();
         model.addAttribute("buses", buses);
-        return "bus-list";
+        return "bus-list"; // Asegúrate de que este archivo existe en src/main/resources/templates/bus/
     }
 
+    // Método para ver detalles de un bus específico
     @GetMapping("/view/{id}")
     public String viewBus(@PathVariable("id") Long id, Model model) {
         Bus bus = busService.findById(id).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
         model.addAttribute("bus", bus);
-        return "bus-view";
+        return "bus-view"; // Asegúrate de que este archivo existe en src/main/resources/templates/bus/
     }
 }

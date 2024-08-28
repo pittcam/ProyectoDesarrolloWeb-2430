@@ -6,15 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "horario")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Horario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,18 +27,9 @@ public class Horario {
     @Column(name = "hora_fin", nullable = false)
     private String horaFin;
 
-    @ElementCollection
-    @CollectionTable(name = "dias", joinColumns = @JoinColumn(name = "horario_id"))
-    @Column(name = "dia")
-    private List<String> dias = new ArrayList<>();
+    // Eliminamos @ManyToMany a buses
+    // Añadimos la relación con Asignacion
 
-    @OneToMany(mappedBy = "horario")
-    private List<Asignacion> asignacions; // Relación con Sistema
-
-    // Constructor con solo los campos requeridos para simplificar la creación
-    public Horario(String horaInicio, String horaFin, List<String> dias) {
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.dias = dias;
-    }
+    @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Asignacion> asignaciones = new HashSet<>();
 }

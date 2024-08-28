@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,19 +31,9 @@ public class Bus {
     @JoinColumn(name = "ruta_id")
     private Ruta ruta;
 
-    @ManyToMany
-    @JoinTable(
-            name = "bus_conductor",
-            joinColumns = @JoinColumn(name = "bus_id"),
-            inverseJoinColumns = @JoinColumn(name = "conductor_id")
-    )
-    private Set<Conductor> conductores = new HashSet<>(); // Inicializar el conjunto de conductores
+    // Eliminamos @ManyToMany a conductores y horarios
+    // Añadimos la relación con Asignacion
 
-    @ManyToMany
-    @JoinTable(
-            name = "bus_horario",
-            joinColumns = @JoinColumn(name = "bus_id"),
-            inverseJoinColumns = @JoinColumn(name = "horario_id")
-    )
-    private List<Horario> horarios;
+    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Asignacion> asignaciones = new HashSet<>();
 }
