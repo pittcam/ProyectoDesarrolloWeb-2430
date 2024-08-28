@@ -16,10 +16,12 @@
                 <input type="checkbox" th:value="${bus.id}" name="busIds"/>
                 <span th:text="${bus.numeroPlaca}">Bus</span>
             </label>
-            <select name="horarioIds" th:field="*{horarioIds}">
+            <!-- Modificación: Agregar un name único para cada selección de horario -->
+            <select th:name="'horarioIds_' + ${bus.id}">
+                <option value="" disabled selected>Selecciona un horario</option>
                 <option th:each="horario : ${horarios}"
                         th:value="${horario.id}"
-                        th:text="${horario.horaInicio + ' - ' + horario.horaFin}">Horario</option>
+                        th:text="${horario.horaInicio + ' - ' + horario.horaFin + ' (' + horario.dias + ')'}">Horario</option>
             </select>
             <br/>
         </div>
@@ -27,5 +29,8 @@
 
     <button type="submit">Guardar Asignaciones</button>
 </form>
+
+<!-- Enlace para volver a la lista de conductores -->
+<a href="/conductor/list">Volver a la lista de conductores</a>
 </body>
 </html>

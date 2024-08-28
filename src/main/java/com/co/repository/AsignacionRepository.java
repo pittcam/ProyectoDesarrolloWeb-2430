@@ -10,4 +10,5 @@ import java.util.List;
 public interface AsignacionRepository extends JpaRepository<Asignacion, Long> {
     List<Asignacion> findByConductor(Conductor conductor);
     List<Asignacion> findByBus(Bus bus);
+    List<Asignacion> findByConductorId(Long conductorId);
 }

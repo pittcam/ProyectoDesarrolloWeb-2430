@@ -1,13 +1,13 @@
 package com.co.controller;
 
+import com.co.model.Asignacion;
 import com.co.model.Bus;
 import com.co.model.Horario;
 import com.co.model.Ruta;
-import com.co.model.Asignacion;
+import com.co.service.AsignacionService;
 import com.co.service.BusService;
 import com.co.service.HorarioService;
 import com.co.service.RutaService;
-import com.co.service.AsignacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +23,13 @@ public class AsignacionController {
 
     @Autowired
     private AsignacionService asignacionService;
+
     @Autowired
     private BusService busService;
+
     @Autowired
     private HorarioService horarioService;
+
     @Autowired
     private RutaService rutaService;
 
@@ -42,7 +45,6 @@ public class AsignacionController {
     public ModelAndView formularioEditarSistema(@PathVariable Long id) {
         Optional<Asignacion> asignacionOpt = asignacionService.obtenerPorId(id);
         if (!asignacionOpt.isPresent()) {
-            // Manejar el caso cuando no se encuentra la asignación (opcional)
             return new ModelAndView("redirect:/sistema/list");
         }
 
@@ -61,6 +63,8 @@ public class AsignacionController {
 
     @PostMapping("/save")
     public RedirectView guardarSistema(@ModelAttribute Asignacion asignacion) {
+        // Si es necesario, puedes realizar validaciones adicionales aquí
+
         asignacionService.guardar(asignacion);
         return new RedirectView("/sistema/list");
     }

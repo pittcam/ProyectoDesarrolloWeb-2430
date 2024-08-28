@@ -20,6 +20,11 @@ public class AsignacionService {
         return asignacionRepository.findByConductor(conductor);
     }
 
+    // Obtener asignaciones por ID del conductor
+    public List<Asignacion> findByConductorId(Long conductorId) {
+        return asignacionRepository.findByConductorId(conductorId);
+    }
+
     public List<Asignacion> findByBus(Bus bus) {
         return asignacionRepository.findByBus(bus);
     }
@@ -38,5 +43,10 @@ public class AsignacionService {
 
     public void eliminar(Long id) {
         asignacionRepository.deleteById(id);
+    }
+
+    public void deleteByConductorId(Long conductorId) {
+        List<Asignacion> asignaciones = asignacionRepository.findByConductorId(conductorId);
+        asignacionRepository.deleteAll(asignaciones);
     }
 }

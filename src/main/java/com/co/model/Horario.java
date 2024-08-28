@@ -27,9 +27,10 @@ public class Horario {
     @Column(name = "hora_fin", nullable = false)
     private String horaFin;
 
-    // Eliminamos @ManyToMany a buses
-    // Añadimos la relación con Asignacion
+    @Column(name = "dias", nullable = false)
+    private String dias;  // Nuevo atributo para almacenar los días de la semana
 
+    // Relación con Asignacion
     @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
 }

@@ -26,7 +26,7 @@
         <td th:text="${asignacion.bus.numeroPlaca}"></td>
         <td th:text="${asignacion.bus.modelo}"></td>
         <td th:text="${asignacion.bus.ruta.nombre}"></td>
-        <td th:text="${asignacion.horario.horaInicio + ' - ' + asignacion.horario.horaFin}"></td>
+        <td th:text="${asignacion.horario.horaInicio + ' - ' + asignacion.horario.horaFin + ' (' + asignacion.horario.dias + ')'}"></td>
     </tr>
     </tbody>
 </table>

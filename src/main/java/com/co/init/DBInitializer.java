@@ -14,10 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
 @Component
 public class DBInitializer implements CommandLineRunner {
 
@@ -42,11 +38,13 @@ public class DBInitializer implements CommandLineRunner {
         Horario horario1 = new Horario();
         horario1.setHoraInicio("08:00");
         horario1.setHoraFin("12:00");
+        horario1.setDias("Lunes a Viernes"); // Agregar valor para 'dias'
         horarioRepository.save(horario1);
 
         Horario horario2 = new Horario();
         horario2.setHoraInicio("13:00");
         horario2.setHoraFin("17:00");
+        horario2.setDias("Lunes a Sábado"); // Agregar valor para 'dias'
         horarioRepository.save(horario2);
 
         // Inicializar Rutas
@@ -71,20 +69,20 @@ public class DBInitializer implements CommandLineRunner {
         bus2.setRuta(ruta2);
         busRepository.save(bus2);
 
-        // Eliminar la inicialización de conductores
-        // Conductor conductor1 = new Conductor();
-        // conductor1.setNombre("Juan Pérez");
-        // conductor1.setCedula("12345678");
-        // conductor1.setTelefono("3001234567");
-        // conductor1.setDireccion("Calle 1 # 2-3");
-        // conductorRepository.save(conductor1);
+        // Inicializar Conductores
+        Conductor conductor1 = new Conductor();
+        conductor1.setNombre("Juan Pérez");
+        conductor1.setCedula("12345678");
+        conductor1.setTelefono("3001234567");
+        conductor1.setDireccion("Calle 1 # 2-3");
+        conductorRepository.save(conductor1);
 
-        // Conductor conductor2 = new Conductor();
-        // conductor2.setNombre("María Rodríguez");
-        // conductor2.setCedula("87654321");
-        // conductor2.setTelefono("3017654321");
-        // conductor2.setDireccion("Carrera 4 # 5-6");
-        // conductorRepository.save(conductor2);
+        Conductor conductor2 = new Conductor();
+        conductor2.setNombre("María Rodríguez");
+        conductor2.setCedula("87654321");
+        conductor2.setTelefono("3017654321");
+        conductor2.setDireccion("Carrera 4 # 5-6");
+        conductorRepository.save(conductor2);
 
         // Crear Asignaciones
         Asignacion asignacion1 = new Asignacion();
