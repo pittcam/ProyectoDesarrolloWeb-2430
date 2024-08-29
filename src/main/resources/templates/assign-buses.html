@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
     <title>Asignar Buses</title>
 </head>
 <body>
+<div th:replace="fragments/menu :: menu"></div>
 <h1>Asignar Buses al Conductor</h1>
 <form th:action="@{/conductor/save-bus-assignments}" method="post">
     <input type="hidden" name="conductorId" th:value="${conductor.id}"/>

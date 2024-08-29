@@ -1,0 +1,36 @@
+.container-lista-buses{
+    max-width: 960px;
+    margin: 100px;
+    padding: 20px;
+
+}
+
+.btn-volver-buses{
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    background-color: #ff7f00;
+    border-color: #ff7f00;
+    color: white;
+}
+
+.btn-volver-buses:hover {
+    background-color: #cc6f00;
+    border-color: #cc6f00;
+}
+
+
+.tabla-lista-buses {
+    margin-top: 20px;
+    background-color: white;
+}
+
+.tabla-lista-buses th {
+    background-color: #ffcc00;
+    color: black;
+    text-align: center;
+}
+
+.tabla-lista-buses td {
+    text-align: center;
+}

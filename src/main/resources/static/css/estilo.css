@@ -34,7 +34,7 @@ h1 {
 }
 
 .search-container button {
-    background-color: #ff7f00;
+    background-color: #e5112a;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -43,7 +43,7 @@ h1 {
 }
 
 .search-container button:hover {
-    background-color: #ffb347;
+    background-color: #ecd566;
 }
 
 /* Estilos de los botones */
@@ -54,7 +54,7 @@ h1 {
 }
 
 .btn {
-    background-color: #ff7f00;
+    background-color: #e5112a;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -65,11 +65,12 @@ h1 {
 }
 
 .btn:hover {
-    background-color: #ffb347;
+    background-color: #ecd566;
 }
 
 .agregar-btn {
-    background-color: #4CAF50; /* Verde */
+    background-color: #000000;
+    text-color: #291f1f;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -80,7 +81,7 @@ h1 {
 }
 
 .agregar-btn:hover {
-    background-color: #45a049; /* Verde oscuro */
+    background-color: #ecd566; /* Verde oscuro */
 }
 
 /* Estilos de la tabla */
@@ -98,12 +99,12 @@ h1 {
 }
 
 .entity-list th {
-    background-color: #ff7f00;
+    background-color: #e5112a;
     color: white;
 }
 
 .entity-list td a {
-    background-color: #ff7f00;
+    background-color: #d6818b;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -114,11 +115,11 @@ h1 {
 }
 
 .entity-list td a:hover {
-    background-color: #ffb347;
+    background-color: #e5112a;
 }
 
 .ver-btn {
-    background-color: #008CBA; /* Azul */
+    background-color: #fff200; /* Azul */
     color: white;
     padding: 5px 10px;
     border: none;
@@ -129,11 +130,11 @@ h1 {
 }
 
 .ver-btn:hover {
-    background-color: #007bff; /* Azul oscuro */
+    background-color: #e5112a; /* Azul oscuro */
 }
 
 .editar-btn {
-    background-color: #FFA500; /* Naranja */
+    background-color: #ecd566; /* Naranja */
     color: white;
     padding: 5px 10px;
     border: none;
@@ -144,7 +145,7 @@ h1 {
 }
 
 .editar-btn:hover {
-    background-color: #FF8C00; /* Naranja oscuro */
+    background-color: #fff200; /* Naranja oscuro */
 }
 
 .eliminar-btn {
@@ -159,8 +160,38 @@ h1 {
 }
 
 .eliminar-btn:hover {
-    background-color: #d32f2f; /* Rojo oscuro */
+    background-color: #000000; /* Rojo oscuro */
 }
+
+.table {
+    margin-top: 20px;
+    background-color: white;
+}
+
+.table th {
+    background-color: #ffcc00;
+    color: black;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.btn {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    background-color: #e5112a;
+    border-color: #dc7673;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #e5112a;
+    border-color: #e5112a;
+}
+
 
 
 

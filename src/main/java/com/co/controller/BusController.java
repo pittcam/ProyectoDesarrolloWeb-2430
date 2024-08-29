@@ -29,6 +29,12 @@ public class BusController {
     public String viewBus(@PathVariable("id") Long id, Model model) {
         Bus bus = busService.findById(id).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
         model.addAttribute("bus", bus);
-        return "bus-view"; // Asegúrate de que este archivo existe en src/main/resources/templates/bus/
+        return "bus-view";
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model) {
+
+        return "logout";
     }
 }
