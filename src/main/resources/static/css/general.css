@@ -1,0 +1,26 @@
+header {
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.menu-item:hover {
+    background-color: #ffb347;
+}
+
+.menu-item.active {
+    background-color: #ffb347;
+}

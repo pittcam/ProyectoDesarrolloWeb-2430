@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <link rel="stylesheet" th:href="@{/css/conductor-formulario.css}">
 </head>
 <body>
-<h1 th:if="${conductor.id == null}">Agregar Conductor</h1>
-<h1 th:if="${conductor.id != null}">Editar Conductor</h1>
+<div th:replace="fragments/menu :: menu"></div>
+<div class="container">
+    <h1 th:if="${conductor.id == null}">Agregar Conductor</h1>
+    <h1 th:if="${conductor.id != null}">Editar Conductor</h1>
 
-<form action="#" th:action="@{/conductor/save}" th:object="${conductor}" method="post">
-    <input type="hidden" th:field="*{id}" />
+    <form action="#" th:action="@{/conductor/save}" th:object="${conductor}" method="post">
+        <input type="hidden" th:field="*{id}" />
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" th:field="*{nombre}" id="nombre" />
+        <div class="form-group">
+            <label for="nombre">Ingrese el nombre:</label>
+            <input type="text" th:field="*{nombre}" id="nombre" class="form-control" />
+        </div>
 
-    <label for="cedula">Cédula:</label>
-    <input type="text" th:field="*{cedula}" id="cedula" />
+        <div class="form-group">
+            <label for="cedula">Ingrese la cédula:</label>
+            <input type="text" th:field="*{cedula}" id="cedula" class="form-control" />
+        </div>
 
-    <label for="telefono">Teléfono:</label>
-    <input type="text" th:field="*{telefono}" id="telefono" />
+        <div class="form-group">
+            <label for="telefono">Ingrese el teléfono:</label>
+            <input type="text" th:field="*{telefono}" id="telefono" class="form-control" />
+        </div>
 
-    <label for="direccion">Dirección:</label>
-    <input type="text" th:field="*{direccion}" id="direccion" />
+        <div class="form-group">
+            <label for="direccion">Ingrese la dirección:</label>
+            <input type="text" th:field="*{direccion}" id="direccion" class="form-control" />
+        </div>
 
-    <button type="submit">Guardar</button>
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a th:href="@{/conductor/list}" class="btn btn-secondary">Volver</a>
+        </div>
 
-    <!-- Si el conductor ya existe, mostrar el botón de asignar buses -->
-    <a th:if="${conductor.id != null}" th:href="@{/conductor/assign-buses/{id}(id=${conductor.id})}">Asignar Buses</a>
-</form>
-
-<a href="/conductor/list">Volver a la lista</a>
+        <!-- Si el conductor ya existe, mostrar el botón de asignar buses -->
+        <a th:if="${conductor.id != null}" th:href="@{/conductor/assign-buses/{id}(id=${conductor.id})}" class="btn btn-info">Asignar Buses</a>
+    </form>
+</div>
 </body>
 </html>

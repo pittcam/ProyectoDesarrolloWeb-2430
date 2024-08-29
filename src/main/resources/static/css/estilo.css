@@ -1,39 +1,167 @@
-/* Archivo: estilo.css */
-
-/* Estilo general para los enlaces tipo botón */
-.entity-list a {
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #fff;
-    border-radius: 5px;
-    margin-right: 5px;
-    font-weight: bold;
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-/* Botón Ver */
-.entity-list a.ver-btn {
-    background-color: #007bff; /* Azul */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.entity-list a.ver-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Botón Editar */
-.entity-list a.editar-btn {
-    background-color: #ffc107; /* Amarillo */
+h1 {
+    text-align: center;
+    margin-top: 20px;
     color: #333;
 }
 
-.entity-list a.editar-btn:hover {
-    background-color: #d39e00;
+
+/* Estilos del formulario de búsqueda */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-/* Botón Eliminar */
-.entity-list a.eliminar-btn {
-    background-color: #dc3545; /* Rojo */
+.search-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
-.entity-list a.eliminar-btn:hover {
-    background-color: #c82333;
+.search-container button {
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+.search-container button:hover {
+    background-color: #ffb347;
+}
+
+/* Estilos de los botones */
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #ff7f00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.btn:hover {
+    background-color: #ffb347;
+}
+
+.agregar-btn {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.agregar-btn:hover {
+    background-color: #45a049; /* Verde oscuro */
+}
+
+/* Estilos de la tabla */
+.entity-list {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.entity-list th,
+.entity-list td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+.entity-list th {
+    background-color: #ff7f00;
+    color: white;
+}
+
+.entity-list td a {
+    background-color: #ff7f00;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.entity-list td a:hover {
+    background-color: #ffb347;
+}
+
+.ver-btn {
+    background-color: #008CBA; /* Azul */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.ver-btn:hover {
+    background-color: #007bff; /* Azul oscuro */
+}
+
+.editar-btn {
+    background-color: #FFA500; /* Naranja */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.editar-btn:hover {
+    background-color: #FF8C00; /* Naranja oscuro */
+}
+
+.eliminar-btn {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.eliminar-btn:hover {
+    background-color: #d32f2f; /* Rojo oscuro */
+}
+
+
+
+
