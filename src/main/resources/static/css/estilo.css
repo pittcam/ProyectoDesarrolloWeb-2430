@@ -18,7 +18,6 @@ h1 {
     color: #333;
 }
 
-
 /* Estilos del formulario de búsqueda */
 .search-container {
     display: flex;
@@ -70,7 +69,6 @@ h1 {
 
 .agregar-btn {
     background-color: #000000;
-    text-color: #291f1f;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -103,66 +101,35 @@ h1 {
     color: white;
 }
 
-.entity-list td a {
-    background-color: #d6818b;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 5px;
+/* Botones en las celdas de la tabla */
+.entity-list td .ver-btn {
+    background-color: #fff200; /* Amarillo */
+    color: black;
 }
 
-.entity-list td a:hover {
-    background-color: #e5112a;
+.entity-list td .ver-btn:hover {
+    background-color: #e5112a; /* Rojo oscuro */
 }
 
-.ver-btn {
-    background-color: #fff200; /* Azul */
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 5px;
-}
-
-.ver-btn:hover {
-    background-color: #e5112a; /* Azul oscuro */
-}
-
-.editar-btn {
+.entity-list td .editar-btn {
     background-color: #ecd566; /* Naranja */
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 5px;
+    color: black;
 }
 
-.editar-btn:hover {
-    background-color: #fff200; /* Naranja oscuro */
+.entity-list td .editar-btn:hover {
+    background-color: #fff200; /* Amarillo oscuro */
 }
 
-.eliminar-btn {
+.entity-list td .eliminar-btn {
     background-color: #f44336; /* Rojo */
     color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    margin-left: 5px;
 }
 
-.eliminar-btn:hover {
+.entity-list td .eliminar-btn:hover {
     background-color: #000000; /* Rojo oscuro */
 }
 
+/* Estilos para la tabla en general */
 .table {
     margin-top: 20px;
     background-color: white;
@@ -191,8 +158,3 @@ h1 {
     background-color: #e5112a;
     border-color: #e5112a;
 }
-
-
-
-
-

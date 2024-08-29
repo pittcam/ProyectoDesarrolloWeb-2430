@@ -68,13 +68,14 @@ public class ConductorController {
     }
 
     @PostMapping("/save")
-    public Object guardarConductor(@Valid @ModelAttribute Conductor conductor, BindingResult result) {
+    public ModelAndView guardarConductor(@Valid @ModelAttribute("conductor") Conductor conductor, BindingResult result) {
         if (result.hasErrors()) {
-            return new ModelAndView("conductor-form");
+            ModelAndView modelAndView = new ModelAndView("conductor-form");
+            modelAndView.addObject("conductor", conductor);
+            return modelAndView;
         }
-
         conductorService.guardarConductor(conductor);
-        return new RedirectView("/conductor/list");
+        return new ModelAndView("redirect:/conductor/list");
     }
 
     @GetMapping("/view/{id}")
