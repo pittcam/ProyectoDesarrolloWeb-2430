@@ -20,8 +20,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/sistema")
+@RestController
+@RequestMapping("/asignacion")
 public class AsignacionController {
 
     @Autowired
@@ -36,15 +36,13 @@ public class AsignacionController {
     @Autowired
     private RutaService rutaService;
 
-    @GetMapping("/list")
-    public ModelAndView listarSistemas() {
+    @GetMapping
+    public List<Asignacion> listarSistemas() {
         List<Asignacion> asignaciones = asignacionService.obtenerTodos();
-        ModelAndView modelAndView = new ModelAndView("sistema-list");
-        modelAndView.addObject("sistemas", asignaciones);
-        return modelAndView;
+        return asignaciones;
     }
 
-    @GetMapping("/edit-form/{id}")
+    @PostMapping("{id}")
     public ModelAndView formularioEditarSistema(@PathVariable Long id) {
         Optional<Asignacion> asignacionOpt = asignacionService.obtenerPorId(id);
         if (!asignacionOpt.isPresent()) {

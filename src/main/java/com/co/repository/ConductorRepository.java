@@ -9,3 +9,5 @@ public interface ConductorRepository extends JpaRepository<Conductor, Long> {
     List<Conductor> findAllByNombreContainingIgnoreCase(String textoBusqueda);
     List<Conductor> findAllById(Iterable<Long> ids);
 }
+
+

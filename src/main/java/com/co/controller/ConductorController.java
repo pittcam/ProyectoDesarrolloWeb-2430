@@ -1,5 +1,6 @@
 package com.co.controller;
 
+import com.co.dto.ConductorDTO;
 import com.co.model.*;
 import com.co.service.AsignacionService;
 import com.co.service.BusService;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/conductor")
 public class ConductorController {
 
@@ -39,23 +40,16 @@ public class ConductorController {
     private AsignacionService asignacionService;
 
     // Obtener todos los conductores
-    @GetMapping("/list")
-    public ModelAndView listarConductores() {
+    @GetMapping
+    public List<Conductor> listarConductores() {
         List<Conductor> conductores = conductorService.conductorList();
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("conductores", conductores);
-        return modelAndView;
+        return conductores;
     }
 
     // Editar
-    @GetMapping("/edit-form/{id}")
-    public ModelAndView formularioEditarConductor(@PathVariable Long id) {
-        Conductor c = conductorService.recuperarConductor(id);
-        ModelAndView modelAndView = new ModelAndView("conductor-form");
-        modelAndView.addObject("conductor", c);
-        modelAndView.addObject("buses", busService.findAll());
-        modelAndView.addObject("horarios", horarioService.findAll());
-        return modelAndView;
+    @PostMapping
+    public ConductorDTO formularioEditarConductor(@RequestBody ConductorDTO conductorDTO) {
+        return conductorService.guardarConductor(conductorDTO);
     }
 
     // Mostrar el formulario de agregar conductor

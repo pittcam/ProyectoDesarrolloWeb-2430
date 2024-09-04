@@ -1,12 +1,12 @@
 package com.co.service;
 
+import com.co.dto.ConductorDTO;
 import com.co.model.Conductor;
 import com.co.repository.ConductorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ConductorService {
@@ -31,8 +31,8 @@ public class ConductorService {
     }
 
     // Crear o actualizar un conductor
-    public void guardarConductor(Conductor conductor) {
-        conductorRepository.save(conductor);
+    public void guardarConductor(ConductorDTO conductor) {
+        return conductorRepository.save(conductor);
     }
 
     // Eliminar un conductor por ID
