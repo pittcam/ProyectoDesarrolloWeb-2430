@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="form-container">
+      <form (ngSubmit)="onSend()" #form="ngForm">
+        <div class="input-group">
+          <input type="text" id ="nombre" name="nombre" [(ngModel)]="nombre" required>
+        </div>
+
+        <div class="input-group">
+          <input type="text" name="cedula" [(ngModel)]="cedula">
+        </div>
+        <div class="input-group">
+            <input type="text" name="correo" [(ngModel)]="correo" required>
+        </div>
+        <div class="input-group">
+            <input type="text" name="usuario" [(ngModel)]="usuario" required>
+        </div>
+        <div class="input-group">
+            <input type="password" name="contrasena" [(ngModel)]="contrasena" required>
+        </div>
+
+        <button type="submit" [disabled]="!form.valid">Enviar</button>
+        <p class="volver-link"> <a [routerLink]="['/principal']">Volver</a></p>
+      </form>
+    </div>
+  </div>

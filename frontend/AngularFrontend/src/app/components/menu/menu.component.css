@@ -1,0 +1,22 @@
+.header {
+    background-color: #f05050;
+    width: 100%;
+    padding: 1.4vw 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header h1 {
+  color: white;
+  font-size: 2.5em;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.logo {
+  background-color: yellow;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
