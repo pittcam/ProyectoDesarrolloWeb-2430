@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormsModule } from "@angular/forms";
-import { RouterLink } from "@angular/router";
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +11,23 @@ import { RouterLink } from "@angular/router";
     RouterLink
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   onSubmit() {
-    
-    console.log("Formulario enviado");
+    if (this.usuario === 'admin' && this.password === 'admin') {
+      this.router.navigate(['/dashboardGeneral']);
+    } else if (this.usuario === 'coordinador' && this.password === 'coordinador') {
+      this.router.navigate(['/dashboardGeneral']);
+    } else if (this.usuario === 'usuario' && this.password === 'usuario') {
+      this.router.navigate(['/dashboardGeneral']);
+    } else {
+      console.log('Login incorrecto');
+    }
   }
 
-  usuario?: String;
-  password?: String;
+  usuario?: string;
+  password?: string;
 
-  constructor() {}
-
+  constructor(private router: Router) {}
 }

@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registrarse',
@@ -14,7 +15,7 @@ import { RouterLink } from "@angular/router";
 })
 export class RegistrarseComponent {
   onSend() {
-    console.log("Formulario enviado");
+    this.router.navigate(['/dashboardGeneral']);
   }
 
   nombre?: String ;
@@ -23,6 +24,6 @@ export class RegistrarseComponent {
   usuario?: String;
   contrasena?: String;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
 }
