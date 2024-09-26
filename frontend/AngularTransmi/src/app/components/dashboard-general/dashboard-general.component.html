@@ -1,1 +1,29 @@
-<p>dashboard-general works!</p>
+<div class="container">
+    <div class="search-bar">
+       <input type="text" placeholder="Buscar...">
+       <button>Añadir conductor</button>
+       <button>Buscar</button>
+    </div>
+    <div class="conductores-list">
+       <table>
+          <tr>
+             <th>Nombre</th>
+             <th>Cédula</th>
+             <th>Teléfono</th>
+             <th>Dirección</th>
+             <th>Acciones</th>
+          </tr>
+          <tr *ngFor="let conductor of conductores">
+             <td>{{ conductor.nombre }}</td>
+             <td>{{ conductor.cedula }}</td>
+             <td>{{ conductor.telefono }}</td>
+             <td>{{ conductor.direccion }}</td>
+             <td>
+                <button>Ver buses</button>
+                <button>Editar</button>
+                <button>Eliminar</button>
+             </td>
+          </tr>
+       </table>
+    </div>
+  </div>
