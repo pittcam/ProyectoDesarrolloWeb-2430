@@ -1,1 +1,30 @@
-<p>menu-general works!</p>
+<header class="menu-header">
+    <div class="menu-circle"></div>
+    <nav class="menu-options">
+      <a href="#" 
+         class="menu-item" 
+         [ngClass]="{'selected': selectedOption === 'conductores'}"
+         (click)="selectOption('conductores')">
+        Gestionar Conductores
+      </a>
+      <a href="#" 
+         class="menu-item" 
+         [ngClass]="{'selected': selectedOption === 'buses'}"
+         (click)="selectOption('buses')">
+        Gestionar Buses
+      </a>
+      <a href="#" 
+         class="menu-item" 
+         [ngClass]="{'selected': selectedOption === 'rutas'}"
+         (click)="selectOption('rutas')">
+        Gestionar Rutas
+      </a>
+      <a href="#" 
+         class="menu-item" 
+         [ngClass]="{'selected': selectedOption === 'consultarRutas'}"
+         (click)="selectOption('consultarRutas')">
+        Consultar Rutas
+      </a>
+    </nav>
+  </header>
+  

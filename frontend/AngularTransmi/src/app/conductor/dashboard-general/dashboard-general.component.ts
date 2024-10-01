@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface Conductor {
   nombre: string;
@@ -10,11 +11,12 @@ interface Conductor {
 @Component({
   selector: 'app-dashboard-general',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard-general.component.html',
   styleUrl: './dashboard-general.component.css'
 })
 export class DashboardGeneralComponent {
+  errorMessage: string = '';
   conductores: Conductor[] = [
     {
       nombre: 'Conductor 1',
@@ -30,5 +32,20 @@ export class DashboardGeneralComponent {
     },
     // ...
   ];
+  constructor(private conductorService: ConductorService) {};
 
+  ngOnInit() {
+    this.conductorService.conductorList()
+      .pipe(
+        catchError(
+          error => {
+            console.error('Hubo un error');
+            this.errorMessage = "Hubo un error.";
+            return of([]);
+          }
+        )
+      )
+    
+    ;
+  }
 }

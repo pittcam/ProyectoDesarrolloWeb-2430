@@ -1,4 +1,6 @@
-<app-menu></app-menu>  <!-- Componente de menú siempre visible -->
+<!-- Mostrar el menú de login/registrarse o el menú general según la ruta actual -->
+<app-menu *ngIf="!showMenuGeneral"></app-menu>   <!-- Menú para login y registrarse -->
+<app-menu-general *ngIf="showMenuGeneral"></app-menu-general>   <!-- Menú para otras vistas -->
 
-<!-- Aquí se renderizarán dinámicamente las vistas de login y registrarse -->
+<!-- Aquí se renderizarán dinámicamente las vistas según las rutas -->
 <router-outlet></router-outlet>
