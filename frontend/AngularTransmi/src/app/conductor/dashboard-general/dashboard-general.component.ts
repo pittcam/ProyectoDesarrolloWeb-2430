@@ -15,7 +15,7 @@ interface Conductor {
 @Component({
   selector: 'app-dashboard-general',
   standalone: true,
-  imports: [NgFor, AsyncPipe, NgIf, RouterModule,Router],
+  imports: [NgFor, AsyncPipe, NgIf, RouterModule],
   templateUrl: './dashboard-general.component.html',
   styleUrl: './dashboard-general.component.css'
 })
