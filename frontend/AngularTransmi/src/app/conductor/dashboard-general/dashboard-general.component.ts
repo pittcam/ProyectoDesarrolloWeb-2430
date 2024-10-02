@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ConductorDTO } from '../../dto/conductor-dto';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { catchError, Observable, of } from 'rxjs';
+import { ConductorService } from '../../shared/conductor.service';
 
 interface Conductor {
   nombre: string;
@@ -11,7 +14,7 @@ interface Conductor {
 @Component({
   selector: 'app-dashboard-general',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgFor, AsyncPipe, NgIf],
   templateUrl: './dashboard-general.component.html',
   styleUrl: './dashboard-general.component.css'
 })
@@ -34,7 +37,7 @@ export class DashboardGeneralComponent {
   ];
   constructor(private conductorService: ConductorService) {};
 
-  ngOnInit() {
+  /*ngOnInit() {
     this.conductorService.conductorList()
       .pipe(
         catchError(
@@ -47,5 +50,5 @@ export class DashboardGeneralComponent {
       )
     
     ;
-  }
+  }*/
 }

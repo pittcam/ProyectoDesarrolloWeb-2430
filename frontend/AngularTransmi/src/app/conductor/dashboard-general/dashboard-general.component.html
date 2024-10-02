@@ -1,9 +1,15 @@
+<div class="general">
+<div class="search-bar">
+   <input type="text" placeholder="Buscar...">
+   <button>Buscar</button>
+</div>
+<h1>Conductores</h1>
+
+<div class="btn-add">
+   <button>Añadir conductor</button>
+</div>
+
 <div class="container">
-    <div class="search-bar">
-       <input type="text" placeholder="Buscar...">
-       <button>Añadir conductor</button>
-       <button>Buscar</button>
-    </div>
     <div class="conductores-list">
        <table>
           <tr>
@@ -19,11 +25,12 @@
              <td>{{ conductor.telefono }}</td>
              <td>{{ conductor.direccion }}</td>
              <td>
-                <button>Ver buses</button>
-                <button>Editar</button>
-                <button>Eliminar</button>
+                <button class="btn-ver">Ver buses</button>
+                <button class="btn-editar">Editar</button>
+                <button class="btn-eliminar">Eliminar</button>
              </td>
           </tr>
        </table>
     </div>
   </div>
+</div>

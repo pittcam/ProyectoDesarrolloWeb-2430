@@ -8,6 +8,8 @@
   }
   
   .search-bar {
+    margin-top: 5vw;
+    width: 10vw;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -15,24 +17,32 @@
   }
   
   .search-bar input[type="text"] {
-    width: 70%;
+    width: 80px;
     padding: 10px;
-    border: none;
+    border: black 1px solid;
     border-radius: 5px;
   }
   
   .search-bar button {
-    width: 15%;
+    width: 15vw;
     padding: 10px;
-    border: none;
+    margin-left: 5vw;
     border-radius: 5px;
-    background-color: #4CAF50;
-    color: #fff;
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
     cursor: pointer;
+  }
+
+  .btn-add button {
+    background-color: #f05050;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
   }
   
   .search-bar button:hover {
-    background-color: #3e8e41;
+    background-color: yellow;
   }
   
   .conductores-list {
@@ -56,3 +66,28 @@
   td button {
     margin: 5px;
   }
+
+  .btn-ver {
+    background-color: #f05050;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .btn-editar {
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  .btn-eliminar {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+
+  
