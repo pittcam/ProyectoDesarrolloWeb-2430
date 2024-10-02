@@ -3,6 +3,7 @@ import { ConductorDTO } from '../../dto/conductor-dto';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { catchError, Observable, of } from 'rxjs';
 import { ConductorService } from '../../shared/conductor.service';
+import { RouterModule,Router } from '@angular/router';
 
 interface Conductor {
   nombre: string;
@@ -14,11 +15,12 @@ interface Conductor {
 @Component({
   selector: 'app-dashboard-general',
   standalone: true,
-  imports: [NgFor, AsyncPipe, NgIf],
+  imports: [NgFor, AsyncPipe, NgIf, RouterModule,Router],
   templateUrl: './dashboard-general.component.html',
   styleUrl: './dashboard-general.component.css'
 })
 export class DashboardGeneralComponent {
+  [x: string]: any;
   errorMessage: string = '';
   conductores: Conductor[] = [
     {
@@ -35,7 +37,7 @@ export class DashboardGeneralComponent {
     },
     // ...
   ];
-  constructor(private conductorService: ConductorService) {};
+  constructor(private conductorService: ConductorService,private router: Router) {};
 
   /*ngOnInit() {
     this.conductorService.conductorList()
@@ -51,4 +53,16 @@ export class DashboardGeneralComponent {
     
     ;
   }*/
+
+  abrirConductorView(){
+    this.router.navigate(['/conductor/conductor-view']);
+  }
+
+  abrirformEditConductor(){
+    this.router.navigate(['/conductor/form-edit-conductor']);
+  }
+
+  abrirAgregarConductor(){
+    this.router.navigate(['/conductor/agregar-conductor']);
+  }
 }

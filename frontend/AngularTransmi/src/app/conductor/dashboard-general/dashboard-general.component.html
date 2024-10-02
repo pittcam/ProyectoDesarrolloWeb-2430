@@ -6,7 +6,7 @@
 <h1>Conductores</h1>
 
 <div class="btn-add">
-   <button>Añadir conductor</button>
+   <button (click)="abrirAgregarConductor()">Añadir conductor</button>
 </div>
 
 <div class="container">
@@ -25,8 +25,8 @@
              <td>{{ conductor.telefono }}</td>
              <td>{{ conductor.direccion }}</td>
              <td>
-                <button class="btn-ver">Ver buses</button>
-                <button class="btn-editar">Editar</button>
+                <button class="btn-ver" (click)="abrirFormEditConductor()">Ver buses</button>
+                <button class="btn-editar" (click)="abrirConductorView()">Editar</button>
                 <button class="btn-eliminar">Eliminar</button>
              </td>
           </tr>
