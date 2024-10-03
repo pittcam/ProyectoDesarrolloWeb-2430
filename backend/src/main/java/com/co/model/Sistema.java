@@ -37,6 +37,4 @@ public class Sistema {
     @JoinColumn(name = "")
     private Horario horario;
 
-
-
 }
