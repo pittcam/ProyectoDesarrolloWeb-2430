@@ -55,14 +55,14 @@ export class DashboardGeneralComponent {
   }*/
 
   abrirConductorView(){
-    this.router.navigate(['/conductor/conductor-view']);
+    this.router.navigate(['/conductor/view']);
   }
 
   abrirformEditConductor(){
-    this.router.navigate(['/conductor/form-edit-conductor']);
+    this.router.navigate(['/form/edit/conductor']);
   }
 
   abrirAgregarConductor(){
-    this.router.navigate(['/conductor/agregar-conductor']);
+    this.router.navigate(['/form/add/conductor']);
   }
 }

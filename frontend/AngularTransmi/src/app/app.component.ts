@@ -6,11 +6,15 @@ import { RegistrarseComponent } from './components/registrarse/registrarse.compo
 import { DashboardGeneralComponent } from './conductor/dashboard-general/dashboard-general.component';
 import { MenuGeneralComponent } from './components/menu-general/menu-general.component';
 import {CommonModule} from '@angular/common';
+import { ConductorViewComponent } from './conductor/conductor-view/conductor-view.component';
+import { FormEditConductorComponent } from './conductor/form-edit-conductor/form-edit-conductor.component';
+import { FormAddConductorComponent } from './conductor/form-add-conductor/form-add-conductor.component';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, MenuComponent,RegistrarseComponent, DashboardGeneralComponent, MenuGeneralComponent,CommonModule],
+  imports: [RouterOutlet, LoginComponent, MenuComponent,RegistrarseComponent, DashboardGeneralComponent, MenuGeneralComponent,CommonModule,ConductorViewComponent, FormAddConductorComponent, FormEditConductorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
