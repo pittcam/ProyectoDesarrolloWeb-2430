@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
+import { FormsModule } from "@angular/forms";
+import { RouterLink } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-add-buses-conductor',
   standalone: true,
-  imports: [],
+  imports: [FormsModule,
+    RouterLink],
   templateUrl: './form-add-buses-conductor.component.html',
   styleUrl: './form-add-buses-conductor.component.css'
 })
 export class FormAddBusesConductorComponent {
+  onSend() {
+    this.router.navigate(['/form-add-buses-conductor']);
+  }
 
+  constructor(private router: Router) { }
 }
