@@ -1,0 +1,6 @@
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<ul>
+  <li *ngFor="let conductor of conductores">
+    {{ conductor.nombre }} <!-- Muestra el nombre del conductor -->
+  </li>
+</ul>
