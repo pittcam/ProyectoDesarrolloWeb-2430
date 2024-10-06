@@ -66,3 +66,7 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+2024-10-06 17:15:58.162083-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CONDUCTORES" no encontrada
+Table "CONDUCTORES" not found; SQL statement:
+select * from conductores [42102-224]

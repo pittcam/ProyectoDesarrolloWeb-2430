@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ConductorService {
@@ -20,46 +19,30 @@ public class ConductorService {
     private ConductorDTOConverter conductorDTOConverter;
 
     // Obtener todos los conductores
-    public List<ConductorDTO> conductorList() {
+    public List<ConductorDTO> getAllConductores() {
         return conductorRepository.findAll().stream()
                 .map(conductorDTOConverter::entityToDTO)
-                .collect(Collectors.toList());
-    }
-
-    // Buscar conductores por nombre
-    public List<ConductorDTO> buscarPorNombre(String textoBusqueda) {
-        return conductorRepository.findAllByNombreContainingIgnoreCase(textoBusqueda).stream()
-                .map(conductorDTOConverter::entityToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // Obtener un conductor por ID
-    public ConductorDTO recuperarConductor(Long id) {
-        Conductor conductor = conductorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
-        return conductorDTOConverter.entityToDTO(conductor);
+    public ConductorDTO getConductor(Long id) {
+        return conductorDTOConverter.entityToDTO(
+                conductorRepository.findById(id).orElseThrow(() -> new RuntimeException("Conductor no encontrado"))
+        );
     }
 
     // Crear o actualizar un conductor
-    public void guardarConductor(ConductorDTO conductorDTO) {
+    public ConductorDTO saveConductor(ConductorDTO conductorDTO) {
         Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
-        conductorRepository.save(conductor);
+        return conductorDTOConverter.entityToDTO(conductorRepository.save(conductor));
     }
 
     // Eliminar un conductor por ID
-    public void delete(Long id) {
+    public void deleteConductor(Long id) {
+        if (!conductorRepository.existsById(id)) {
+            throw new RuntimeException("Conductor no encontrado para eliminar");
+        }
         conductorRepository.deleteById(id);
-    }
-
-    // Verificar si un conductor existe por ID
-    public boolean existsById(Long id) {
-        return conductorRepository.existsById(id);
-    }
-
-    // Obtener conductores por lista de IDs
-    public List<ConductorDTO> findByIds(List<Long> ids) {
-        return conductorRepository.findAllById(ids).stream()
-                .map(conductorDTOConverter::entityToDTO)
-                .collect(Collectors.toList());
     }
 }

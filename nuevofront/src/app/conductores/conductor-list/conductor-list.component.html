@@ -1,6 +1,13 @@
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-<ul>
-  <li *ngFor="let conductor of conductores">
-    {{ conductor.nombre }} <!-- Muestra el nombre del conductor -->
-  </li>
-</ul>
+<div>
+  <h1>Conductores</h1>
+  <p>{{ errorMessage }}</p>
+  <ul *ngIf="allConductors$ | async as allConductores; else loading">
+    <li *ngFor="let conductor of allConductores">
+      {{ conductor.nombre }} <!-- Asegúrate de que las propiedades sean correctas -->
+    </li>
+  </ul>
+</div>
+
+<ng-template #loading>
+  <p>Cargando...</p>
+</ng-template>

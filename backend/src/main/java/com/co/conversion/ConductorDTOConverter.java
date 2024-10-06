@@ -22,13 +22,13 @@ public class ConductorDTOConverter {
     }
 
     // Convertir de DTO a entidad
-    public Conductor DTOToEntity(ConductorDTO conductorDTO) {
+    public Conductor DTOToEntity(ConductorDTO conductor) {
         return new Conductor(
-                conductorDTO.getId(),
-                conductorDTO.getNombre(),
-                conductorDTO.getCedula(),
-                conductorDTO.getTelefono(),
-                conductorDTO.getDireccion(),
+                conductor.getId(),
+                conductor.getNombre(),
+                conductor.getCedula(),
+                conductor.getTelefono(),
+                conductor.getDireccion(),
                 new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
         );
     }

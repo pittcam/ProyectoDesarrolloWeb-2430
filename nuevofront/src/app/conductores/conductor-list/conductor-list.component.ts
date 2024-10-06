@@ -1,36 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { catchError, Observable, of } from 'rxjs';
 import { ConductorService } from '../../shared/conductor.service';
 import { ConductorDTO } from '../../dto/conductor-dto';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-conductor-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgFor, AsyncPipe, NgIf],
   templateUrl: './conductor-list.component.html',
   styleUrls: ['./conductor-list.component.css'],
 })
 export class ConductorListComponent implements OnInit {
-  conductores: ConductorDTO[] = [];
-  errorMessage: string | null = null;
+  allConductors$!: Observable<ConductorDTO[]>;
+  errorMessage: string = '';
 
   constructor(private conductorService: ConductorService) {}
 
   ngOnInit(): void {
-    this.obtenerConductores(); // Llama al método para obtener los conductores al iniciar el componente
-  }
+    this.allConductors$ = this.conductorService.listarConductores()
+      .pipe(
+              catchError(
+                error => {
+                  console.log("Hubo un error");
+                  this.errorMessage = "Hubo un error";
+                  return of([]);
+                }
 
-  obtenerConductores(): void {
-    this.conductorService.listarConductores().subscribe({
-      next: (conductores: ConductorDTO[]) => {
-        this.conductores = conductores;
-        this.errorMessage = null; // Limpia el mensaje de error si la carga es exitosa
-        console.log('Conductores cargados:', this.conductores); // Para depuración
-      },
-      error: (error: any) => {
-        this.errorMessage = 'Error al obtener la lista de conductores';
-        console.error('Error: ', error); // Muestra el error en la consola
-      },
-    });
-  }
+              )
+            )
+          ;
+        }
 }

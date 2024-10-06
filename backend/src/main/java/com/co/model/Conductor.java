@@ -33,13 +33,29 @@ public class Conductor {
     private String cedula;
 
     @NotBlank(message = "El teléfono es obligatorio")
-    @Column(name = "telefono")
+    @Column(name = "telefono", nullable = false)
     private String telefono;
 
     @NotBlank(message = "La dirección es obligatoria")
-    @Column(name = "direccion")
+    @Column(name = "direccion", nullable = false)
     private String direccion;
 
     @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
+
+    // Constructor con parámetros (sin ID)
+    public Conductor(String nombre, String cedula, String telefono, String direccion) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
+    public Conductor(Long id,String nombre, String cedula, String telefono, String direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
 }

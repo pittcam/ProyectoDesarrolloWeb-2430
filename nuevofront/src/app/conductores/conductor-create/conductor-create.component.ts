@@ -19,16 +19,14 @@ export class ConductorCreateComponent {
   crearConductor() {
     this.conductorService.crearConductor(this.conductorDTO).subscribe({
       next: (data) => {
-        console.log('Conductor creado!', data);
-        // Opcional: Reiniciar el formulario después de crear el conductor
-        this.reiniciarFormulario();
-      },
-      error: (error) => {
-        console.error('Error al crear el conductor', error);
-        this.error = error; // Guarda el error para mostrarlo en la plantilla si es necesario
-      },
-    });
-  }
+              console.log(data);
+            },
+
+            error: (error) => {
+              console.log(error);
+            },
+          });
+        }
 
   reiniciarFormulario() {
     this.conductorDTO = new ConductorDTO(null, '', '', '', '');
