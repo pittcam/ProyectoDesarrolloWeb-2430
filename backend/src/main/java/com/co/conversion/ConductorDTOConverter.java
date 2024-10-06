@@ -5,21 +5,31 @@ import org.springframework.stereotype.Component;
 import com.co.dto.ConductorDTO;
 import com.co.model.Conductor;
 
+import java.util.HashSet;
+
 @Component
 public class ConductorDTOConverter {
 
-    // Método para convertir de Conductor a ConductorDTO
+    // Convertir de entidad a DTO
     public ConductorDTO entityToDTO(Conductor conductor) {
-        return new ConductorDTO(conductor.getNombre(), conductor.getCedula(), conductor.getTelefono(), conductor.getDireccion());
+        return new ConductorDTO(
+                conductor.getId(),
+                conductor.getNombre(),
+                conductor.getCedula(),
+                conductor.getTelefono(),
+                conductor.getDireccion()
+        );
     }
 
-    // Método para convertir de ConductorDTO a Conductor
+    // Convertir de DTO a entidad
     public Conductor DTOToEntity(ConductorDTO conductorDTO) {
-        Conductor conductor = new Conductor();
-        conductor.setNombre(conductorDTO.getNombre());
-        conductor.setCedula(conductorDTO.getCedula());
-        conductor.setTelefono(conductorDTO.getTelefono());
-        conductor.setDireccion(conductorDTO.getDireccion());
-        return conductor;
+        return new Conductor(
+                conductorDTO.getId(),
+                conductorDTO.getNombre(),
+                conductorDTO.getCedula(),
+                conductorDTO.getTelefono(),
+                conductorDTO.getDireccion(),
+                new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
+        );
     }
 }
