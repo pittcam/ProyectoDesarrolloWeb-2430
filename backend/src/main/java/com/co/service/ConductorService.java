@@ -1,5 +1,6 @@
 package com.co.service;
 
+import com.co.conversion.ConductorDTOConverter;
 import com.co.dto.ConductorDTO;
 import com.co.model.Conductor;
 import com.co.repository.ConductorRepository;
@@ -13,6 +14,9 @@ public class ConductorService {
 
     @Autowired
     private ConductorRepository conductorRepository;
+
+    @Autowired
+    private ConductorDTOConverter conductorDTOConverter;
 
     // Obtener todos los conductores
     public List<Conductor> conductorList() {
@@ -28,6 +32,17 @@ public class ConductorService {
     public Conductor recuperarConductor(Long id) {
         return conductorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
+    }
+
+    public ConductorDTO agregarConductor(ConductorDTO conductorDTO) {
+        // Convertir DTO a entidad
+        Conductor nuevoConductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        
+        // Guardar el conductor en la base de datos
+        Conductor conductorGuardado = conductorRepository.save(nuevoConductor);
+        
+        // Convertir la entidad guardada a DTO para devolver
+        return conductorDTOConverter.entityToDTO(conductorGuardado);
     }
 
     // Crear o actualizar un conductor

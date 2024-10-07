@@ -1,5 +1,6 @@
 package com.co.controller;
 
+import com.co.conversion.ConductorDTOConverter;
 import com.co.dto.ConductorDTO;
 import com.co.model.*;
 import com.co.service.AsignacionService;
@@ -9,6 +10,8 @@ import com.co.service.HorarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +42,9 @@ public class ConductorController {
     @Autowired
     private AsignacionService asignacionService;
 
+    @Autowired
+    private ConductorDTOConverter conductorDTOConverter;
+
     // Obtener todos los conductores
     @GetMapping
     public List<Conductor> listarConductores() {
@@ -46,148 +52,118 @@ public class ConductorController {
         return conductores;
     }
 
-    // Editar
-    @PostMapping
-    public ConductorDTO formularioEditarConductor(@RequestBody ConductorDTO conductorDTO) {
-        return conductorService.guardarConductor(conductorDTO);
-    }
 
-    // Mostrar el formulario de agregar conductor
-    @GetMapping("/add-form")
-    public ModelAndView formularioAgregarConductor() {
-        Conductor nuevoConductor = new Conductor();
-        ModelAndView modelAndView = new ModelAndView("conductor-form");
-        modelAndView.addObject("conductor", nuevoConductor);
-        return modelAndView;
-    }
-
-    @PostMapping("/save")
-    public ModelAndView guardarConductor(@Valid @ModelAttribute("conductor") Conductor conductor, BindingResult result) {
-        if (result.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("conductor-form");
-            modelAndView.addObject("conductor", conductor);
-            return modelAndView;
-        }
-        conductorService.guardarConductor(conductor);
-        return new ModelAndView("redirect:/conductor/list");
-    }
-
-    @GetMapping("/view/{id}")
-    public ModelAndView verConductor(@PathVariable Long id) {
-        Optional<Conductor> conductorOpt = Optional.ofNullable(conductorService.recuperarConductor(id));
-        if (!conductorOpt.isPresent()) {
-            // Manejar el caso cuando no se encuentra el conductor
-            return new ModelAndView("redirect:/conductor/list");
-        }
-
-        Conductor conductor = conductorOpt.get();
-        List<Asignacion> asignaciones = asignacionService.findByConductorId(id);
-
-        ModelAndView modelAndView = new ModelAndView("conductor-view");
-        modelAndView.addObject("conductor", conductor);
-        modelAndView.addObject("asignaciones", asignaciones);
-        return modelAndView;
-    }
-
-    @GetMapping("/delete/{id}")
-    public RedirectView deleteConductor(@PathVariable("id") Long id) {
-        if (conductorService.existsById(id)) {
-            conductorService.delete(id);
-            log.info("Conductor con ID {} eliminado correctamente.", id);
-        } else {
-            log.warn("El conductor con ID {} no fue encontrado.", id);
-        }
-        return new RedirectView("/conductor/list");
-    }
-
+    //Buscar Conductor por nombre
     @GetMapping("/search")
-    public ModelAndView listConductores(@RequestParam(required = false) String searchText) {
+    public ResponseEntity<List<ConductorDTO>> buscarConductoresPorNombre(@RequestParam(required = false) String searchText) {
         List<Conductor> conductores;
-        if (searchText == null || searchText.trim().equals("")) {
-            log.info("No hay texto de búsqueda. Retornando todo");
+        
+        if (searchText == null || searchText.trim().isEmpty()) {
+            // Si no se ingresa un nombre, se devuelven todos los conductores
             conductores = conductorService.conductorList();
         } else {
-            log.info("Buscando conductores cuyo nombre comienza con {}", searchText);
+            // Si se ingresa un nombre, se filtran los conductores por nombre
             conductores = conductorService.buscarPorNombre(searchText);
         }
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("conductores", conductores);
-        return modelAndView;
+        
+        List<ConductorDTO> conductoresDTO = conductores.stream()
+                                        .map(conductorDTOConverter::entityToDTO)
+                                        .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(conductoresDTO);
     }
 
-    @GetMapping("/assign-buses/{id}")
-    public ModelAndView asignarBuses(@PathVariable Long id) {
-        Conductor conductor = conductorService.recuperarConductor(id);
-        List<Bus> buses = busService.findAll();
-        List<Horario> horarios = horarioService.findAll();
-
-        ModelAndView modelAndView = new ModelAndView("assign-buses");
-        modelAndView.addObject("conductor", conductor);
-        modelAndView.addObject("buses", buses);
-        modelAndView.addObject("horarios", horarios);
-        return modelAndView;
+    //Crear conductor
+    @PostMapping
+    public ResponseEntity<ConductorDTO> crearConductor(@RequestBody @Valid ConductorDTO conductorDTO) {
+        ConductorDTO nuevoConductor = conductorService.agregarConductor(conductorDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoConductor);
     }
 
-    @PostMapping("/save-bus-assignments")
-    public RedirectView guardarAsignaciones(@RequestParam("conductorId") Long conductorId,
-                                            @RequestParam("busIds") List<Long> busIds,
-                                            @RequestParam Map<String, String> allParams) {
 
-        // Obtener el conductor
-        Conductor conductor = conductorService.recuperarConductor(conductorId);
 
-        // Eliminar asignaciones existentes
-        asignacionService.deleteByConductorId(conductorId);
+    // Editar
+    @PutMapping("/{id}")
+    public ResponseEntity<ConductorDTO> editarConductor(@PathVariable Long id, @RequestBody @Valid ConductorDTO conductorDTO) {
+        Conductor conductorExistente = conductorService.recuperarConductor(id);
+        
+        // Actualizar campos
+        conductorExistente.setNombre(conductorDTO.getNombre());
+        conductorExistente.setCedula(conductorDTO.getCedula());
+        conductorExistente.setTelefono(conductorDTO.getTelefono());
+        conductorExistente.setDireccion(conductorDTO.getDireccion());
+        
+        // Guardar conductor actualizado
+        conductorService.guardarConductor(conductorDTOConverter.entityToDTO(conductorExistente)); // O convertir a DTO si el servicio lo requiere
 
-        // Crear nuevas asignaciones
-        for (Long busId : busIds) {
-            String horarioIdParam = "horarioIds_" + busId;
-            String horarioIdStr = allParams.get(horarioIdParam);
-            if (horarioIdStr != null) {
-                Long horarioId = Long.parseLong(horarioIdStr);
-                Bus bus = busService.findById(busId).orElseThrow(() -> new RuntimeException("Bus no encontrado"));
-                Horario horario = horarioService.findById(horarioId).orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+        ConductorDTO conductorActualizadoDTO = conductorDTOConverter.entityToDTO(conductorExistente);
 
-                Asignacion asignacion = new Asignacion();
-                asignacion.setBus(bus);
-                asignacion.setHorario(horario);
-                asignacion.setConductor(conductor);
-                asignacionService.guardar(asignacion);
-            }
+        return ResponseEntity.ok(conductorActualizadoDTO);
+    }
+
+    // Eliminar
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarConductor(@PathVariable Long id) {
+        if (conductorService.existsById(id)) {
+            conductorService.delete(id);
+            return ResponseEntity.noContent().build(); // Retorna 204 No Content si se elimina correctamente
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 404 si no existe
         }
-
-        return new RedirectView("/conductor/list");
     }
 
-    @GetMapping("/assign-schedule/{id}")
-    public ModelAndView asignarHorarios(@PathVariable Long id) {
+    //Ver conductor
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> verConductor(@PathVariable Long id) {
         Conductor conductor = conductorService.recuperarConductor(id);
-        List<Horario> horarios = horarioService.findAll();
-        ModelAndView modelAndView = new ModelAndView("assign-schedule");
-        modelAndView.addObject("conductor", conductor);
-        modelAndView.addObject("horarios", horarios);
-        return modelAndView;
+        List<Asignacion> asignaciones = asignacionService.findByConductorId(id);
+
+        // Mapea las asignaciones a la información de los buses
+        List<Map<String, Object>> busesAsignados = asignaciones.stream().map(asignacion -> {
+            Bus bus = asignacion.getBus();
+            Horario horario = asignacion.getHorario();
+            Map<String, Object> busInfo = Map.of(
+                    "placa", bus.getNumeroPlaca(), // Cambiado a getNumeroPlaca()
+                    "modelo", bus.getModelo(),
+                    "diasAsignados", horario.getDias() // Asegúrate de que "dias" exista en Horario
+            );
+            return busInfo;
+        }).collect(Collectors.toList());
+
+        Map<String, Object> response = Map.of(
+                "conductor", conductorDTOConverter.entityToDTO(conductor),
+                "busesAsignados", busesAsignados
+        );
+
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/save-schedule-assignments")
-    public RedirectView guardarAsignacionesHorarios(
-            @RequestParam Long conductorId,
-            @RequestParam List<Long> horarioIds) {
-        Conductor conductor = conductorService.recuperarConductor(conductorId);
-        log.info("Conductor recuperado: {}", conductor);
 
-        List<Horario> horarios = horarioService.findByIds(horarioIds);
-        log.info("Horarios recuperados: {}", horarios);
+    @PostMapping("/{id}/asignar-buses")
+    public ResponseEntity<Void> asignarBuses(
+            @PathVariable Long id,
+            @RequestBody Map<Long, Long> busHorarioMap) { // Mapa de busId a horarioId
+        Conductor conductor = conductorService.recuperarConductor(id);
 
-        // Crear nuevas asignaciones para los horarios seleccionados
-        horarios.forEach(horario -> {
+        // Eliminar asignaciones anteriores
+        asignacionService.deleteByConductorId(id);
+
+        // Asignar los nuevos buses
+        busHorarioMap.forEach((busId, horarioId) -> {
+            Bus bus = busService.findById(busId)
+                    .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
+
+            Horario horario = horarioService.findById(horarioId)
+                    .orElseThrow(() -> new RuntimeException("Horario no encontrado"));
+
             Asignacion asignacion = new Asignacion();
             asignacion.setConductor(conductor);
+            asignacion.setBus(bus);
             asignacion.setHorario(horario);
+
             asignacionService.guardar(asignacion);
         });
 
-        log.info("Conductor actualizado con horarios asignados: {}", conductor);
-        return new RedirectView("/conductor/list");
+        return ResponseEntity.ok().build();
     }
 }
