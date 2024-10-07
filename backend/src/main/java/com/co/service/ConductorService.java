@@ -46,9 +46,18 @@ public class ConductorService {
     }
 
     // Crear o actualizar un conductor
-    public void guardarConductor(ConductorDTO conductor) {
-        return conductorRepository.save(conductor);
+    // Crear o actualizar un conductor
+    public ConductorDTO guardarConductor(ConductorDTO conductorDTO) {
+        // Convertir DTO a entidad
+        Conductor nuevoConductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        
+        // Guardar el conductor en la base de datos
+        Conductor conductorGuardado = conductorRepository.save(nuevoConductor);
+        
+        // Convertir la entidad guardada a DTO para devolver
+        return conductorDTOConverter.entityToDTO(conductorGuardado);
     }
+
 
     // Eliminar un conductor por ID
     public void delete(Long id) {

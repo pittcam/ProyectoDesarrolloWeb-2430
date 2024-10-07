@@ -1,36 +1,42 @@
 <div class="general">
-<div class="search-bar">
-   <input type="text" placeholder="Buscar...">
-   <button>Buscar</button>
-</div>
-<h1>Conductores</h1>
-
-<div class="btn-add">
-   <button (click)="abrirAgregarConductor()">Añadir conductor</button>
-</div>
-
-<div class="container">
-    <div class="conductores-list">
+   <div class="search-bar">
+     <input type="text" placeholder="Buscar..." [(ngModel)]="searchText">
+     <button (click)="buscarConductor()">Buscar</button>
+   </div>
+   <h1>Conductores</h1>
+ 
+   <div class="btn-add">
+     <button (click)="abrirAgregarConductor()">Añadir conductor</button>
+   </div>
+ 
+   <div class="container">
+     <div *ngIf="errorMessage">{{ errorMessage }}</div>
+     <div class="conductores-list">
        <table>
-          <tr>
+         <thead>
+           <tr>
              <th>Nombre</th>
              <th>Cédula</th>
              <th>Teléfono</th>
              <th>Dirección</th>
              <th>Acciones</th>
-          </tr>
-          <tr *ngFor="let conductor of conductores">
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor="let conductor of conductores">
              <td>{{ conductor.nombre }}</td>
              <td>{{ conductor.cedula }}</td>
              <td>{{ conductor.telefono }}</td>
              <td>{{ conductor.direccion }}</td>
              <td>
-                <button class="btn-ver" (click)="abrirformEditConductor()">Ver buses</button>
-                <button class="btn-editar" (click)="abrirConductorView()">Editar</button>
-                <button class="btn-eliminar">Eliminar</button>
+               <button class="btn-ver" (click)="abrirVerConductor(conductor.id)">Ver buses</button>
+               <button class="btn-editar" (click)="abrirEditarConductor(conductor.id)">Editar</button>
+               <button class="btn-eliminar" (click)="eliminarConductor(conductor.id)">Eliminar</button>
              </td>
-          </tr>
+           </tr>
+         </tbody>
        </table>
-    </div>
-  </div>
-</div>
+     </div>
+   </div>
+ </div>
+ 

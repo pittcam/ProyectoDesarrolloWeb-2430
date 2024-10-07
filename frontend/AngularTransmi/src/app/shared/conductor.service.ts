@@ -1,29 +1,29 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { ConductorDTO } from '../dto/conductor-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConductorService {
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      "Content-Type": "application/json",
-    })
-  };
-  /*constructor(private http: HttpClient) {}
+  private apiUrl = '/api/conductor';  // URL base del backend
 
-  conductorList(): Observable<PersonDTO[]> {
-    return this.http.get<PersonDTO[]>(`${environment.SERVER_URL}/person`);
+  constructor(private http: HttpClient) { }
+
+  // Obtener lista de todos los conductores
+  conductorList(): Observable<ConductorDTO[]> {
+    return this.http.get<ConductorDTO[]>(`${this.apiUrl}`);
   }
 
-  crearPersona(personDTO: PersonDTO) : Observable<PersonDTO> {
-    return this.http.post<PersonDTO>(
-      `${environment.SERVER_URL}/person`,
-      personDTO,
-      this.httpOptions
-    )
-  }*/
+  // Buscar conductores por nombre
+  buscarPorNombre(nombre: string): Observable<ConductorDTO[]> {
+    return this.http.get<ConductorDTO[]>(`${this.apiUrl}/search?searchText=${nombre}`);
+  }
+
+  // Eliminar conductor por ID
+  eliminarConductor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
