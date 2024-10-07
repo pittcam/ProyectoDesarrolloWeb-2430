@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators'; // Importar el operador tap
 import { environment } from '../../environments/environment.development';
 import { ConductorDTO } from '../dto/conductor-dto'; // Asegúrate de que esta ruta sea correcta
 
@@ -9,6 +8,7 @@ import { ConductorDTO } from '../dto/conductor-dto'; // Asegúrate de que esta r
   providedIn: 'root', // Asegúrate de que el servicio esté disponible en toda la aplicación
 })
 export class ConductorService {
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -18,15 +18,13 @@ export class ConductorService {
   constructor(private http: HttpClient) {}
 
   listarConductores(): Observable<ConductorDTO[]> {
-    return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductores`)
-      .pipe(
-        tap(conductores => console.log('Conductores obtenidos:', conductores)) // Para depuración
-      );
+    return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductor`);
   }
+
 
   crearConductor(conductorDTO: ConductorDTO): Observable<ConductorDTO> {
     return this.http.post<ConductorDTO>(
-      `${environment.SERVER_URL}/conductores`,
+      `${environment.SERVER_URL}/conductor`,
       conductorDTO,
       this.httpOptions
     );

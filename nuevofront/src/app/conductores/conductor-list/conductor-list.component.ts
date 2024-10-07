@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { catchError, Observable, of } from 'rxjs';
 import { ConductorService } from '../../shared/conductor.service';
 import { ConductorDTO } from '../../dto/conductor-dto';
@@ -12,7 +11,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
   templateUrl: './conductor-list.component.html',
   styleUrls: ['./conductor-list.component.css'],
 })
-export class ConductorListComponent implements OnInit {
+export class ConductorListComponent {
   allConductors$!: Observable<ConductorDTO[]>;
   errorMessage: string = '';
 

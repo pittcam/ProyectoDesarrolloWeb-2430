@@ -28,8 +28,8 @@ public class ConductorDTOConverter {
                 conductor.getNombre(),
                 conductor.getCedula(),
                 conductor.getTelefono(),
-                conductor.getDireccion(),
-                new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
+                conductor.getDireccion()
+                //, new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
         );
     }
 }

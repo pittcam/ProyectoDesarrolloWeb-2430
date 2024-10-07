@@ -4,6 +4,9 @@
   <ul *ngIf="allConductors$ | async as allConductores; else loading">
     <li *ngFor="let conductor of allConductores">
       {{ conductor.nombre }} <!-- Asegúrate de que las propiedades sean correctas -->
+      <button type="button">Ver</button> <!-- Botón Ver -->
+      <button type="button">Editar</button> <!-- Botón Editar -->
+      <button type="button">Eliminar</button> <!-- Botón Eliminar -->
     </li>
   </ul>
 </div>

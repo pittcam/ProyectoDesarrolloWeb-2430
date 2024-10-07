@@ -1,6 +1,7 @@
 package com.co.controller;
 
 import com.co.dto.ConductorDTO;
+import com.co.model.Conductor;
 import com.co.service.ConductorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,22 +19,22 @@ public class ConductorController {
 
     // http://localhost:8080/conductor
     @GetMapping
-    public ResponseEntity<List<ConductorDTO>> recuperarConductores() {
-        List<ConductorDTO> conductores = conductorService.getAllConductores();
-        return ResponseEntity.ok(conductores);
+    public List<Conductor> recuperarConductores()throws InterruptedException {
+        Thread.sleep(2000);
+        List<Conductor> conductors = conductorService.getAllConductores();
+        return conductors;
     }
 
     // http://localhost:8080/conductor/1
     @GetMapping("/{id}")
-    public ResponseEntity<ConductorDTO> recuperarConductor(@PathVariable Long id) {
+    public ConductorDTO recuperarConductor(@PathVariable Long id) {
         ConductorDTO conductorDTO = conductorService.getConductor(id);
-        return ResponseEntity.ok(conductorDTO);
+        return conductorDTO;
     }
 
     @PostMapping
-    public ResponseEntity<ConductorDTO> crearConductor(@RequestBody ConductorDTO conductorDTO) {
-        ConductorDTO nuevoConductor = conductorService.saveConductor(conductorDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoConductor);
+    public ConductorDTO crearConductor(@RequestBody ConductorDTO conductorDTO) {
+        return conductorService.createConductor(conductorDTO);
     }
 
     // Idempotency

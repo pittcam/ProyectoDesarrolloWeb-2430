@@ -18,19 +18,20 @@ public class ConductorService {
     @Autowired
     private ConductorDTOConverter conductorDTOConverter;
 
-    // Obtener todos los conductores
-    public List<ConductorDTO> getAllConductores() {
-        return conductorRepository.findAll().stream()
-                .map(conductorDTOConverter::entityToDTO)
-                .toList();
+    public List<Conductor> getAllConductores() {
+        return conductorRepository.findAll();
     }
 
-    // Obtener un conductor por ID
     public ConductorDTO getConductor(Long id) {
-        return conductorDTOConverter.entityToDTO(
-                conductorRepository.findById(id).orElseThrow(() -> new RuntimeException("Conductor no encontrado"))
-        );
+        return conductorDTOConverter.entityToDTO(conductorRepository.findById(id).orElseThrow());
     }
+
+
+    public ConductorDTO createConductor(ConductorDTO conductorDTO) {
+        Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        return conductorDTOConverter.entityToDTO(conductorRepository.save(conductor));
+    }
+
 
     // Crear o actualizar un conductor
     public ConductorDTO saveConductor(ConductorDTO conductorDTO) {
