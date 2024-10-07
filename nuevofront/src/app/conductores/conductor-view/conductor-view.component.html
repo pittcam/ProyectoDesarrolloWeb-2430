@@ -1,0 +1,12 @@
+<div>
+  <h2>Detalles del Conductor</h2>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <ng-container *ngIf="conductor$ | async as conductor">
+    <p><strong>Nombre:</strong> {{ conductor.nombre }}</p>
+    <p><strong>Cédula:</strong> {{ conductor.cedula }}</p>
+    <p><strong>Teléfono:</strong> {{ conductor.telefono }}</p>
+    <p><strong>Dirección:</strong> {{ conductor.direccion }}</p>
+  </ng-container>
+
+</div>

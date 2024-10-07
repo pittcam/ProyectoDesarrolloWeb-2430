@@ -21,7 +21,6 @@ export class ConductorService {
     return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductor`);
   }
 
-
   crearConductor(conductorDTO: ConductorDTO): Observable<ConductorDTO> {
     return this.http.post<ConductorDTO>(
       `${environment.SERVER_URL}/conductor`,
@@ -29,6 +28,21 @@ export class ConductorService {
       this.httpOptions
     );
   }
+
+  recuperarConductorPorId(id: number): Observable<ConductorDTO> {
+      return this.http.get<ConductorDTO>(`${environment.SERVER_URL}/conductor/${id}`);
+  }
+
+  actualizarConductor(conductor: ConductorDTO): Observable<any> {
+    return this.http.put(`${environment.SERVER_URL}/conductor/${conductor.id}`, conductor);
+  }
+
+  eliminarConductor(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.SERVER_URL}/conductor/${id}`, this.httpOptions);
+  }
+
+
+
 
   // Otras funciones como buscarConductores, etc.
 }
