@@ -1,0 +1,19 @@
+<div>
+  <h1>Bus</h1>
+  <p>{{ errorMessage }}</p>
+  <ul *ngIf="allBuses$ | async as allBuses; else loading">
+    <li *ngFor="let bus of allBuses">
+      {{ bus.numeroPlaca }} <!-- Asegúrate de que las propiedades sean correctas -->
+      {{ bus.modelo }}
+
+
+    </li>
+  </ul>
+</div>
+
+<button (click)="crearBus()">Crear Bus</button>
+
+<ng-template #loading>
+  <p>Cargando...</p>
+</ng-template>
+

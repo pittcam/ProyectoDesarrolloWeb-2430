@@ -1,23 +1,31 @@
 package com.co.conversion;
 
 import org.springframework.stereotype.Component;
-
 import com.co.dto.BusDTO;
 import com.co.model.Bus;
+
+import java.util.HashSet;
 
 @Component
 public class BusDTOConverter {
 
-    // Método para convertir de Bus a BusDTO
+    // Convertir de entidad a DTO
     public BusDTO entityToDTO(Bus bus) {
-        return new BusDTO(bus.getNumeroPlaca(), bus.getModelo());
+        return new BusDTO(
+                bus.getId(),
+                bus.getNumeroPlaca(),
+                bus.getModelo()
+        );
     }
 
-    // Método para convertir de BusDTO a Bus
-    public Bus DTOToEntity(BusDTO busDTO) {
-        Bus bus = new Bus();
-        bus.setNumeroPlaca(busDTO.getNumeroPlaca());
-        bus.setModelo(busDTO.getModelo());
-        return bus;
+    // Convertir de DTO a entidad
+    public Bus DTOToEntity(BusDTO bus) {
+        return new Bus(
+                bus.getId(),
+                bus.getNumeroPlaca(),
+                bus.getModelo(),
+                null, // Inicializamos la ruta como null; puedes ajustarlo si necesitas
+                new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
+        );
     }
 }

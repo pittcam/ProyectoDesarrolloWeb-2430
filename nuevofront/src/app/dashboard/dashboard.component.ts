@@ -14,4 +14,8 @@ export class DashboardComponent {
   abrirCrearConductor() {
     this.router.navigate(['/crear-conductor']); // Navega a la pantalla de crear conductor
   }
+
+  abrirGestionarBuses() {
+    this.router.navigate(['/buses']);
+  }
 }
