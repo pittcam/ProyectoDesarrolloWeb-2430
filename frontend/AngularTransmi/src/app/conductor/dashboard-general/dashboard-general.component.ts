@@ -49,10 +49,10 @@ export class DashboardGeneralComponent implements OnInit {
         })
       );
     } else {
-      // Si no hay nombre, recargar la lista completa
-      this.cargarListaConductores();
+      this.cargarListaConductores();  // Si el campo está vacío, recargar la lista completa
     }
   }
+
 
 
   // Metodo para abrir el formulario de agregar un conductor

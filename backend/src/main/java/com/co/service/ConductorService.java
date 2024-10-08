@@ -32,6 +32,12 @@ public class ConductorService {
         return conductorDTOConverter.entityToDTO(conductorRepository.save(conductor));
     }
 
+    // Buscar conductor por nombre
+    public List<ConductorDTO> buscarConductoresPorNombre(String nombre) {
+        List<Conductor> conductores = conductorRepository.findAllByNombreContainingIgnoreCase(nombre);
+        return conductorDTOConverter.entitiesToDTOs(conductores);  // Usa el nuevo método para convertir la lista
+    }
+
 
     // Crear o actualizar un conductor
     public ConductorDTO saveConductor(ConductorDTO conductorDTO) {

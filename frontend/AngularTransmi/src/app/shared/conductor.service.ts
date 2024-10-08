@@ -33,12 +33,13 @@ export class ConductorService {
   }
 
   buscarConductorPorNombre(nombre: string): Observable<ConductorDTO[]> {
-    return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductor?nombre=${nombre}`);
+    return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductor/search?nombre=${nombre}`);
   }
 
 
   actualizarConductor(conductor: ConductorDTO): Observable<any> {
-    return this.http.put(`${environment.SERVER_URL}/conductor/${conductor.id}`, conductor);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(`${environment.SERVER_URL}/conductor/${conductor.id}`, conductor, { headers });
   }
 
   eliminarConductor(id: number): Observable<void> {

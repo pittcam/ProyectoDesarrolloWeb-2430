@@ -1,44 +1,57 @@
-import { Component } from '@angular/core';
-import {FormsModule, NgForm} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ConductorService } from '../../shared/conductor.service';
+import { ConductorDTO } from '../../dto/conductor-dto';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-form-edit-conductor',
   standalone: true,
-  imports: [
-    FormsModule,
-    RouterLink
-  ],
+  imports: [FormsModule, RouterLink],
   templateUrl: './form-edit-conductor.component.html',
   styleUrls: ['./form-edit-conductor.component.css']
 })
-export class FormEditConductorComponent {
+export class FormEditConductorComponent implements OnInit {
 
   // Propiedades para enlazar con los inputs del formulario
   nombre: string = '';
   cedula: string = '';
   telefono: string = '';
   direccion: string = '';
+  conductorDTO: ConductorDTO;
+  error: any;
 
-  constructor(private router: Router) {}
-
-  // Metodo que se ejecutará al enviar el formulario
-  onSend(form: NgForm) {
-    if (form.valid) {
-      // Aquí puedes procesar los datos del formulario. Ejemplo:
-      const conductorData = {
-        nombre: this.nombre,
-        cedula: this.cedula,
-        telefono: this.telefono,
-        direccion: this.direccion
-      };
-
-      console.log('Datos del conductor:', conductorData);
-
-      // Después de guardar o procesar los datos, podrías redirigir al dashboard:
-      this.router.navigate(['/dashboard/general']);
-    } else {
-      console.log('Formulario inválido.');
-    }
+  constructor(
+    private conductorService: ConductorService,
+    private router: Router,
+    private route: ActivatedRoute // Para acceder a los parámetros de la ruta
+  ) {
+    this.conductorDTO = new ConductorDTO(null, '', '', '', '');
   }
+
+  ngOnInit() {
+    const id = this.route.snapshot.params['id']; // Obtiene el ID del conductor de la URL
+    this.conductorService.recuperarConductorPorId(id).subscribe({
+      next: (data) => {
+        this.conductorDTO = data; // Asigna el conductor recuperado al conductorDTO
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  onSend(form:NgForm) {
+    this.conductorService.actualizarConductor(this.conductorDTO).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['/dashboardGeneral']); // Redirige a la lista de conductores
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
 }

@@ -37,10 +37,18 @@ public class ConductorController {
         return conductorService.createConductor(conductorDTO);
     }
 
-    // Idempotency
+    // Nuevo endpoint para buscar conductores por nombre
+    @GetMapping("/search")
+    public ResponseEntity<List<ConductorDTO>> buscarConductoresPorNombre(@RequestParam String nombre) {
+        List<ConductorDTO> conductores = conductorService
+                .buscarConductoresPorNombre(nombre);
+        return new ResponseEntity<>(conductores, HttpStatus.OK);
+    }
+
+    // Editar conductor
     @PutMapping("/{id}")
     public ResponseEntity<ConductorDTO> actualizarConductor(@PathVariable Long id, @RequestBody ConductorDTO conductorDTO) {
-        conductorDTO.setId(id);  // Suponiendo que el DTO tiene un método setId
+        conductorDTO.setId(id);  // Establecemos el id tomado del path
         ConductorDTO actualizado = conductorService.saveConductor(conductorDTO);
         return ResponseEntity.ok(actualizado);
     }

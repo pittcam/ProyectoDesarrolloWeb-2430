@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class ConductorDTO {
-    private long id;
+    private Long id;
     private String nombre;
     private String cedula;
     private String telefono;
