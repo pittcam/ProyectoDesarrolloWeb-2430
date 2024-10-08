@@ -1,29 +1,32 @@
 <div class="container">
   <div class="form-container">
     <form (ngSubmit)="onSend(form)" #form="ngForm">
-      <h2>Formulario Conductores</h2>
+      <h2>Editar Conductor</h2>
+
       <div class="input-group">
         <p>Ingrese el nombre: </p>
-        <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="conductorDTO.nombre" required>
       </div>
 
       <div class="input-group">
         <p>Ingrese la cédula: </p>
-        <input type="text" name="cedula" [(ngModel)]="cedula">
+        <input type="text" name="cedula" [(ngModel)]="conductorDTO.cedula" required>
       </div>
+
       <div class="input-group">
         <p>Ingrese el telefono: </p>
-        <input type="text" name="telefono" [(ngModel)]="telefono" required>
+        <input type="text" name="telefono" [(ngModel)]="conductorDTO.telefono" required>
       </div>
+
       <div class="input-group">
         <p>Ingrese la dirección: </p>
-        <input type="text" name="direccion" [(ngModel)]="direccion" required>
+        <input type="text" name="direccion" [(ngModel)]="conductorDTO.direccion" required>
       </div>
 
       <button type="submit" [disabled]="!form.valid">Guardar</button>
 
-      <p class="volver-link"> <a [routerLink]="['dashboardGeneral']">Volver</a></p>
-      <p class="agregar-buses"> <a [routerLink]="['add/buses/conductor']">Agregar buses</a></p>
+      <p class="volver-link"><a [routerLink]="['/dashboardGeneral']">Volver</a></p>
+      <p class="agregar-buses"><a [routerLink]="['add/buses/conductor']">Agregar buses</a></p>
     </form>
   </div>
 </div>
