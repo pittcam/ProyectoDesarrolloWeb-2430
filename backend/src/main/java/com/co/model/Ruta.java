@@ -29,4 +29,7 @@ public class Ruta {
 
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
+
+    @OneToMany(mappedBy = "estacion", cascade = CascadeType.ALL,orphanRemoval = true )
+    private Set<Estacion> estaciones = new HashSet<>();
 }

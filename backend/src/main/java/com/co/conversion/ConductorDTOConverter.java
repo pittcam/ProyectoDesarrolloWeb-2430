@@ -16,7 +16,7 @@ public class ConductorDTOConverter {
         return new ConductorDTO(conductor.getId(),conductor.getNombre(), conductor.getCedula(), conductor.getTelefono(), conductor.getDireccion());
     }
 
-    // Método para convertir una lista de Conductores a una lista de ConductorDTOs
+    // Metodo para convertir una lista de Conductores a una lista de ConductorDTOs
     public List<ConductorDTO> entitiesToDTOs(List<Conductor> conductores) {
         return conductores.stream()
                 .map(this::entityToDTO)  // Convierte cada conductor en ConductorDTO
