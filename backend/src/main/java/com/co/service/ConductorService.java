@@ -18,59 +18,32 @@ public class ConductorService {
     @Autowired
     private ConductorDTOConverter conductorDTOConverter;
 
-    // Obtener todos los conductores
-    public List<Conductor> conductorList() {
+    public List<Conductor> getAllConductores() {
         return conductorRepository.findAll();
     }
 
-    // Buscar conductores por nombre
-    public List<Conductor> buscarPorNombre(String textoBusqueda) {
-        return conductorRepository.findAllByNombreContainingIgnoreCase(textoBusqueda);
+    public ConductorDTO getConductor(Long id) {
+        return conductorDTOConverter.entityToDTO(conductorRepository.findById(id).orElseThrow());
     }
 
-    // Obtener un conductor por ID
-    public Conductor recuperarConductor(Long id) {
-        return conductorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Conductor no encontrado"));
+
+    public ConductorDTO createConductor(ConductorDTO conductorDTO) {
+        Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        return conductorDTOConverter.entityToDTO(conductorRepository.save(conductor));
     }
 
-    public ConductorDTO agregarConductor(ConductorDTO conductorDTO) {
-        // Convertir DTO a entidad
-        Conductor nuevoConductor = conductorDTOConverter.DTOToEntity(conductorDTO);
-        
-        // Guardar el conductor en la base de datos
-        Conductor conductorGuardado = conductorRepository.save(nuevoConductor);
-        
-        // Convertir la entidad guardada a DTO para devolver
-        return conductorDTOConverter.entityToDTO(conductorGuardado);
-    }
 
     // Crear o actualizar un conductor
-    // Crear o actualizar un conductor
-    public ConductorDTO guardarConductor(ConductorDTO conductorDTO) {
-        // Convertir DTO a entidad
-        Conductor nuevoConductor = conductorDTOConverter.DTOToEntity(conductorDTO);
-        
-        // Guardar el conductor en la base de datos
-        Conductor conductorGuardado = conductorRepository.save(nuevoConductor);
-        
-        // Convertir la entidad guardada a DTO para devolver
-        return conductorDTOConverter.entityToDTO(conductorGuardado);
+    public ConductorDTO saveConductor(ConductorDTO conductorDTO) {
+        Conductor conductor = conductorDTOConverter.DTOToEntity(conductorDTO);
+        return conductorDTOConverter.entityToDTO(conductorRepository.save(conductor));
     }
-
 
     // Eliminar un conductor por ID
-    public void delete(Long id) {
+    public void deleteConductor(Long id) {
+        if (!conductorRepository.existsById(id)) {
+            throw new RuntimeException("Conductor no encontrado para eliminar");
+        }
         conductorRepository.deleteById(id);
-    }
-
-    // Verificar si un conductor existe por ID
-    public boolean existsById(Long id) {
-        return conductorRepository.existsById(id);
-    }
-
-    // Obtener conductores por lista de IDs
-    public List<Conductor> findByIds(List<Long> ids) {
-        return conductorRepository.findAllById(ids);
     }
 }

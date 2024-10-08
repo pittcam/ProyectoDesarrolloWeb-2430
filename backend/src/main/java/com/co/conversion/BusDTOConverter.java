@@ -10,7 +10,7 @@ public class BusDTOConverter {
 
     // Metodo para convertir de Bus a BusDTO
     public BusDTO entityToDTO(Bus bus) {
-        return new BusDTO(bus.getNumeroPlaca(), bus.getModelo());
+        return new BusDTO(bus.getId(),bus.getNumeroPlaca(), bus.getModelo());
     }
 
     // Metodo para convertir de BusDTO a Bus
