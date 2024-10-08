@@ -5,6 +5,7 @@ import { DashboardGeneralComponent } from './conductor/dashboard-general/dashboa
 import { ConductorViewComponent } from './conductor/conductor-view/conductor-view.component';
 import { FormEditConductorComponent } from './conductor/form-edit-conductor/form-edit-conductor.component';
 import { FormAddConductorComponent } from './conductor/form-add-conductor/form-add-conductor.component';
+import { FormAddBusesConductorComponent} from "./conductor/form-add-buses-conductor/form-add-buses-conductor.component";
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'conductor/view/:id', component: ConductorViewComponent },
     { path: 'conductor/edit/:id', component: FormEditConductorComponent },
     { path: 'conductor/add', component: FormAddConductorComponent },
+    { path: 'add/buses/conductor', component: FormAddBusesConductorComponent},
 
     { path: '**', redirectTo: '/dashboardGeneral' }  // Manejo de rutas no encontradas
 ];
