@@ -16,7 +16,7 @@ export class FormAddConductorComponent {
     this.router.navigate(['/dashboard/general']);
   }
 
-  constructor(private router: Router) {
-  
+  constructor(private router: Router) {}
+
 
 }

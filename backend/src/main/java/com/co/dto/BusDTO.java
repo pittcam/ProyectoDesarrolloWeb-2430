@@ -13,4 +13,6 @@ public class BusDTO {
     private String numeroPlaca;
     private String modelo;
 
+    public BusDTO(Long id, String numeroPlaca, String modelo) {
+    }
 }

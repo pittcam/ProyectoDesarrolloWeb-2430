@@ -5,7 +5,7 @@ import { ConductorListComponent } from "./conductores/conductor-list/conductor-l
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule],
+  imports: [RouterOutlet, RouterModule,ConductorListComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

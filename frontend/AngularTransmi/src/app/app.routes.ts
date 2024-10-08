@@ -10,10 +10,9 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'registrarse', component: RegistrarseComponent },
     { path: 'dashboardGeneral', component: DashboardGeneralComponent},
-    { path: 'conductor/view', component: ConductorViewComponent },
-    { path: 'conductor/edit', component: FormEditConductorComponent },
+    { path: 'conductor/view/:id', component: ConductorViewComponent },
+    { path: 'conductor/edit/:id', component: FormEditConductorComponent },
     { path: 'conductor/add', component: FormAddConductorComponent },
-
 
     { path: '**', redirectTo: '/dashboardGeneral' }  // Manejo de rutas no encontradas
 ];

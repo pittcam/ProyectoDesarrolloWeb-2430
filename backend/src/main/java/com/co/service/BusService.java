@@ -23,7 +23,7 @@ public class BusService {
 
     // Obtener todos los buses
     public List<Bus> getAllBuses() {
-         return busRepository.findAll();
+        return busRepository.findAll();
     }
 
     // Obtener un bus por ID
@@ -37,7 +37,6 @@ public class BusService {
         Bus bus = busDTOConverter.DTOToEntity(busDTO);
         return busDTOConverter.entityToDTO(busRepository.save(bus));
     }
-
 
     // Eliminar un bus por ID
     public void delete(Long id) {
@@ -53,6 +52,7 @@ public class BusService {
     }
 
     public List<Bus> findByIds(List<Long> ids) {
-        return busRepository.findById(ids);
+        return busRepository.findAllById(ids);
     }
 }
+
