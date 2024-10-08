@@ -1,121 +1,88 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ConductorDTO } from '../../dto/conductor-dto';
-import { catchError, Observable, of } from 'rxjs';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
-import { ConductorService } from '../../shared/conductor.service';
-import { Router } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
+import { catchError, Observable, of } from 'rxjs';
+import { ConductorService } from '../../shared/conductor.service';
+import { RouterModule,Router } from '@angular/router';
+import {FormsModule} from "@angular/forms";
 
-
-interface Conductor {
-  id: number;
-  nombre: string;
-  cedula: string;
-  telefono: string;
-  direccion: string;
-}
 
 @Component({
   selector: 'app-dashboard-general',
   standalone: true,
-  imports: [NgFor, AsyncPipe, NgIf,FormsModule,HttpClientModule],
+  imports: [NgFor, AsyncPipe, NgIf, RouterModule, FormsModule],
   templateUrl: './dashboard-general.component.html',
-  styleUrls: ['./dashboard-general.component.css'],
+  styleUrl: './dashboard-general.component.css'
 })
 export class DashboardGeneralComponent implements OnInit {
-  allConductores$!: Observable<ConductorDTO[]>;
+
+  conductores$!: Observable<ConductorDTO[]>;
   errorMessage: string = '';
-  conductores: Conductor[] = [];
-  searchText: string = ''; // Campo para el texto de búsqueda
+  nombreBuscado: string = '';
 
-  constructor(
-    private conductorService: ConductorService,
-    private router: Router
-  ) {}
+  constructor(private conductorService: ConductorService,private router: Router) {};
 
-  // Cargar lista de conductores al inicializar el componente
   ngOnInit() {
-    this.cargarConductores();
+    // Cargar la lista inicial de conductores
+    this.cargarListaConductores();
   }
 
-  // Método para cargar todos los conductores desde el backend
-  cargarConductores() {
-    this.conductorService.conductorList().subscribe({
-      next: (conductoresDTO) => {
-        // Convertir ConductorDTO[] a Conductor[]
-        this.conductores = conductoresDTO.map((dto) => ({
-          id: dto.id ?? 0, // Si 'id' es null, lo asignamos a 0
-          nombre: dto.nombre,
-          cedula: dto.cedula,
-          telefono: dto.telefono,
-          direccion: dto.direccion,
-        }));
-      },
-      error: (error) => {
-        console.error('Error al cargar conductores:', error);
-        this.errorMessage = 'Error al cargar la lista de conductores.';
-      },
-    });
+  // Metodo para cargar la lista de conductores
+  cargarListaConductores() {
+    this.conductores$ = this.conductorService.conductorList().pipe(
+      catchError(error => {
+        console.error('Hubo un error al cargar la lista de conductores', error);
+        this.errorMessage = 'Hubo un error al cargar la lista de conductores.';
+        return of([]);
+      })
+    );
   }
 
-  // Método para buscar un conductor
+  // Metodo para buscar conductor por nombre
   buscarConductor() {
-    if (this.searchText.trim() === '') {
-      // Si no hay texto de búsqueda, cargar todos los conductores
-      this.cargarConductores();
-    } else {
-      this.conductorService.buscarPorNombre(this.searchText).subscribe({
-        next: (conductoresDTO) => {
-          // Convertir ConductorDTO[] a Conductor[]
-          this.conductores = conductoresDTO.map((dto) => ({
-            id: dto.id ?? 0,
-            nombre: dto.nombre,
-            cedula: dto.cedula,
-            telefono: dto.telefono,
-            direccion: dto.direccion,
-          }));
-        },
-        error: (error) => {
-          console.error('Error al buscar conductores:', error);
+    if (this.nombreBuscado.trim() !== '') {
+      this.conductores$ = this.conductorService.buscarConductorPorNombre(this.nombreBuscado).pipe(
+        catchError(error => {
+          console.error('Hubo un error en la búsqueda', error);
           this.errorMessage = 'No se encontraron conductores con ese nombre.';
-        },
-      });
+          return of([]);
+        })
+      );
+    } else {
+      // Si no hay nombre, recargar la lista completa
+      this.cargarListaConductores();
     }
   }
 
-  // Navegar al formulario de añadir conductor
+
+  // Metodo para abrir el formulario de agregar un conductor
   abrirAgregarConductor() {
-    this.router.navigate(['/form/add/conductor']);
+    this.router.navigate(['/conductor/add']);
   }
 
-  // Navegar a la vista para ver buses de un conductor
-  abrirVerBuses(id: number) {
-    this.router.navigate(['/conductor/view', id]);
-  }
-
-  // Navegar a la vista para ver detalles de un conductor
-  abrirVerConductor(id: number) {
-    this.router.navigate(['/conductor/detail', id]);
-  }
-
-  // Navegar al formulario de edición de conductor
-  abrirEditarConductor(id: number) {
-    this.router.navigate(['/form/edit/conductor', id]);
-  }
-
-  // Eliminar un conductor
+  // Metodo para eliminar un conductor
   eliminarConductor(id: number) {
     if (confirm('¿Estás seguro de que quieres eliminar este conductor?')) {
       this.conductorService.eliminarConductor(id).subscribe({
         next: () => {
-          this.cargarConductores(); // Recargar la lista después de eliminar
+          console.log('Conductor eliminado exitosamente');
+          this.cargarListaConductores(); // Recarga la lista de conductores después de la eliminación
         },
-        error: (error) => {
-          console.error('Error al eliminar el conductor:', error);
-          this.errorMessage = 'No se pudo eliminar el conductor.';
-        },
+        error: (err) => {
+          console.error('Error al eliminar el conductor:', err);
+          this.errorMessage = 'Hubo un error al eliminar el conductor.';
+        }
       });
     }
   }
+
+  // Métodos para la navegación
+  abrirConductorView() {
+    this.router.navigate(['/conductor/view/:id']);
+  }
+
+  abrirFormEditConductor() {
+    this.router.navigate(['/conductor/edit/:id']);
+  }
+
 }

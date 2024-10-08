@@ -8,12 +8,12 @@ import com.co.model.Conductor;
 @Component
 public class ConductorDTOConverter {
 
-    // Método para convertir de Conductor a ConductorDTO
+    // Metodo para convertir de Conductor a ConductorDTO
     public ConductorDTO entityToDTO(Conductor conductor) {
         return new ConductorDTO(conductor.getId(),conductor.getNombre(), conductor.getCedula(), conductor.getTelefono(), conductor.getDireccion());
     }
 
-    // Método para convertir de ConductorDTO a Conductor
+    // Metodo para convertir de ConductorDTO a Conductor
     public Conductor DTOToEntity(ConductorDTO conductorDTO) {
         Conductor conductor = new Conductor();
         conductor.setId(conductorDTO.getId());

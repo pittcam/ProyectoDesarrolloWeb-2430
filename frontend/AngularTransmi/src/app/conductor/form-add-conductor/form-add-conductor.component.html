@@ -1,1 +1,28 @@
-<p>form-add-conductor works!</p>
+<div class="container">
+  <div class="form-container">
+    <form (ngSubmit)="onSend(form)" #form="ngForm">
+      <h2>Formulario Conductores</h2>
+      <div class="input-group">
+        <p>Ingrese el nombre: </p>
+        <input type="text" id ="nombre" name="nombre" [(ngModel)]="nombre" required>
+      </div>
+
+      <div class="input-group">
+        <p>Ingrese la cédula: </p>
+        <input type="text" name="cedula" [(ngModel)]="cedula">
+      </div>
+      <div class="input-group">
+        <p>Ingrese el telefono: </p>
+        <input type="text" name="telefono" [(ngModel)]="telefono" required>
+      </div>
+      <div class="input-group">
+        <p>Ingrese la dirección: </p>
+        <input type="text" name="direccion" [(ngModel)]="direccion" required>
+      </div>
+
+      <button type="submit" [disabled]="!form.valid">Enviar</button>
+
+      <p class="volver-link"> <a [routerLink]="['/dashboard-general']">Volver</a></p>
+    </form>
+  </div>
+</div>

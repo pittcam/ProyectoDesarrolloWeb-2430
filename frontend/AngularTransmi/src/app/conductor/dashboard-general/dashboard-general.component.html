@@ -1,42 +1,45 @@
 <div class="general">
-   <div class="search-bar">
-     <input type="text" placeholder="Buscar..." [(ngModel)]="searchText">
-     <button (click)="buscarConductor()">Buscar</button>
-   </div>
-   <h1>Conductores</h1>
- 
-   <div class="btn-add">
-     <button (click)="abrirAgregarConductor()">Añadir conductor</button>
-   </div>
- 
-   <div class="container">
-     <div *ngIf="errorMessage">{{ errorMessage }}</div>
-     <div class="conductores-list">
-       <table>
-         <thead>
-           <tr>
-             <th>Nombre</th>
-             <th>Cédula</th>
-             <th>Teléfono</th>
-             <th>Dirección</th>
-             <th>Acciones</th>
-           </tr>
-         </thead>
-         <tbody>
-           <tr *ngFor="let conductor of conductores">
-             <td>{{ conductor.nombre }}</td>
-             <td>{{ conductor.cedula }}</td>
-             <td>{{ conductor.telefono }}</td>
-             <td>{{ conductor.direccion }}</td>
-             <td>
-               <button class="btn-ver" (click)="abrirVerConductor(conductor.id)">Ver buses</button>
-               <button class="btn-editar" (click)="abrirEditarConductor(conductor.id)">Editar</button>
-               <button class="btn-eliminar" (click)="eliminarConductor(conductor.id)">Eliminar</button>
-             </td>
-           </tr>
-         </tbody>
-       </table>
-     </div>
-   </div>
- </div>
- 
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="nombreBuscado" placeholder="Buscar..." />
+    <button (click)="buscarConductor()">Buscar</button>
+  </div>
+
+  <h1>Conductores</h1>
+
+  <div class="btn-add">
+    <button (click)="abrirAgregarConductor()">Añadir conductor</button>
+  </div>
+
+  <div class="container">
+    <div class="conductores-list">
+      <table>
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera sobre los conductores cuando estén disponibles usando async pipe -->
+        <tr *ngFor="let conductor of conductores$ | async">
+          <td>{{ conductor.nombre }}</td>
+          <td>{{ conductor.cedula }}</td>
+          <td>{{ conductor.telefono }}</td>
+          <td>{{ conductor.direccion }}</td>
+          <td>
+            <button class="btn-ver" (click)="abrirConductorView()">Ver buses</button>
+            <button class="btn-editar" (click)="abrirFormEditConductor()">Editar</button>
+            <button class="btn-eliminar" (click)="eliminarConductor(conductor.id!)">Eliminar</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- Mostrar mensaje de error si algo falla -->
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+  </div>
+</div>

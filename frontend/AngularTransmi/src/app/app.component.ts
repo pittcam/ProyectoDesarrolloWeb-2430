@@ -14,7 +14,10 @@ import { FormAddConductorComponent } from './conductor/form-add-conductor/form-a
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, MenuComponent,RegistrarseComponent, DashboardGeneralComponent, MenuGeneralComponent,CommonModule,ConductorViewComponent, FormAddConductorComponent, FormEditConductorComponent],
+  imports: [RouterOutlet, LoginComponent, MenuComponent,
+    RegistrarseComponent, DashboardGeneralComponent,
+    MenuGeneralComponent,CommonModule,ConductorViewComponent,
+    FormAddConductorComponent, FormEditConductorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
