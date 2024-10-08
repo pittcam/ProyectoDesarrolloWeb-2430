@@ -33,6 +33,7 @@ export class BusService {
     return this.http.get<BusDTO>(`${environment.SERVER_URL}/bus/${id}`);
   }
 
+
   actualizarBus(bus: BusDTO): Observable<any> {
     return this.http.put(`${environment.SERVER_URL}/bus/${bus.id}`, bus, this.httpOptions);
   }

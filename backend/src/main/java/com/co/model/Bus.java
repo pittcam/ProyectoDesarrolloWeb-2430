@@ -27,9 +27,6 @@ public class Bus {
     @Column(name = "modelo", nullable = false)
     private String modelo;
 
-    @ManyToOne
-    @JoinColumn(name = "ruta_id")
-    private Ruta ruta;
 
     // Eliminamos @ManyToMany a conductores y horarios
     // Añadimos la relación con Asignacion

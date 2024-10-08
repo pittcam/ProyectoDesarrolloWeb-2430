@@ -1,1 +1,9 @@
-<p>bus-create works!</p>
+<form (ngSubmit)="crearBus()">
+  <label for="modelo">Modelo:</label>
+  <input type="text" id="modelo" [(ngModel)]="busDTO.modelo" name="modelo" required>
+
+  <label for="numeroPlaca">Número de Placa:</label>
+  <input type="text" id="numeroPlaca" [(ngModel)]="busDTO.numeroPlaca" name="numeroPlaca" required>
+
+  <button type="submit">Crear Bus</button>
+</form>

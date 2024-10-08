@@ -9,10 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class BusDTO {
     private Long id;
-    private Long ruta_id;
     private String numeroPlaca;
     private String modelo;
 
-    public BusDTO(Long id, String numeroPlaca, String modelo) {
-    }
 }

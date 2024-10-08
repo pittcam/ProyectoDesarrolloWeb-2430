@@ -31,7 +31,6 @@ public class BusService {
         return busDTOConverter.entityToDTO(busRepository.findById(id).orElseThrow());
     }
 
-
     // Crear o actualizar un bus
     public BusDTO save(BusDTO busDTO) {
         Bus bus = busDTOConverter.DTOToEntity(busDTO);

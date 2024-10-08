@@ -1,19 +1,17 @@
 <div>
-  <h1>Bus</h1>
+  <h1>Buses</h1>
   <p>{{ errorMessage }}</p>
   <ul *ngIf="allBuses$ | async as allBuses; else loading">
     <li *ngFor="let bus of allBuses">
       {{ bus.numeroPlaca }} <!-- Asegúrate de que las propiedades sean correctas -->
       {{ bus.modelo }}
-
-
+      <button (click)="verBus(bus.id)">Ver</button>
+      <button *ngIf="bus.id !== null" (click)="editarBus(bus.id)">Editar</button>
+      <button (click)="eliminarBus(bus.id)" class="btn btn-danger">Eliminar</button>
     </li>
   </ul>
 </div>
 
-<button (click)="crearBus()">Crear Bus</button>
-
 <ng-template #loading>
   <p>Cargando...</p>
 </ng-template>
-

@@ -60,13 +60,11 @@ public class DBInitializer implements CommandLineRunner {
         Bus bus1 = new Bus();
         bus1.setNumeroPlaca("ABC123");
         bus1.setModelo("Modelo Bus 1");
-        bus1.setRuta(ruta1);
         busRepository.save(bus1);
 
         Bus bus2 = new Bus();
         bus2.setNumeroPlaca("XYZ789");
         bus2.setModelo("Modelo Bus 2");
-        bus2.setRuta(ruta2);
         busRepository.save(bus2);
 
         // Inicializar Conductores

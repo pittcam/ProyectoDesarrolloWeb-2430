@@ -24,7 +24,6 @@ public class BusDTOConverter {
                 bus.getId(),
                 bus.getNumeroPlaca(),
                 bus.getModelo(),
-                null, // Inicializamos la ruta como null; puedes ajustarlo si necesitas
                 new HashSet<>() // Asignaciones se inicializa como un conjunto vacío
         );
     }
