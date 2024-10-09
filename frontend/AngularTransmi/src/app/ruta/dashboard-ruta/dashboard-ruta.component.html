@@ -1,1 +1,75 @@
-<p>dashboard-ruta works!</p>
+<div class="general">
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="nombreBuscado" placeholder="Buscar..." />
+    <button (click)="buscarRuta()">Buscar</button>
+  </div>
+
+  <h1>Rutas con buses asignados</h1>
+
+  <div class="btn-add">
+    <button (click)="abrirAgregarRuta()">Añadir ruta</button>
+  </div>
+
+  <div class="container">
+    <div class="rutas-list-buses-asignados">
+      <table>
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera sobre los conductores cuando estén disponibles usando async pipe -->
+        <tr *ngFor="let ruta of rutas$ | async">
+          <td>{{ ruta.codigo }}</td>
+          <td>{{ ruta.dias }}</td>
+          <td>{{ ruta.horarioInicio }}</td>
+          <td>{{ ruta.horarioFinal }}</td>
+          <td>
+            <button class="btn-ver" (click)="abrirRutaView()">Ver estaciones</button>
+            <button class="btn-editar" (click)="abrirFormEditRuta()">Editar</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <h1>Rutas sin buses asignados</h1>
+
+    <div class="container">
+      <div class="rutas-list-sin-buses">
+        <table>
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Itera sobre las rutas cuando estén disponibles usando async pipe -->
+          <tr *ngFor="let ruta of rutas$ | async">
+            <td>{{ ruta.codigo }}</td>
+            <td>{{ ruta.dias }}</td>
+            <td>{{ ruta.horarioInicio }}</td>
+            <td>{{ ruta.horarioFinal }}</td>
+            <td>
+              <button class="btn-eliminar" (click)="eliminarRuta(ruta.id!)">Eliminar</button>                <button class="btn-editar" (click)="abrirFormEditRuta()">Editar</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+    <!-- Mostrar mensaje de error si algo falla -->
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+</div>
+</div>
+

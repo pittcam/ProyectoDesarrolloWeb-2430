@@ -1,14 +1,16 @@
 package com.co.service;
 
 import com.co.conversion.RutaDTOConverter;
+import com.co.dto.ConductorDTO;
 import com.co.dto.RutaDTO;
+import com.co.model.Conductor;
 import com.co.model.Ruta;
 import com.co.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RutaService {
@@ -28,10 +30,17 @@ public class RutaService {
         return rutaDTOConverter.entityToDTO(rutaRepository.findById(id).orElseThrow());
     }
 
-    /*public List<RutaDTO> buscarRutasPorNombre(String nombre) {
+    //Buscar
+    public List<RutaDTO> buscarRutasPorNombre(String nombre) {
+        // Fetch list of Ruta entities matching the name
         List<Ruta> rutas = rutaRepository.findAllByNombreContainingIgnoreCase(nombre);
-        return rutaDTOConverter.entityToDTO(rutaRepository.save(ruta));
-    }*/
+
+        // Convert the list of Ruta entities to a list of RutaDTOs
+        return rutas.stream()
+                .map(rutaDTOConverter::entityToDTO)
+                .collect(Collectors.toList());
+    }
+
 
     //Crear ruta
     public RutaDTO createRuta(RutaDTO rutaDTO) {
@@ -39,11 +48,16 @@ public class RutaService {
         return rutaDTOConverter.entityToDTO(rutaRepository.save(ruta));
     }
 
-    public Ruta guardar(Ruta ruta) {
-        return rutaRepository.save(ruta);
-    }
-
-    public void eliminar(Long id) {
+    //Borrar ruta
+    public void deleteRuta(Long id) {
         rutaRepository.deleteById(id);
     }
+
+    // Crear o actualizar un conductor
+    public RutaDTO saveRuta(RutaDTO rutaDTO) {
+        Ruta ruta = rutaDTOConverter.DTOToEntity(rutaDTO);
+        return rutaDTOConverter.entityToDTO(rutaRepository.save(ruta));
+    }
+
+
 }

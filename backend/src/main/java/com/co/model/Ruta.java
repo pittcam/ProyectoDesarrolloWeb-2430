@@ -24,12 +24,14 @@ public class Ruta {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    // Eliminamos @OneToMany a buses
-    // Añadimos la relación con Asignacion
-
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
 
-    @OneToMany(mappedBy = "estacion", cascade = CascadeType.ALL,orphanRemoval = true )
+    @ManyToMany
+    @JoinTable(
+            name = "ruta_estacion",
+            joinColumns = @JoinColumn(name = "ruta_id"),
+            inverseJoinColumns = @JoinColumn(name = "estacion_id")
+    )
     private Set<Estacion> estaciones = new HashSet<>();
 }

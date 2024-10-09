@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface RutaRepository extends JpaRepository<Ruta, Long> {
     List<Ruta> findAllByNombreContainingIgnoreCase(String textoBusqueda);
-    List<Ruta> findAllByIdRuta(Iterable<Long> ids);
+    List<Ruta> findAllById(Iterable<Long> ids);
 
     // Consulta personalizada utilizando JPQL para buscar conductores por nombre
     @Query("SELECT r FROM Ruta r WHERE r.nombre LIKE concat(:texto, '%')")
@@ -24,9 +24,7 @@ public interface RutaRepository extends JpaRepository<Ruta, Long> {
     List<Conductor> findAllByNombreStartingWithIgnoreCase2(String texto);
 
     //Metodo para asociar estaciones con ruta
-    @Query("SELECT e.id FROM Estacion e INNER JOIN Ruta r ON e.id_ruta = r.id WHERE r.id = :id_ruta")
+    @Query("SELECT e.id FROM Estacion e INNER JOIN Ruta r ON e.id = r.id WHERE r.id = :id_ruta")
     List<Estacion> findAllByRutaIdRuta(Long id_ruta);
-
-
 
 }

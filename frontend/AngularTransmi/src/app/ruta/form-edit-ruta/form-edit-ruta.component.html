@@ -1,1 +1,74 @@
-<p>form-edit-ruta works!</p>
+<div class="container">
+  <div class="form-container">
+    <form (ngSubmit)="onSend(form)" #form="ngForm">
+      <h2>Editar Ruta</h2>
+
+      <div class="input-group">
+        <p>Ingrese el código: </p>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="rutaDTO.nombre" required>
+      </div>
+
+      <div class="input-group">
+        <p>Ingrese el horario de inicio: </p>
+        <input type="text" name="cedula" [(ngModel)]="rutaDTO.horarioInicio" required>
+      </div>
+
+      <div class="input-group">
+        <p>Ingrese el horario de salida: </p>
+        <input type="text" name="telefono" [(ngModel)]="rutaDTO.horarioFinal" required>
+      </div>
+
+      <p>Seleccione las estaciones que quiere asignar a esta ruta</p>
+      <h2>Estaciones escogidas</h2>
+      <div class="container">
+        <div class="rutas-list-estaciones-escogidas">
+          <table>
+            <thead>
+            <tr>
+              <th>Estacion</th>
+              <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre los conductores cuando estén disponibles usando async pipe -->
+            <tr *ngFor="let estacion of estaciones$ | async">
+              <td>{{ estacion.nombre }}</td>
+              <td>
+                <button class="btn-eliminar" (click)="eliminarEstacion(estacion.id!)">Eliminar</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+          <h2>Estaciones no escogidas</h2>
+      <div class="container">
+        <div class="rutas-list-estaciones-no-escogidas">
+          <table>
+            <thead>
+            <tr>
+              <th>Estacion</th>
+              <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre los conductores cuando estén disponibles usando async pipe -->
+            <tr *ngFor="let estacion of estaciones$ | async">
+              <td>{{ estacion.nombre }}</td>
+              <td>
+                <button class="btn-agregar" (click)="agregarEstacion()">Agregar</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+          <button type="submit" [disabled]="!form.valid">Guardar</button>
+
+      <p class="volver-link"><a [routerLink]="['/dashboardGeneral']">Volver</a></p>
+      <p class="agregar-buses"><a [routerLink]="['add/buses/conductor']">Agregar buses</a></p>
+    </form>
+  </div>
+</div>
+

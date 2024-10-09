@@ -31,8 +31,6 @@ public class Bus {
     @JoinColumn(name = "ruta_id")
     private Ruta ruta;
 
-    // Eliminamos @ManyToMany a conductores y horarios
-    // Añadimos la relación con Asignacion
 
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
