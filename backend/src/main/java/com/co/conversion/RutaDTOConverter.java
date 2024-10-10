@@ -1,10 +1,13 @@
 package com.co.conversion;
 
+import com.co.dto.ConductorDTO;
+import com.co.model.Conductor;
 import org.springframework.stereotype.Component;
 import com.co.dto.RutaDTO;
 import com.co.model.Ruta;
 import com.co.model.Estacion;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,13 @@ public class RutaDTOConverter {
                 estacionesIds,
                 ruta.getHorarioFuncionamiento()
         );
+    }
+
+    // Metodo para convertir una lista de rutas a una lista de ConductorDTOs
+    public List<RutaDTO> entitiesToDTOs(List<Ruta> rutas) {
+        return rutas.stream()
+                .map(this::entityToDTO)  // Convierte cada ruta en ConductorDTO
+                .collect(Collectors.toList());  // Colecta los resultados en una lista
     }
 
     public Ruta dtoToEntity(RutaDTO rutaDTO, Set<Estacion> estaciones) {

@@ -4,29 +4,24 @@ import { Router } from '@angular/router'; // Importar Router
 import { ConductorService } from '../../shared/conductor.service';
 import { ConductorDTO } from '../../dto/conductor-dto';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-conductor-list',
   standalone: true,
-  imports: [NgFor, AsyncPipe, NgIf],
+  imports: [NgFor, AsyncPipe, NgIf, FormsModule],
   templateUrl: './conductor-list.component.html',
   styleUrls: ['./conductor-list.component.css'],
 })
 export class ConductorListComponent implements OnInit {
   allConductors$!: Observable<ConductorDTO[]>;
   errorMessage: string = '';
+  nombreBuscado: string = '';
 
   constructor(private conductorService: ConductorService, private router: Router) {} // Inyectar Router
 
   ngOnInit(): void {
-    this.allConductors$ = this.conductorService.listarConductores()
-      .pipe(
-        catchError(error => {
-          console.log("Hubo un error");
-          this.errorMessage = "Hubo un error";
-          return of([]);
-        })
-      );
+    this.cargarListaConductores()
   }
 
   verConductor(id: number | null): void {
@@ -52,6 +47,35 @@ export class ConductorListComponent implements OnInit {
       }
     }
   }
+
+  cargarListaConductores() {
+    this.allConductors$ = this.conductorService.listarConductores().pipe(
+      catchError(error => {
+        console.error('Hubo un error al cargar la lista de conductores', error);
+        this.errorMessage = 'Hubo un error al cargar la lista de conductores.';
+        return of([]);
+      })
+    );
+  }
+
+
+  // Metodo para buscar conductor por nombre
+  buscarConductor() {
+    if (this.nombreBuscado.trim() !== '') {
+      this.allConductors$ = this.conductorService.buscarConductorPorNombre(this.nombreBuscado).pipe(
+        catchError(error => {
+          console.error('Hubo un error en la búsqueda', error);
+          this.errorMessage = 'No se encontraron conductores con ese nombre.';
+          return of([]);
+        })
+      );
+    } else {
+      // Si no hay nombre, recargar la lista completa
+      this.cargarListaConductores();
+    }
+  }
+
+
 
   editarConductor(id: number): void {
     this.router.navigate(['/conductores/editar', id]);

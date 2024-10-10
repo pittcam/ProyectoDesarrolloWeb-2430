@@ -29,6 +29,10 @@ export class ConductorService {
     );
   }
 
+  buscarConductorPorNombre(nombre: string): Observable<ConductorDTO[]> {
+    return this.http.get<ConductorDTO[]>(`${environment.SERVER_URL}/conductor/search?nombre=${nombre}`);
+  }
+
   recuperarConductorPorId(id: number): Observable<ConductorDTO> {
       return this.http.get<ConductorDTO>(`${environment.SERVER_URL}/conductor/${id}`);
   }

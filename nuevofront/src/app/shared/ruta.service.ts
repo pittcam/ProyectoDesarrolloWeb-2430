@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { RutaDTO } from '../dto/ruta-dto';
+import {ConductorDTO} from '../dto/conductor-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,10 @@ export class RutaService {
   // Actualizar una ruta existente
   actualizarRuta(id: number, ruta: RutaDTO): Observable<void> {
     return this.http.put<void>(`${environment.SERVER_URL}/rutas/${id}`, ruta, this.httpOptions);
+  }
+
+  buscarRutaPorNombre(nombre: string): Observable<RutaDTO[]> {
+    return this.http.get<RutaDTO[]>(`${environment.SERVER_URL}/ruta/search?nombre=${nombre}`);
   }
 
   // Obtener rutas disponibles (modificación redundante)

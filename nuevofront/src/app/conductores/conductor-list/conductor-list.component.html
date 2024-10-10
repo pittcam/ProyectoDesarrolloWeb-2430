@@ -1,4 +1,11 @@
 <div class="conductor-container">
+
+  <div class="general">
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="nombreBuscado" placeholder="Buscar..." />
+      <button (click)="buscarConductor()">Buscar</button>
+    </div>
+
   <h1>Lista de Conductores</h1>
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 

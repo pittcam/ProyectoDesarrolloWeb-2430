@@ -1,7 +1,9 @@
 package com.co.service;
 
 import com.co.conversion.RutaDTOConverter;
+import com.co.dto.ConductorDTO;
 import com.co.dto.RutaDTO;
+import com.co.model.Conductor;
 import com.co.model.Ruta;
 import com.co.model.Estacion;
 import com.co.repository.RutaRepository;
@@ -87,5 +89,11 @@ public class RutaService {
         return rutaRepository.findAll().stream()
                 .map(rutaDTOConverter::entityToDTO)
                 .collect(Collectors.toList());
+    }
+
+    // Buscar ruta por nombre
+    public List<RutaDTO> buscarRutasPorNombre(String nombre) {
+        List<Ruta> rutas = rutaRepository.findAllByNombreContainingIgnoreCase(nombre);
+        return rutaDTOConverter.entitiesToDTOs(rutas);
     }
 }

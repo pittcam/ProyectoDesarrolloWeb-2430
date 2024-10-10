@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/conductor")
@@ -23,6 +24,14 @@ public class ConductorController {
         Thread.sleep(2000);
         List<Conductor> conductors = conductorService.getAllConductores();
         return conductors;
+    }
+
+    // Nuevo endpoint para buscar conductores por nombre
+    @GetMapping("/search")
+    public ResponseEntity<List<ConductorDTO>> buscarConductoresPorNombre(@RequestParam String nombre) {
+        List<ConductorDTO> conductores = conductorService
+                .buscarConductoresPorNombre(nombre);
+        return new ResponseEntity<>(conductores, HttpStatus.OK);
     }
 
     // http://localhost:8080/conductor/1

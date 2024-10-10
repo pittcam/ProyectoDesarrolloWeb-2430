@@ -6,6 +6,8 @@ import com.co.dto.ConductorDTO;
 import com.co.model.Conductor;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ConductorDTOConverter {
@@ -19,6 +21,13 @@ public class ConductorDTOConverter {
                 conductor.getTelefono(),
                 conductor.getDireccion()
         );
+    }
+
+    // Metodo para convertir una lista de Conductores a una lista de ConductorDTOs
+    public List<ConductorDTO> entitiesToDTOs(List<Conductor> conductores) {
+        return conductores.stream()
+                .map(this::entityToDTO)  // Convierte cada conductor en ConductorDTO
+                .collect(Collectors.toList());  // Colecta los resultados en una lista
     }
 
     // Convertir de DTO a entidad
