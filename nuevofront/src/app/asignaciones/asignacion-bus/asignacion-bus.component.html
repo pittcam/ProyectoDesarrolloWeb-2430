@@ -2,6 +2,7 @@
   <h2>Asignar Bus al Conductor</h2>
 
   <form (ngSubmit)="asignarBus()" class="bus-assignment-form">
+    <!-- Selección de Bus -->
     <div class="form-group">
       <label for="bus">Seleccionar Bus:</label>
       <select id="bus" [(ngModel)]="selectedBusId" name="bus" required>

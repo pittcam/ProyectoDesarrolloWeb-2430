@@ -31,7 +31,7 @@ export class RutasListComponent implements OnInit{
 
   verRuta(id: number | null): void {
     if (id !== null) {
-      this.router.navigate(['/ruta/ver', id]); // Redirigir a la vista de la ruta con el id
+      this.router.navigate(['/consulta', id]); // Redirigir a la vista de la ruta con el id
     }
   }
 

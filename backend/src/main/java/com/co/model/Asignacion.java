@@ -23,12 +23,10 @@ public class Asignacion {
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "bus_id")
-    @NotNull(message = "Debe seleccionar al menos un bus.")
     private Bus bus;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "conductor_id")
-    @NotNull(message = "Debe seleccionar un conductor.")
     private Conductor conductor;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
@@ -37,6 +35,5 @@ public class Asignacion {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "horario_id")
-    @NotNull(message = "Debe seleccionar al menos un horario.")
     private Horario horario;
 }

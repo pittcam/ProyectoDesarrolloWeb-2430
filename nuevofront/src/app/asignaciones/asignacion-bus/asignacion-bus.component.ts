@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BusService } from '../../shared/bus.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,18 +16,26 @@ import { AsignacionDTO } from '../../dto/asignacion-dto';
 export class AsignacionBusComponent implements OnInit {
   buses: any[] = [];
   selectedBusId: number | null = null;
-  conductorId!: number;
+  conductorId: number | null = null;  // ID del conductor que se toma de la URL
   mensaje: string | null = null;
 
   constructor(
     private busService: BusService,
     private asignacionService: AsignacionService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute // Para obtener el ID del conductor desde la URL
   ) {}
 
   ngOnInit() {
     this.cargarBusesDisponibles();
+    // Obtener el ID del conductor desde la URL
+    this.conductorId = Number(this.route.snapshot.paramMap.get('conductorId'));
+
+    if (!this.conductorId) {
+      this.mensaje = 'Error: No se ha proporcionado un conductor válido.';
+    }
   }
+
 
   cargarBusesDisponibles() {
     this.busService.getBusesDisponibles().subscribe(
@@ -46,26 +54,45 @@ export class AsignacionBusComponent implements OnInit {
   }
 
   asignarBus() {
-    if (this.selectedBusId && this.conductorId) {
-      const asignacion: AsignacionDTO = {
-        busId: this.selectedBusId,
-        conductorId: this.conductorId,
-        // rutaId y horarioId se pueden agregar si tienes valores para ellos
-      };
-
-      this.asignacionService.asignarBus(asignacion).subscribe(
-        () => {
-          this.mensaje = "Bus asignado exitosamente.";
-          this.router.navigate(['/conductores']);
-        },
-        (error) => {
-          this.mensaje = error.error?.message || "Error al asignar el bus. Intenta nuevamente.";
-          console.error('Error al asignar el bus:', error);
-        }
-      );
-    } else {
-      this.mensaje = "Por favor, selecciona un bus y proporciona el ID del conductor.";
-      console.error('No se ha seleccionado ningún bus o no se ha proporcionado el ID del conductor.');
+    // Verificar si el conductorId es válido
+    if (!this.conductorId) {
+      this.mensaje = "No se ha seleccionado un conductor válido. Por favor, inténtalo nuevamente.";
+      console.error('Error: El ID del conductor es nulo o inválido.');
+      return;
     }
+
+    // Verificar si se ha seleccionado un bus
+    if (!this.selectedBusId) {
+      this.mensaje = "Por favor, selecciona un bus para asignar.";
+      console.error('Error: No se ha seleccionado ningún bus.');
+      return;
+    }
+
+    const busIdNumber = Number(this.selectedBusId);
+
+    // Verificar si el bus seleccionado es válido (es un número)
+    if (isNaN(busIdNumber)) {
+      this.mensaje = "Por favor, selecciona un bus válido.";
+      console.error('Error: El ID del bus seleccionado no es un número válido.');
+      return;
+    }
+
+    // Si todo es válido, proceder a la asignación
+    const asignacion: AsignacionDTO = {
+      busId: busIdNumber,
+      conductorId: this.conductorId
+    };
+
+    this.asignacionService.asignarBus(asignacion).subscribe(
+      () => {
+        this.mensaje = "Bus asignado exitosamente.";
+        this.router.navigate(['/conductores']);
+      },
+      (error) => {
+        this.mensaje = error.error?.message || "Error al asignar el bus. Intenta nuevamente.";
+        console.error('Error al asignar el bus:', error);
+      }
+    );
   }
+
 }

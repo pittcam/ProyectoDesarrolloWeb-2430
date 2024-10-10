@@ -21,12 +21,12 @@ export class ConductorListComponent implements OnInit {
   constructor(private conductorService: ConductorService, private router: Router) {} // Inyectar Router
 
   ngOnInit(): void {
-    this.cargarListaConductores()
+    this.cargarListaConductores();
   }
 
   verConductor(id: number | null): void {
     if (id !== null) {
-      this.router.navigate(['/conductores/ver', id]); // Navegar usando id
+      this.router.navigate(['/conductores/ver', id]); // Navegar con el ID del conductor
     }
   }
 

@@ -33,9 +33,8 @@ export const routes: Routes = [
   { path: 'rutas/editar/:id', component: RutaEditComponent },
   { path: 'rutas', component: RutaListComponent },
   { path: 'usuario', component: RutasListComponent},
-  { path: 'ruta/ver', component: RutasViewComponent},
-
-  { path: 'asignaciones/asignar-bus/:id', component: AsignacionBusComponent },
+  { path: 'consulta/:id', component: RutasViewComponent},
+  { path: 'asignaciones/asignar-bus/:conductorId', component: AsignacionBusComponent},
   { path: 'asignaciones/asignar-ruta/:id', component: AsignacionRutaComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Redirección al dashboard
 ];

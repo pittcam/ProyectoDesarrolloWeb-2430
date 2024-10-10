@@ -10,6 +10,14 @@
       <p><strong>Dirección:</strong> <span>{{ conductor.direccion }}</span></p>
     </div>
 
+    <h3>Buses Asignados</h3>
+    <ul *ngIf="busesAsignados$ | async as busesAsignados; else noBuses">
+      <li *ngFor="let bus of busesAsignados">{{ bus.modelo }} - {{ bus.numeroPlaca }}</li>
+    </ul>
+    <ng-template #noBuses>
+      <p>No tiene ningún bus asignado.</p>
+    </ng-template>
+
     <button
       [disabled]="!conductor.id"
       (click)="asignarBus(conductor.id)"
