@@ -1,6 +1,7 @@
 package com.co.controller;
 
 import com.co.dto.AsignacionDTO;
+import com.co.dto.BusDTO;
 import com.co.dto.HorarioDTO;
 import com.co.dto.RutaDTO;
 import com.co.model.Asignacion;
@@ -11,10 +12,13 @@ import com.co.service.HorarioService;
 import com.co.service.RutaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/asignacion")
@@ -50,6 +54,20 @@ public class AsignacionController {
     public Asignacion crearAsignacion(@Valid @RequestBody AsignacionDTO asignacionDTO) {
         return asignacionService.guardar(asignacionDTO);
     }
+
+    // Endpoint para obtener los buses asignados a un conductor
+    @GetMapping("/conductor/{conductorId}/buses")
+    public ResponseEntity<List<BusDTO>> obtenerBusesPorConductor(@PathVariable Long conductorId) {
+        List<Bus> busesAsignados = asignacionService.obtenerBusesPorConductorId(conductorId);
+        if (busesAsignados.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            List<BusDTO> busesDTO = busesAsignados.stream()
+                    .map(bus -> new BusDTO(bus.getId(), bus.getNumeroPlaca(), bus.getModelo()))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(busesDTO, HttpStatus.OK);
+        }
+}
 
     // Asignar ruta a un bus
     @PostMapping("/asignar")

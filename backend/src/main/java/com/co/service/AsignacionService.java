@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AsignacionService {
@@ -44,24 +45,40 @@ public class AsignacionService {
     }
 
     // Guardar una nueva asignación a partir de AsignacionDTO
+    // Guardar una nueva asignación a partir de AsignacionDTO
     public Asignacion guardar(AsignacionDTO asignacionDTO) {
         // Validar que el bus y el conductor existan
         Bus bus = busRepository.findById(asignacionDTO.getBusId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bus no válido"));
+
         Conductor conductor = conductorRepository.findById(asignacionDTO.getConductorId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Conductor no válido"));
-        Ruta ruta = rutaRepository.findById(asignacionDTO.getRutaId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ruta no válida"));
+
+        // Validar la ruta solo si está presente
+        Ruta ruta = null;
+        if (asignacionDTO.getRutaId() != null) {
+            ruta = rutaRepository.findById(asignacionDTO.getRutaId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ruta no válida"));
+        }
 
         // Crear y guardar la asignación
         Asignacion asignacion = new Asignacion();
         asignacion.setBus(bus);
         asignacion.setConductor(conductor);
-        asignacion.setRuta(ruta);
-        // Aquí podrías agregar lógica para el horario si es necesario
+        if (ruta != null) {
+            asignacion.setRuta(ruta);
+        }
 
         return asignacionRepository.save(asignacion);
     }
+
+    // Obtener los buses asignados a un conductor
+    public List<Bus> obtenerBusesPorConductorId(Long conductorId) {
+        List<Asignacion> asignaciones = asignacionRepository.findByConductorId(conductorId);
+        return asignaciones.stream().map(Asignacion::getBus).collect(Collectors.toList());
+    }
+
+
 
     // Asignar ruta a un bus usando DTO
     public Asignacion asignarRutaABus(Long busId, Long rutaId) {

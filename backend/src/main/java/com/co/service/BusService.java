@@ -27,13 +27,17 @@ public class BusService {
     }
 
     public List<Bus> getBusesDisponibles() {
-        return busRepository.findBusesDisponibles();
+        List<Bus> disponibles = busRepository.findBusesDisponibles();
+        System.out.println("Buses disponibles: " + disponibles);  // Añade este log
+        return disponibles;
     }
 
     // Obtener un bus por ID
     public BusDTO getBus(Long id) {
         return busDTOConverter.entityToDTO(busRepository.findById(id).orElseThrow());
     }
+
+
 
     // Crear o actualizar un bus
     public BusDTO save(BusDTO busDTO) {
@@ -48,6 +52,8 @@ public class BusService {
         }
         busRepository.deleteById(id);
     }
+
+
 
     public BusDTO createBus(BusDTO busDTO) {
         Bus bus = busDTOConverter.DTOToEntity(busDTO);
