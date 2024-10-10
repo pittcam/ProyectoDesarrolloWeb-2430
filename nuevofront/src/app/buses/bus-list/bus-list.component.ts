@@ -56,4 +56,8 @@ export class BusListComponent implements OnInit {
   editarBus(id: number): void {
     this.router.navigate(['/buses/editar', id]);
   }
+
+  crearBus(): void {
+    this.router.navigate(['/buses/crear']); // Asegúrate de que la ruta sea la correcta
+  }
 }

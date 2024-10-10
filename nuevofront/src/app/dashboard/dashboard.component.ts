@@ -16,6 +16,10 @@ export class DashboardComponent {
   }
 
   abrirGestionarBuses() {
-    this.router.navigate(['/buses']);
+    this.router.navigate(['/buses']); // Navega a la pantalla de gestionar buses
+  }
+
+  abrirGestionarRutas() {
+    this.router.navigate(['/rutas']); // Navega a la pantalla de gestionar rutas
   }
 }

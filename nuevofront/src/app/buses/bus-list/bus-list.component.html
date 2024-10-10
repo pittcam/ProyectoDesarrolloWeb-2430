@@ -1,6 +1,10 @@
 <div>
   <h1>Buses</h1>
   <p>{{ errorMessage }}</p>
+
+  <!-- Botón para crear un nuevo bus -->
+  <button (click)="crearBus()">Crear Bus</button>
+
   <ul *ngIf="allBuses$ | async as allBuses; else loading">
     <li *ngFor="let bus of allBuses">
       {{ bus.numeroPlaca }} <!-- Asegúrate de que las propiedades sean correctas -->

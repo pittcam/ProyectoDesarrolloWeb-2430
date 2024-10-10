@@ -1,0 +1,25 @@
+<div *ngIf="ruta$ | async as ruta; else loading">
+  <h2>Detalles de la Ruta</h2>
+  <p><strong>ID:</strong> {{ ruta.id }}</p>
+  <p><strong>Nombre:</strong> {{ ruta.nombre }}</p>
+
+  <p><strong>Estaciones:</strong></p>
+  <ul>
+    <li *ngFor="let estacion of (estaciones$ | async) as estaciones">
+      <span *ngIf="ruta.estacionesIds.includes(estacion.id)">
+        {{ estacion.nombre }}
+      </span>
+    </li>
+  </ul>
+
+  <ng-container *ngIf="horarioSeleccionado">
+    <p><strong>Horario:</strong> {{ horarioSeleccionado.horaInicio }} - {{ horarioSeleccionado.horaFin }}</p>
+  </ng-container>
+  <p *ngIf="!horarioSeleccionado"><strong>Horario:</strong> No hay horario disponible.</p>
+
+  <button (click)="volver()">Volver a la lista</button>
+</div>
+
+<ng-template #loading>
+  <p>Cargando...</p>
+</ng-template>

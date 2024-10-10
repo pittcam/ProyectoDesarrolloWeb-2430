@@ -1,9 +1,9 @@
 package com.co.controller;
 
+import com.co.dto.HorarioDTO;
+import com.co.dto.RutaDTO;
 import com.co.model.Asignacion;
 import com.co.model.Bus;
-import com.co.model.Horario;
-import com.co.model.Ruta;
 import com.co.service.AsignacionService;
 import com.co.service.BusService;
 import com.co.service.HorarioService;
@@ -76,12 +76,12 @@ public class AsignacionController {
     }
 
     @GetMapping("/horarios")
-    public List<Horario> listarHorarios() {
-        return horarioService.findAll();
+    public List<HorarioDTO> listarHorarios() {
+        return horarioService.obtenerHorarios();
     }
 
     @GetMapping("/rutas")
-    public List<Ruta> listarRutas() {
-        return rutaService.obtenerTodos();
+    public List<RutaDTO> listarRutas() {
+        return rutaService.listarRutas();
     }
 }

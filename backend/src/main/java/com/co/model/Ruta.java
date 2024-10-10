@@ -24,9 +24,22 @@ public class Ruta {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    // Eliminamos @OneToMany a buses
-    // Añadimos la relación con Asignacion
+    // Relación de muchos a muchos con estaciones
+    @ManyToMany
+    @JoinTable(
+            name = "ruta_estacion",
+            joinColumns = @JoinColumn(name = "ruta_id"),
+            inverseJoinColumns = @JoinColumn(name = "estacion_id")
+    )
+    private Set<Estacion> estaciones = new HashSet<>();
 
+    // IDs de los horarios de funcionamiento
+    @ElementCollection
+    @CollectionTable(name = "ruta_horario", joinColumns = @JoinColumn(name = "ruta_id"))
+    @Column(name = "horario_id") // Almacena los IDs de los horarios
+    private Set<Long> horarioFuncionamiento = new HashSet<>();
+
+    // Relación con asignaciones de buses
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
 }
