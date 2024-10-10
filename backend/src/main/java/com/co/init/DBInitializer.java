@@ -66,13 +66,13 @@ public class DBInitializer implements CommandLineRunner {
 
         // Inicializar Rutas
         Ruta ruta1 = new Ruta();
-        ruta1.setNombre("Ruta 1");
+        ruta1.setNombre("T40");
         ruta1.setEstaciones(new HashSet<>(Set.of(estacion1, estacion2))); // Asignar estaciones a la ruta
         ruta1.getHorarioFuncionamiento().add(horario1.getId()); // Agregar ID del horario
         rutaRepository.save(ruta1);
 
         Ruta ruta2 = new Ruta();
-        ruta2.setNombre("Ruta 2");
+        ruta2.setNombre("K86");
         ruta2.setEstaciones(new HashSet<>(Set.of(estacion1))); // Asignar una estación a la ruta
         ruta2.getHorarioFuncionamiento().add(horario2.getId()); // Agregar ID del horario
         rutaRepository.save(ruta2);

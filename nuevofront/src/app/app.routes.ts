@@ -14,6 +14,7 @@ import { RutaViewComponent } from './rutas/ruta-view/ruta-view.component';
 import { RutaEditComponent } from './rutas/ruta-edit/ruta-edit.component';
 import { AsignacionBusComponent } from './asignaciones/asignacion-bus/asignacion-bus.component';
 import { AsignacionRutaComponent } from './asignaciones/asignacion-ruta/asignacion-ruta.component';
+import { RutasListComponent} from './usuario/rutas-list/rutas-list.component';
 import { RutasViewComponent} from './usuario/rutas-view/rutas-view.component';
 
 
@@ -31,7 +32,9 @@ export const routes: Routes = [
   { path: 'rutas/ver/:id', component: RutaViewComponent },
   { path: 'rutas/editar/:id', component: RutaEditComponent },
   { path: 'rutas', component: RutaListComponent },
-  { path: 'usuario', component: RutasViewComponent},
+  { path: 'usuario', component: RutasListComponent},
+  { path: 'ruta/ver', component: RutasViewComponent},
+
   { path: 'asignaciones/asignar-bus/:id', component: AsignacionBusComponent },
   { path: 'asignaciones/asignar-ruta/:id', component: AsignacionRutaComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Redirección al dashboard

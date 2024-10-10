@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RutasViewComponent } from './rutas-view.component';
+import { RutasListComponent } from './rutas-list.component';
 
 describe('RutasViewComponent', () => {
-  let component: RutasViewComponent;
-  let fixture: ComponentFixture<RutasViewComponent>;
+  let component: RutasListComponent;
+  let fixture: ComponentFixture<RutasListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RutasViewComponent]
+      imports: [RutasListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RutasViewComponent);
+    fixture = TestBed.createComponent(RutasListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
