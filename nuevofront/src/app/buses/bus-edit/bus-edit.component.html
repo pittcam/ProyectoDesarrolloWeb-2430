@@ -1,7 +1,7 @@
-<div class="container">
+<div class="editar-bus-container">
   <h2>Editar Bus</h2>
 
-  <form (ngSubmit)="actualizarBus()">
+  <form (ngSubmit)="actualizarBus()" class="bus-edit-form">
     <div class="form-group">
       <label for="numeroPlaca">Número de Placa:</label>
       <input type="text" id="numeroPlaca" [(ngModel)]="busDTO.numeroPlaca" name="numeroPlaca" required>
@@ -12,7 +12,9 @@
       <input type="text" id="modelo" [(ngModel)]="busDTO.modelo" name="modelo" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Actualizar Bus</button>
-    <button type="button" class="btn btn-secondary" (click)="verBuses()">Cancelar</button>
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-update">Actualizar Bus</button>
+      <button type="button" class="btn btn-cancel" (click)="verBuses()">Cancelar</button>
+    </div>
   </form>
 </div>

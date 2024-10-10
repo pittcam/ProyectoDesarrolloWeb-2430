@@ -104,16 +104,18 @@ public class DBInitializer implements CommandLineRunner {
         conductorRepository.save(conductor2);
 
         // Opcional: Crear asignaciones
-        // Asignacion asignacion1 = new Asignacion();
-        // asignacion1.setBus(bus1);
-        // asignacion1.setRuta(ruta1);
-        // asignacion1.setHorario(horario1);
-        // asignacionRepository.save(asignacion1);
+        Asignacion asignacion1 = new Asignacion();
+        asignacion1.setBus(bus1);
+        asignacion1.setRuta(ruta1);
+        asignacion1.setHorario(horario1);
+        asignacion1.setConductor(conductor1); // Asignar conductor
+        asignacionRepository.save(asignacion1);
 
-        // Asignacion asignacion2 = new Asignacion();
-        // asignacion2.setBus(bus2);
-        // asignacion2.setRuta(ruta2);
-        // asignacion2.setHorario(horario2);
-        // asignacionRepository.save(asignacion2);
+        Asignacion asignacion2 = new Asignacion();
+        asignacion2.setBus(bus2);
+        asignacion2.setRuta(ruta2);
+        asignacion2.setHorario(horario2);
+        asignacion2.setConductor(conductor2); // Asignar conductor
+        asignacionRepository.save(asignacion2);
     }
 }

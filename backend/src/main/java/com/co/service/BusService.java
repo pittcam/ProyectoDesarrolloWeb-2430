@@ -26,6 +26,10 @@ public class BusService {
         return busRepository.findAll();
     }
 
+    public List<Bus> getBusesDisponibles() {
+        return busRepository.findBusesDisponibles();
+    }
+
     // Obtener un bus por ID
     public BusDTO getBus(Long id) {
         return busDTOConverter.entityToDTO(busRepository.findById(id).orElseThrow());

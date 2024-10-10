@@ -1,17 +1,20 @@
-<div>
+<div class="bus-list-container">
   <h1>Buses</h1>
   <p>{{ errorMessage }}</p>
 
   <!-- Botón para crear un nuevo bus -->
-  <button (click)="crearBus()">Crear Bus</button>
+  <button (click)="crearBus()" class="create-button">Crear Bus</button>
 
-  <ul *ngIf="allBuses$ | async as allBuses; else loading">
-    <li *ngFor="let bus of allBuses">
-      {{ bus.numeroPlaca }} <!-- Asegúrate de que las propiedades sean correctas -->
-      {{ bus.modelo }}
-      <button (click)="verBus(bus.id)">Ver</button>
-      <button *ngIf="bus.id !== null" (click)="editarBus(bus.id)">Editar</button>
-      <button (click)="eliminarBus(bus.id)" class="btn btn-danger">Eliminar</button>
+  <ul *ngIf="allBuses$ | async as allBuses; else loading" class="bus-list">
+    <li *ngFor="let bus of allBuses" class="bus-item">
+      <span class="bus-info">
+        {{ bus.numeroPlaca }} - {{ bus.modelo }} <!-- Asegúrate de que las propiedades sean correctas -->
+      </span>
+      <div class="bus-buttons">
+        <button (click)="verBus(bus.id)" class="view-button">Ver</button>
+        <button *ngIf="bus.id !== null" (click)="editarBus(bus.id)" class="edit-button">Editar</button>
+        <button (click)="eliminarBus(bus.id)" class="delete-button">Eliminar</button>
+      </div>
     </li>
   </ul>
 </div>

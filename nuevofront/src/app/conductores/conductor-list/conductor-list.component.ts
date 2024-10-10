@@ -34,25 +34,30 @@ export class ConductorListComponent implements OnInit {
       this.router.navigate(['/conductores/ver', id]); // Navegar usando id
     }
   }
-    eliminarConductor(id: number | null): void {
-      if (id !== null) {
-        const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este conductor?');
-        if (confirmDelete) {
-          this.conductorService.eliminarConductor(id).subscribe({
-            next: () => {
-              console.log('Conductor eliminado con éxito');
-              this.ngOnInit(); // Volver a cargar la lista después de eliminar
-            },
-            error: (error: any) => {
-              console.log(error);
-              this.errorMessage = "Error al eliminar el conductor.";
-            },
-          });
-        }
+
+  eliminarConductor(id: number | null): void {
+    if (id !== null) {
+      const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este conductor?');
+      if (confirmDelete) {
+        this.conductorService.eliminarConductor(id).subscribe({
+          next: () => {
+            console.log('Conductor eliminado con éxito');
+            this.ngOnInit(); // Volver a cargar la lista después de eliminar
+          },
+          error: (error: any) => {
+            console.log(error);
+            this.errorMessage = "Error al eliminar el conductor.";
+          },
+        });
       }
     }
+  }
 
   editarConductor(id: number): void {
     this.router.navigate(['/conductores/editar', id]);
+  }
+
+  crearConductor(): void { // Método para crear conductor
+    this.router.navigate(['/crear-conductor']); // Cambia la ruta si es necesario
   }
 }

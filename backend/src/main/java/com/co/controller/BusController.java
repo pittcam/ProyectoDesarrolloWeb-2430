@@ -32,6 +32,11 @@ public class BusController {
         return buses;
     }
 
+    @GetMapping("/disponibles")
+    public List<Bus> recuperarBusesDisponibles() {
+        return busService.getBusesDisponibles();
+    }
+
     // Obtener un bus por ID
     @GetMapping("/{id}")
     public BusDTO recuperarBus(@PathVariable Long id) {

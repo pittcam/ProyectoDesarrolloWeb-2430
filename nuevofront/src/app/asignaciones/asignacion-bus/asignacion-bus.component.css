@@ -1,4 +1,4 @@
-.editar-conductor-container {
+.asignar-bus-container {
   max-width: 500px; /* Ancho máximo para el contenedor */
   margin: 0 auto; /* Centrar horizontalmente */
   padding: 20px; /* Espaciado interno */
@@ -22,7 +22,7 @@ label {
   color: #555; /* Color del texto */
 }
 
-input {
+select {
   width: 100%; /* Ocupa todo el ancho */
   padding: 10px; /* Espaciado interno */
   border: 1px solid #ccc; /* Borde gris */
@@ -30,14 +30,12 @@ input {
   font-size: 16px; /* Tamaño de fuente */
 }
 
-.form-buttons {
-  display: flex; /* Usar flexbox para botones */
-  justify-content: space-between; /* Espacio entre los botones */
-  margin-top: 20px; /* Margen superior para los botones */
-}
-
-.btn {
+.confirm-button {
+  display: block; /* Botón en bloque */
+  width: 100%; /* Ocupa todo el ancho */
   padding: 10px; /* Espaciado interno */
+  background-color: #4CAF50; /* Color verde */
+  color: white; /* Texto blanco */
   border: none; /* Sin borde */
   border-radius: 5px; /* Bordes redondeados */
   cursor: pointer; /* Cambiar cursor al pasar por encima */
@@ -45,20 +43,12 @@ input {
   transition: background-color 0.3s; /* Transición suave para el color de fondo */
 }
 
-.btn-update {
-  background-color: #4CAF50; /* Color verde */
-  color: white; /* Texto blanco */
-}
-
-.btn-update:hover {
+.confirm-button:hover {
   background-color: #45a049; /* Color más oscuro al pasar el ratón */
 }
 
-.btn-cancel {
-  background-color: #f44336; /* Color rojo */
-  color: white; /* Texto blanco */
-}
-
-.btn-cancel:hover {
-  background-color: #e53935; /* Color más oscuro al pasar el ratón */
+.message {
+  margin-top: 15px; /* Margen arriba del mensaje */
+  text-align: center; /* Centrar el mensaje */
+  color: #4CAF50; /* Color verde para mensajes de éxito */
 }

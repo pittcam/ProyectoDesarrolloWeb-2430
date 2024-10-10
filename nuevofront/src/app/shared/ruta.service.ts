@@ -5,14 +5,15 @@ import { environment } from '../../environments/environment.development';
 import { RutaDTO } from '../dto/ruta-dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RutaService {
   private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
+
   constructor(private http: HttpClient) {}
 
   // Obtener todas las rutas
@@ -20,20 +21,38 @@ export class RutaService {
     return this.http.get<RutaDTO[]>(`${environment.SERVER_URL}/rutas`);
   }
 
+  // Obtener rutas disponibles (puedes modificar esta URL según tu API)
+  obtenerRutasDisponibles(): Observable<RutaDTO[]> {
+    return this.http.get<RutaDTO[]>(`${environment.SERVER_URL}/rutas/disponibles`);
+  }
+
   // Eliminar una ruta por su ID
   eliminarRuta(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.SERVER_URL}/rutas/${id}`);
   }
 
+  // Crear una nueva ruta
   crearRuta(ruta: RutaDTO): Observable<RutaDTO> {
-    return this.http.post<RutaDTO>(`${environment.SERVER_URL}/rutas`, ruta);
+    return this.http.post<RutaDTO>(`${environment.SERVER_URL}/rutas`, ruta, this.httpOptions);
   }
 
+  // Obtener una ruta por su ID
   obtenerRuta(id: number): Observable<RutaDTO> {
     return this.http.get<RutaDTO>(`${environment.SERVER_URL}/rutas/${id}`);
   }
 
+  // Actualizar una ruta existente
   actualizarRuta(id: number, ruta: RutaDTO): Observable<void> {
-    return this.http.put<void>(`${environment.SERVER_URL}/rutas/${id}`, ruta);
+    return this.http.put<void>(`${environment.SERVER_URL}/rutas/${id}`, ruta, this.httpOptions);
+  }
+
+  // Obtener rutas disponibles (modificación redundante)
+  getRutasDisponibles(): Observable<RutaDTO[]> {
+    return this.http.get<RutaDTO[]>(`${environment.SERVER_URL}/rutas/disponibles`); // Asegúrate de que esta ruta sea correcta
+  }
+
+  // Nuevo método para obtener rutas por bus
+  obtenerRutasPorBus(busId: number): Observable<RutaDTO[]> {
+    return this.http.get<RutaDTO[]>(`${environment.SERVER_URL}/rutas/bus/${busId}`, this.httpOptions);
   }
 }

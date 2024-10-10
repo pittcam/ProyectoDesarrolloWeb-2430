@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConductorService } from '../../shared/conductor.service';
 import { ConductorDTO } from '../../dto/conductor-dto';
 import { catchError, of, Observable } from 'rxjs';
@@ -18,7 +18,8 @@ export class ConductorViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private conductorService: ConductorService
+    private conductorService: ConductorService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,5 +34,13 @@ export class ConductorViewComponent implements OnInit {
           return of(null);  // Devolvemos un observable nulo en caso de error
         })
       );
+  }
+
+  asignarBus(conductorId: number | null): void {
+    if (conductorId !== null) { // Asegúrate de que conductorId no sea null
+      this.router.navigate(['/asignaciones/asignar-bus', conductorId]);
+    } else {
+      console.error('El ID del conductor es nulo');
+    }
   }
 }

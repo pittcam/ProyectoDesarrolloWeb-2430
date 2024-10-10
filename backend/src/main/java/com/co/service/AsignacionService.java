@@ -1,11 +1,19 @@
 package com.co.service;
 
+import com.co.dto.AsignacionDTO;
+import com.co.dto.RutaDTO;
 import com.co.model.Asignacion;
-import com.co.model.Conductor;
 import com.co.model.Bus;
+import com.co.model.Conductor;
+import com.co.model.Ruta;
 import com.co.repository.AsignacionRepository;
+import com.co.repository.BusRepository;
+import com.co.repository.ConductorRepository;
+import com.co.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +24,63 @@ public class AsignacionService {
     @Autowired
     private AsignacionRepository asignacionRepository;
 
-    public List<Asignacion> findByConductor(Conductor conductor) {
-        return asignacionRepository.findByConductor(conductor);
+    @Autowired
+    private BusRepository busRepository;
+
+    @Autowired
+    private ConductorRepository conductorRepository;
+
+    @Autowired
+    private RutaRepository rutaRepository;
+
+    // Obtener todas las asignaciones
+    public List<Asignacion> obtenerTodos() {
+        return asignacionRepository.findAll();
+    }
+
+    // Obtener una asignación por ID
+    public Optional<Asignacion> obtenerPorId(Long id) {
+        return asignacionRepository.findById(id);
+    }
+
+    // Guardar una nueva asignación a partir de AsignacionDTO
+    public Asignacion guardar(AsignacionDTO asignacionDTO) {
+        // Validar que el bus y el conductor existan
+        Bus bus = busRepository.findById(asignacionDTO.getBusId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bus no válido"));
+        Conductor conductor = conductorRepository.findById(asignacionDTO.getConductorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Conductor no válido"));
+        Ruta ruta = rutaRepository.findById(asignacionDTO.getRutaId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ruta no válida"));
+
+        // Crear y guardar la asignación
+        Asignacion asignacion = new Asignacion();
+        asignacion.setBus(bus);
+        asignacion.setConductor(conductor);
+        asignacion.setRuta(ruta);
+        // Aquí podrías agregar lógica para el horario si es necesario
+
+        return asignacionRepository.save(asignacion);
+    }
+
+    // Asignar ruta a un bus usando DTO
+    public Asignacion asignarRutaABus(Long busId, Long rutaId) {
+        Bus bus = busRepository.findById(busId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus no encontrado"));
+
+        Ruta ruta = rutaRepository.findById(rutaId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ruta no encontrada"));
+
+        Asignacion asignacion = new Asignacion();
+        asignacion.setBus(bus);
+        asignacion.setRuta(ruta);
+
+        return asignacionRepository.save(asignacion);
+    }
+
+    // Eliminar una asignación
+    public void eliminar(Long id) {
+        asignacionRepository.deleteById(id);
     }
 
     // Obtener asignaciones por ID del conductor
@@ -27,22 +90,6 @@ public class AsignacionService {
 
     public List<Asignacion> findByBus(Bus bus) {
         return asignacionRepository.findByBus(bus);
-    }
-
-    public List<Asignacion> obtenerTodos() {
-        return asignacionRepository.findAll();
-    }
-
-    public Optional<Asignacion> obtenerPorId(Long id) {
-        return asignacionRepository.findById(id);
-    }
-
-    public Asignacion guardar(Asignacion asignacion) {
-        return asignacionRepository.save(asignacion);
-    }
-
-    public void eliminar(Long id) {
-        asignacionRepository.deleteById(id);
     }
 
     public void deleteByConductorId(Long conductorId) {

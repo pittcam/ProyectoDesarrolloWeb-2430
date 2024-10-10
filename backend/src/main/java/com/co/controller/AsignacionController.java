@@ -1,5 +1,6 @@
 package com.co.controller;
 
+import com.co.dto.AsignacionDTO;
 import com.co.dto.HorarioDTO;
 import com.co.dto.RutaDTO;
 import com.co.model.Asignacion;
@@ -46,22 +47,31 @@ public class AsignacionController {
 
     // Crear una nueva asignación
     @PostMapping
-    public Asignacion crearAsignacion(@Valid @RequestBody Asignacion asignacion) {
-        return asignacionService.guardar(asignacion);
+    public Asignacion crearAsignacion(@Valid @RequestBody AsignacionDTO asignacionDTO) {
+        return asignacionService.guardar(asignacionDTO);
+    }
+
+    // Asignar ruta a un bus
+    @PostMapping("/asignar")
+    public Asignacion asignarRutaABus(@RequestParam Long busId, @RequestParam Long rutaId) {
+        return asignacionService.asignarRutaABus(busId, rutaId);
     }
 
     // Actualizar una asignación existente
-    @PutMapping("/{id}")
-    public Asignacion actualizarAsignacion(@PathVariable Long id, @Valid @RequestBody Asignacion asignacionActualizada) {
+    /*@PutMapping("/{id}")
+    public Asignacion actualizarAsignacion(@PathVariable Long id, @Valid @RequestBody AsignacionDTO asignacionDTO) {
         Optional<Asignacion> asignacionOpt = asignacionService.obtenerPorId(id);
         if (asignacionOpt.isPresent()) {
+            // Aquí se puede crear un método para actualizar la asignación existente
             Asignacion asignacionExistente = asignacionOpt.get();
-            // Aquí se puede copiar los campos de asignacionActualizada a asignacionExistente
-            return asignacionService.guardar(asignacionExistente);
+            asignacionExistente.setBus(busService.getBusById(asignacionDTO.getBusId()));
+            asignacionExistente.setConductor(conductorService.getConductorById(asignacionDTO.getConductorId()));
+            asignacionExistente.setRuta(rutaService.getRutaById(asignacionDTO.getRutaId()));
+            return asignacionService.guardar(asignacionDTO);
         } else {
             return null; // Manejar el caso donde la asignación no exista
         }
-    }
+    }*/
 
     // Eliminar una asignación
     @DeleteMapping("/{id}")

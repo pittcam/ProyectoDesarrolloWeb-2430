@@ -12,6 +12,9 @@ import { RutaCreateComponent } from './rutas/ruta-create/ruta-create.component';
 import { RutaListComponent } from './rutas/ruta-list/ruta-list.component';
 import { RutaViewComponent } from './rutas/ruta-view/ruta-view.component';
 import { RutaEditComponent } from './rutas/ruta-edit/ruta-edit.component';
+import { AsignacionBusComponent } from './asignaciones/asignacion-bus/asignacion-bus.component';
+import { AsignacionRutaComponent } from './asignaciones/asignacion-ruta/asignacion-ruta.component';
+
 
 
 
@@ -29,5 +32,7 @@ export const routes: Routes = [
   { path: 'rutas/ver/:id', component: RutaViewComponent },
   { path: 'rutas/editar/:id', component: RutaEditComponent },
   { path: 'rutas', component: RutaListComponent },
+  { path: 'asignaciones/asignar-bus/:id', component: AsignacionBusComponent },
+  { path: 'asignaciones/asignar-ruta/:id', component: AsignacionRutaComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' } // Redirección al dashboard
 ];

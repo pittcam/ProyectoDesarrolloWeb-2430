@@ -8,7 +8,6 @@ import { BusDTO } from '../dto/bus-dto'; // Asegúrate de que esta ruta sea corr
   providedIn: 'root', // Asegúrate de que el servicio esté disponible en toda la aplicación
 })
 export class BusService {
-
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -33,7 +32,6 @@ export class BusService {
     return this.http.get<BusDTO>(`${environment.SERVER_URL}/bus/${id}`);
   }
 
-
   actualizarBus(bus: BusDTO): Observable<any> {
     return this.http.put(`${environment.SERVER_URL}/bus/${bus.id}`, bus, this.httpOptions);
   }
@@ -42,5 +40,13 @@ export class BusService {
     return this.http.delete<void>(`${environment.SERVER_URL}/bus/${id}`, this.httpOptions);
   }
 
-  // Otras funciones como buscarBuses, etc.
+  getBusesDisponibles(): Observable<BusDTO[]> {
+    return this.http.get<BusDTO[]>(`${environment.SERVER_URL}/bus/disponibles`); // Asegúrate que esta ruta sea correcta
+  }
+
+  // Método para asignar una ruta a un bus
+  asignarRutaAlBus(busId: number, rutaId: number): Observable<void> {
+    const asignacion = { busId, rutaId }; // Crear objeto de asignación
+    return this.http.post<void>(`${environment.SERVER_URL}/bus/asignarRuta`, asignacion, this.httpOptions);
+  }
 }

@@ -12,7 +12,7 @@ export class DashboardComponent {
   constructor(private router: Router) {}
 
   abrirCrearConductor() {
-    this.router.navigate(['/crear-conductor']); // Navega a la pantalla de crear conductor
+    this.router.navigate(['/conductores']); // Navega a la pantalla de crear conductor
   }
 
   abrirGestionarBuses() {

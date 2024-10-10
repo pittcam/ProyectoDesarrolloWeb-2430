@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,9 +29,7 @@ public class Bus {
     private String modelo;
 
 
-    // Eliminamos @ManyToMany a conductores y horarios
-    // Añadimos la relación con Asignacion
-
+    @JsonIgnore
     @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Asignacion> asignaciones = new HashSet<>();
 }

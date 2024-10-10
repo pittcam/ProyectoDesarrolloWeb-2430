@@ -1,7 +1,7 @@
-<div class="container">
+<div class="editar-conductor-container">
   <h2>Editar Conductor</h2>
 
-  <form (ngSubmit)="actualizarConductor()">
+  <form (ngSubmit)="actualizarConductor()" class="conductor-edit-form">
     <div class="form-group">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" [(ngModel)]="conductorDTO.nombre" name="nombre" required>
@@ -22,7 +22,9 @@
       <input type="text" id="direccion" [(ngModel)]="conductorDTO.direccion" name="direccion" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Actualizar Conductor</button>
-    <button type="button" class="btn btn-secondary" (click)="verConductores()">Cancelar</button>
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-update">Actualizar Conductor</button>
+      <button type="button" class="btn btn-cancel" (click)="verConductores()">Cancelar</button>
+    </div>
   </form>
 </div>
